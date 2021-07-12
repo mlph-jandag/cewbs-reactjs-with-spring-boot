@@ -15,6 +15,11 @@ const Dashboard = () => {
                         <div className="card-body">
                         </div>
                     </div>
+                    <div className="card mt-5">
+                        <h5 className="card-header font-weight-light">Posts</h5>
+                        <div className="card-body">
+                        </div>
+                    </div>
                 </div>
             </div>
         </>
