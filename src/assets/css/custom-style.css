@@ -2,6 +2,10 @@
     background: #333;
 }
 
+.category-buttons a{
+    margin-right: 15px;
+}
+
 #sidebar-container {
     min-height: 100vh;   
     background-color: #333;
