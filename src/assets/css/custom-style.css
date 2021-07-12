@@ -1,57 +1,67 @@
-.navbar{
-    background: #333;
+.navbar {
+  background: #333;
 }
 
 #sidebar-container {
-    min-height: 100vh;   
-    background-color: #333;
-    padding: 0;
+  min-height: 100vh;
+  background-color: #333;
+  padding: 0;
 }
 
 .sidebar-expanded {
-    width: 230px;
+  width: 230px;
 }
 .sidebar-collapsed {
-    width: 60px;
+  width: 60px;
 }
 
 #sidebar-container .list-group a {
-    height: 50px;
-    color: white;
+  height: 50px;
+  color: white;
 }
 
 #sidebar-container .list-group .sidebar-submenu a {
-    height: 45px;
-    padding-left: 30px;
+  height: 45px;
+  padding-left: 30px;
 }
 .sidebar-submenu {
-    font-size: 0.9rem;
+  font-size: 0.9rem;
 }
 
 .sidebar-separator-title {
-    background-color: #333;
-    height: 35px;
+  background-color: #333;
+  height: 35px;
 }
 .sidebar-separator {
-    background-color: #333;
-    height: 25px;
+  background-color: #333;
+  height: 25px;
 }
 .logo-separator {
-    background-color: #333;    
-    height: 60px;
+  background-color: #333;
+  height: 60px;
 }
 
-#sidebar-container .list-group .list-group-item[aria-expanded="false"] .submenu-icon::after {
+#sidebar-container
+  .list-group
+  .list-group-item[aria-expanded="false"]
+  .submenu-icon::after {
   content: " \f0d7";
   font-family: FontAwesome;
   display: inline;
   text-align: right;
   padding-left: 10px;
 }
-#sidebar-container .list-group .list-group-item[aria-expanded="true"] .submenu-icon::after {
+#sidebar-container
+  .list-group
+  .list-group-item[aria-expanded="true"]
+  .submenu-icon::after {
   content: " \f0da";
   font-family: FontAwesome;
   display: inline;
   text-align: right;
   padding-left: 10px;
+}
+.App {
+  background-color: #eff0f0;
+  height: 100vh;
 }
