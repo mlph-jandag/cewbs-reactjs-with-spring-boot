@@ -1,3 +1,7 @@
+/* Common styles here
+ */
+@import 'assets/css/custom-style.css';
+
 .App{
-    background-color: yellow;
+    /* background-color: yellow; */
 }
