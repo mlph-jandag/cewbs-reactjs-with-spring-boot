@@ -2,6 +2,19 @@
   background: #333;
 }
 
+.navbar .navbar-brand {
+    width: 198px;
+}
+.navbar .btn-search{
+    background: #343a40;
+    color: #fff;
+    border-color: #343a40;
+}
+
+.category-buttons a{
+    margin-right: 15px;
+}
+
 #sidebar-container {
   min-height: 100vh;
   background-color: #333;

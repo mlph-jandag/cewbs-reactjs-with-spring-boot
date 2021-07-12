@@ -1,7 +1,25 @@
-/* Common styles here
- */
 @import 'assets/css/custom-style.css';
 
+/* Common styles here
+ */
 a{
     cursor: pointer;
+}
+
+.border-radius-0{
+    border-radius: 0 !important;
+}
+.btn-yellow{
+    background: #FFFF00;
+    color: #000;
+    padding: 8px 15px;
+}
+
+.btn-yellow:hover{
+    text-decoration: none;
+    color: #333;
+}
+
+.toupper{
+    text-transform: uppercase;
 }
