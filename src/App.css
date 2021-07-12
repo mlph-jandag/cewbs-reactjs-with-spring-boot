@@ -6,6 +6,9 @@ a{
     cursor: pointer;
 }
 
+.border-radius-0{
+    border-radius: 0 !important;
+}
 .btn-yellow{
     background: #FFFF00;
     color: #000;

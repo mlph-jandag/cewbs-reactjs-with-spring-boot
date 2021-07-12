@@ -12,6 +12,10 @@ const Navbar = () => {
                 <span className="menu-collapsed">{ process.env.REACT_APP_NAME }</span>
             </a>
             <div className="collapse navbar-collapse" id="navbarNavDropdown">
+                <form className="form-inline">
+                    <input className="form-control mr-sm-2 border-radius-0" type="search" placeholder="Search" aria-label="Search" />
+                    <button className="btn btn-outline-success my-2 my-sm-0 btn-search" type="submit">Search</button>
+                </form>
                 <ul className="navbar-nav ml-auto">
                     <li className="nav-item">
                         <a className="nav-link">
