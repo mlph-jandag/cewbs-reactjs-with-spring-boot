@@ -2,6 +2,6 @@
  */
 @import 'assets/css/custom-style.css';
 
-.App{
-    /* background-color: yellow; */
+a{
+    cursor: pointer;
 }
