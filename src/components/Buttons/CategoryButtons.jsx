@@ -5,7 +5,7 @@ const CategoryButtons = (props) => {
 
     return (
         <div className="category-buttons">
-            <a className="btn-yellow">All </a>
+            <a className="btn-yellow toupper">All </a>
             {
                 cats.map(cat => {
                     return (
