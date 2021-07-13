@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import classes from "./LoginForm.module.css";
-import { firebaseApp } from '../../firebase.config';
+import { firebaseAuth } from '../../firebase.config';
 
 function LoginForm() {
   const [email, setEmail] = useState("admin@admin.com");
   const [password, setPassword] = useState("admin123");
   const [user, setUser] = useState({});
-  
+  const history = useHistory();
+
   useEffect(() => {
     authListener();
   }, []);
 
   const authListener = () => {
-    firebaseApp.auth().onAuthStateChanged(response => {
+    firebaseAuth.onAuthStateChanged(response => {
         if (response) {
             setUser(response);
+            history.push('/');
         } else {
             setUser('');
         }
@@ -24,10 +27,10 @@ function LoginForm() {
 
   const loginHandler = (e) => {
     e.preventDefault();
-    firebaseApp.auth()
-    .signInWithEmailAndPassword(email, password)
+    firebaseAuth.signInWithEmailAndPassword(email, password)
     .then(res => {
         console.log('success', res);
+
     })
     .catch(err => {
         console.log(err);

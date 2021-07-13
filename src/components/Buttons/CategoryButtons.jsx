@@ -5,11 +5,11 @@ const CategoryButtons = (props) => {
 
     return (
         <div className="category-buttons">
-            <a className="btn-yellow toupper">All </a>
+            <a href="/" className="btn-yellow toupper">All </a>
             {
                 cats.map((cat, index) => {
                     return (
-                        <a className="btn-yellow toupper" key={index}>
+                        <a href="/" className="btn-yellow toupper" key={index}>
                             { cat }
                         </a>
                     );
