@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from '../../assets/images/logo.png';
+import Logout from './Logout';
 
 const Navbar = () => {
     return (
@@ -23,9 +24,7 @@ const Navbar = () => {
                         </a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#top">
-                            <i className="fa fa-sign-out"></i> Logout
-                        </a>
+                        <Logout />
                     </li>
                 </ul>
             </div>

@@ -7,9 +7,9 @@ const CategoryButtons = (props) => {
         <div className="category-buttons">
             <a className="btn-yellow toupper">All </a>
             {
-                cats.map(cat => {
+                cats.map((cat, index) => {
                     return (
-                        <a className="btn-yellow toupper">
+                        <a className="btn-yellow toupper" key={index}>
                             { cat }
                         </a>
                     );
