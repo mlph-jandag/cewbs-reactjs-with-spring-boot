@@ -1,20 +1,10 @@
-import React, { useEffect } from 'react';
-import firebaseApp from '../../firebase.config';
+import React from 'react';
+import { firebaseAuth } from '../../firebase.config';
 
 const Logout = () => {
     
-    useEffect(() => {
-        authListener();
-      }, []);
-    
-    const authListener = () => {
-    firebaseApp.auth().onAuthStateChanged(response => {
-        console.log('set', response);
-    });
-    }
-
     const onLogout = () => {
-        firebaseApp.auth().signOut();
+        firebaseAuth.signOut();
     }
     return (
         <a className="nav-link" href="#" onClick={onLogout}>

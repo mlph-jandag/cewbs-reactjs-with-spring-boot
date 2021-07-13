@@ -10,7 +10,7 @@ function LoginForm() {
   const history = useHistory();
 
   useEffect(() => {
-    authListener();
+    // authListener();
   }, []);
 
   const authListener = () => {

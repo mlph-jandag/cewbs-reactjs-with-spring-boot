@@ -1,10 +1,15 @@
 import React, { useContext, useEffect, useState} from 'react';
 import { firebaseAuth } from '../firebase.config';
-import useAuth from '../hooks/useAuth';
 
-const AuthContext = useAuth();
+const AuthContext = React.createContext();
+
+export const useAuth = () => {
+    return useContext(AuthContext);
+}
+
 
 const AuthProvider = ({ children }) => {
+
     const [currentUser, setCurrentUser] = useState({});
     const [loading, setLoading] = useState(true);
 
