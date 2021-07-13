@@ -13,7 +13,7 @@ const Dashboard = () => {
             <div className="row mr-0 ml-0">
                 <Sidebar />
                 <div className="col p-4">
-                    <CategoryButtons limit="5" />
+                    <CategoryButtons />
                     <div className="card mt-5">
                         <h5 className="card-header font-weight-light">Posts</h5>
                         <div className="card-body">
