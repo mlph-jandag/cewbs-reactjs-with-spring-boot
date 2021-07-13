@@ -13,10 +13,6 @@ const AuthProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState({});
     const [loading, setLoading] = useState(true);
 
-    const login = (email, password) => {
-        return firebaseAuth.signInWithEmailAndPassword(email, password);
-    }
-
     useEffect(() => {
         const unsubscribe = firebaseAuth.onAuthStateChanged(loggedInUser => {
             setCurrentUser(loggedInUser);
@@ -27,7 +23,6 @@ const AuthProvider = ({ children }) => {
     }, [])
 
     const values = {
-        login,
         currentUser,
     };
 

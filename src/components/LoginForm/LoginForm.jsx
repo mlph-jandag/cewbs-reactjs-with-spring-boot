@@ -7,6 +7,7 @@ function LoginForm() {
   const [email, setEmail] = useState("admin@admin.com");
   const [password, setPassword] = useState("admin123");
   const [btnLogin, setBtnLogin] = useState('Sign in');
+  const [btnDisabled, setBtnDisabled] = useState(false);
   const [error, setError] = useState('');
 
   const history = useHistory();
@@ -26,14 +27,15 @@ function LoginForm() {
   const loginHandler = (e) => {
     e.preventDefault();
     setBtnLogin('Loading...');
+    setBtnDisabled(true);
     firebaseAuth.signInWithEmailAndPassword(email, password)
     .then(res => {
-        history.push('/');
+      history.push('/');
     })
     .catch(err => {
-        setBtnLogin('Sign in');
-        setError('Invalid password or email address.');
-        console.log('error', err);
+      setBtnLogin('Sign in');
+      setError('Invalid password or email address.');
+      setBtnDisabled(false);
     })
   }
 
@@ -63,7 +65,7 @@ function LoginForm() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit" className="btn">
+        <button type="submit" className="btn" disabled={btnDisabled}>
           { btnLogin }
         </button>
       </form>
