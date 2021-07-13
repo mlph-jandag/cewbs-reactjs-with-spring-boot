@@ -28,30 +28,21 @@
   width: 60px;
 }
 
-#sidebar-container .list-group a {
+#sidebar-container .list-group .main-menu {
   height: 50px;
   color: white;
+  background: #343a40;
+}
+#sidebar-container .list-group .main-menu:hover{
+  color: #fff;
 }
 
-#sidebar-container .list-group .sidebar-submenu a {
-  height: 45px;
-  padding-left: 30px;
+#sidebar-container a.list-group-item{
+  background: #1e2125;
+  color: #fff;
 }
-.sidebar-submenu {
-  font-size: 0.9rem;
-}
-
-.sidebar-separator-title {
-  background-color: #333;
-  height: 35px;
-}
-.sidebar-separator {
-  background-color: #333;
-  height: 25px;
-}
-.logo-separator {
-  background-color: #333;
-  height: 60px;
+#sidebar-container a.list-group-item:hover{
+  color: #ffff00;
 }
 
 #sidebar-container
