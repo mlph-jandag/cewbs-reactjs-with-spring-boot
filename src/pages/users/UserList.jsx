@@ -1,12 +1,12 @@
 import React from 'react';
 import DefaultLayout from '../../components/Layouts/DefaultLayout';
 
-const Category = () => {
+const UserList = () => {
     return (
         <DefaultLayout>
-            Test category
+            List of users
         </DefaultLayout>
     )
 }
 
-export default Category;
+export default UserList

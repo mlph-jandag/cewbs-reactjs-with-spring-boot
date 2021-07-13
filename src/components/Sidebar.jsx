@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
     const [showPost, setShowPost] = useState(false);
@@ -8,12 +9,12 @@ const Sidebar = () => {
     return (
         <div id="sidebar-container" className="sidebar-expanded d-none d-md-block">
             <ul className="list-group">
-                <a href="#submenu1" data-toggle="collapse" aria-expanded="false" className="main-menu list-group-item list-group-item-action flex-column align-items-start">
+                <Link to="/" data-toggle="collapse" aria-expanded="false" className="main-menu list-group-item list-group-item-action flex-column align-items-start">
                     <div className="d-flex w-100 justify-content-start align-items-center">
                         <span className="fa fa-dashboard fa-fw mr-3"></span>
                         <span className="menu-collapsed">Dashboard</span>
                     </div>
-                </a>
+                </Link>
                 <a onClick={() => setShowPost(!showPost)} data-toggle="collapse" aria-expanded="false" className="main-menu list-group-item list-group-item-action">
                     <div className="d-flex w-100 justify-content-start align-items-center">
                         <span className="fa fa-sticky-note-o  fa-fw mr-3"></span>
@@ -29,12 +30,12 @@ const Sidebar = () => {
                         <span className="menu-collapsed">View Posts</span>
                     </a>
                 </div>
-                <a aria-expanded="false" className="main-menu list-group-item list-group-item-action">
+                <Link to="/categories" aria-expanded="false" className="main-menu list-group-item list-group-item-action">
                     <div className="d-flex w-100 justify-content-start align-items-center">
                         <span className="fa fa-list-alt fa-fw mr-3"></span>
                         <span className="menu-collapsed">Category</span>
                     </div>
-                </a>
+                </Link>
                 {/* <div className={!showCategory ? 'collapse' : ''}>
                     <a href="#" className="list-group-item list-group-item-action  ">
                         <span className="menu-collapsed">Add New</span>
