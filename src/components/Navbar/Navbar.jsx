@@ -1,8 +1,10 @@
 import React from 'react';
 import logo from '../../assets/images/logo.png';
 import Logout from './Logout';
+import { useAuth } from '../../contexts/AuthContext';
 
 const Navbar = () => {
+    const { currentUser } = useAuth();
     return (
         <nav className="navbar navbar-expand-md navbar-dark">
             <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,7 +22,7 @@ const Navbar = () => {
                 <ul className="navbar-nav ml-auto">
                     <li className="nav-item">
                         <a className="nav-link">
-                            Welcome, <i className="fa fa-user"></i> Joe
+                            Welcome, <i className="fa fa-user"></i> { currentUser.email }
                         </a>
                     </li>
                     <li className="nav-item">

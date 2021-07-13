@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import 'jquery';
+import 'popper.js';
+import 'bootstrap/dist/js/bootstrap.js';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 
