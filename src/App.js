@@ -10,13 +10,11 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <Switch>
-          <AuthenticatedRoute exact path="/">
-            <Dashboard />
-          </AuthenticatedRoute>
+          <AuthenticatedRoute exact path="/" component={Dashboard}/>
           <Route path="/login">
             <Login />
           </Route>
-          <Redirect to="/"/>
+          <Redirect to="/login"/>
         </Switch>
       </AuthProvider>
     </BrowserRouter>

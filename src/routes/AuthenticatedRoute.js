@@ -5,7 +5,7 @@ import { useAuth } from "../contexts/AuthContext"
 const loginRoute = '/login';
 
 const AuthenticatedRoute = ({ component: Component, ...rest }) => {
-  const { currentUser } = useAuth()
+  const { currentUser } = useAuth();
 
   return (
     <Route

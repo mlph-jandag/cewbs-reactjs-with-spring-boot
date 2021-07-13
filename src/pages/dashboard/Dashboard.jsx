@@ -2,8 +2,11 @@ import React from 'react';
 import Navbar from '../../components/Navbar/Navbar';
 import Sidebar from '../../components/Sidebar';
 import CategoryButtons from '../../components/Buttons/CategoryButtons';
+import { useAuth } from '../../contexts/AuthContext';
 
 const Dashboard = () => {
+    const { currentUser } = useAuth();
+    console.log(currentUser);
     return (
         <>
             <Navbar />

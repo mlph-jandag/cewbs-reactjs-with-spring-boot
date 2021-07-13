@@ -6,40 +6,41 @@ import { firebaseAuth } from '../../firebase.config';
 function LoginForm() {
   const [email, setEmail] = useState("admin@admin.com");
   const [password, setPassword] = useState("admin123");
-  const [user, setUser] = useState({});
+  const [btnLogin, setBtnLogin] = useState('Sign in');
+  const [error, setError] = useState('');
+
   const history = useHistory();
 
   useEffect(() => {
-    // authListener();
+    authListener();
   }, []);
 
   const authListener = () => {
     firebaseAuth.onAuthStateChanged(response => {
         if (response) {
-            setUser(response);
             history.push('/');
-        } else {
-            setUser('');
         }
-        console.log('set', response);
     });
   }
 
   const loginHandler = (e) => {
     e.preventDefault();
+    setBtnLogin('Loading...');
     firebaseAuth.signInWithEmailAndPassword(email, password)
     .then(res => {
-        console.log('success', res);
-
+        history.push('/');
     })
     .catch(err => {
-        console.log(err);
+        setBtnLogin('Sign in');
+        setError('Invalid password or email address.');
+        console.log('error', err);
     })
   }
 
   return (
     <div className={classes.LoginForm}>
       <form onSubmit={loginHandler}>
+        { error && <p className="alert alert-danger">{error}</p> }
         <div className="form-group">
           <label htmlFor="email">Email</label>
           <input
@@ -63,7 +64,7 @@ function LoginForm() {
           />
         </div>
         <button type="submit" className="btn">
-          Sign in
+          { btnLogin }
         </button>
       </form>
     </div>

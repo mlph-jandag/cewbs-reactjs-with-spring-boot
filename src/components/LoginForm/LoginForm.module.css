@@ -1,6 +1,7 @@
 .LoginForm {
-  margin-top: 70px;
-  width: 40vw;
+  margin-top: 20px;
+  border-top: 1px solid #ccc;
+  padding-top: 21px;
 }
 .LoginForm button {
   background-color: #ffff00;
