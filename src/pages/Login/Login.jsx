@@ -4,6 +4,7 @@ import classes from "./Login.module.css";
 import LoginForm from "../../components/LoginForm/LoginForm";
 
 function Login() {
+  console.log('login');
   return (
     <div className={[classes.Container, ...["d-flex"]].join(" ")}>
       <div className={classes.LoginContainer}>
