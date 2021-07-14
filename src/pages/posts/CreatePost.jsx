@@ -10,36 +10,42 @@ import { firestore } from "../../firebase.config";
 const CreatePost = () => {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
+  const [error, setError] = useState(false);
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
 
   const onSaveHandler = async () => {
-    //TODO
-    console.log("body", editorState);
-    console.log("title", title);
-    console.log("category", category);
-    console.log("created_at", new Date().toDateString());
-    try {
-      const response = firestore.collection("posts");
-      const id = await response.doc().id;
-      await response.doc(id).set({
-        body: editorState,
-        title: title,
-        category: category,
-        created_at: new Date().toDateString(),
-      });
-    } catch (e) {
-      console.log(e);
-    }
+    const validateFields = () => {
+      setError(false);
+      if (title !== "" && category !== "") {
+        return true;
+      }
+      setError(true);
+      return false;
+    };
+    if (validateFields())
+      try {
+        const response = firestore.collection("posts");
+        const id = await response.doc().id;
+        await response.doc(id).set({
+          body: editorState,
+          title: title,
+          category: category,
+          created_at: new Date().toDateString(),
+        });
+      } catch (e) {
+        console.log(e);
+      }
   };
 
   const onCategoryChanged = (data) => {
-    console.log(data);
+    setError(false);
     setCategory(data);
   };
 
   const getEditorState = (data) => {
+    setError(false);
     setEditorState(data);
   };
 
@@ -64,6 +70,11 @@ const CreatePost = () => {
                 />
               </div>
               <TextEditor onChangedHandler={getEditorState} />
+              {error ? (
+                <div class="alert alert-danger mt-3" role="alert">
+                  Error on saving data, make sure all fields are not empty!
+                </div>
+              ) : null}
               <div className={classes.bottomActions}>
                 <div className={classes.drop}>
                   <CategoryDropDown
