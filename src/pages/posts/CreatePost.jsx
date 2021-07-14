@@ -11,11 +11,13 @@ const CreatePost = () => {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
 
   const onSaveHandler = async () => {
+    setLoading(true);
     const validateFields = () => {
       setError(false);
       if (title !== "" && category !== "") {
@@ -24,7 +26,7 @@ const CreatePost = () => {
       setError(true);
       return false;
     };
-    if (validateFields())
+    if (validateFields()) {
       try {
         const response = firestore.collection("posts");
         const id = await response.doc().id;
@@ -37,6 +39,10 @@ const CreatePost = () => {
       } catch (e) {
         console.log(e);
       }
+      setTitle("");
+      setCategory("");
+    }
+    setLoading(false);
   };
 
   const onCategoryChanged = (data) => {
@@ -83,7 +89,7 @@ const CreatePost = () => {
                   />
                 </div>
                 <button onClick={onSaveHandler} className={classes.postButton}>
-                  Post
+                  {loading ? "Loading..." : "Post"}
                 </button>
               </div>
             </div>
