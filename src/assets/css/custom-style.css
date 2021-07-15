@@ -1,4 +1,4 @@
-.react-confirm-alert-body h1{
+.react-confirm-alert-body h1 {
   font-size: 20px !important;
 }
 
@@ -83,6 +83,10 @@
   vertical-align: middle !important;
 }
 
-.actions .fa{
+.actions .fa {
   cursor: pointer;
+}
+
+.btn-custom {
+  background-color: #ffff00 !important;
 }
