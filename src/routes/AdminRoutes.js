@@ -6,7 +6,7 @@ import CreatePost from "../pages/posts/CreatePost";
 import AuthenticatedRoute from "./AuthenticatedRoute";
 import CreatePartner from "../pages/partners/CreatePartner/CreatePartner";
 import ViewPartners from "../pages/partners/ViewPartners/ViewPartners.jsx";
-import ViewPosts from "../pages/posts/Posts";
+import ViewPosts from "../pages/posts/ViewPost";
 
 const AdminRoutes = () => {
   return (
