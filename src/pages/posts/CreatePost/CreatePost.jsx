@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../../../components/Navbar/Navbar";
 import Sidebar from "../../../components/Sidebar";
 import TextEditor from "../../../components/Editor/Editor";
@@ -6,8 +6,11 @@ import classes from "./CreatePost.module.css";
 import CategoryDropDown from "../../../components/Buttons/CategoryDropDown";
 import { EditorState } from "draft-js";
 import { firestore } from "../../../firebase.config";
+import { useParams } from "react-router";
+import {convertFromRaw} from "draft-js";
 
 const CreatePost = () => {
+  const { uid } = useParams();
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [error, setError] = useState({});
@@ -16,18 +19,52 @@ const CreatePost = () => {
     EditorState.createEmpty()
   );
 
+  useEffect(() => {
+    const fetchData = async () => {
+      if (uid) {
+        await firestore
+          .collection("posts")
+          .doc(uid)
+          .get()
+          .then((data) => {
+            const { title, category, editorState } = data.data()
+            setTitle(title);
+            setCategory(category);
+            setEditorState(convertFromRaw(editorState));
+          })
+          .catch(() => {});
+      }
+    };
+    
+    fetchData();
+  }, [uid]);
+
   const onSaveHandler = async () => {
     setLoading(true);
     if (!handleValidation()) {
       try {
         const response = firestore.collection("posts");
-        const id = await response.doc().id;
-        await response.doc(id).set({
-          body: editorState,
-          title: title,
-          category: category,
-          created_at: new Date().toDateString(),
-        });
+        let id = null;
+        if ({uid}) {
+          id = uid;
+          console.log("ALREADY EXIST")
+          await response.doc(id).update({
+            body: editorState,
+            title: title,
+            category: category,
+            created_at: new Date().toDateString(),
+          });
+        } else {
+          id = await response.doc().id;
+          console.log("NEW POST")
+          await response.doc(id).set({
+            body: editorState,
+            title: title,
+            category: category,
+            created_at: new Date().toDateString(),
+          });
+        }
+        
       } catch (e) {
         console.log(e);
       } finally {
@@ -46,6 +83,7 @@ const CreatePost = () => {
           name: "Title must not be empty",
         };
       });
+      return true;
     }
     if (Object.keys(editorState.entityMap).length > 0) {
       console.log(editorState);
@@ -54,6 +92,7 @@ const CreatePost = () => {
           setError((prev) => {
             return { ...prev, editor: "Only include links to images" };
           });
+          return true;
         }
       }
     }
@@ -104,7 +143,7 @@ const CreatePost = () => {
                 />
                 <span style={{ color: "red" }}>{error["name"]}</span>
               </div>
-              <TextEditor onChangedHandler={getEditorState} />
+              <TextEditor editorState={editorState} onChangedHandler={getEditorState} />
               <span style={{ color: "red" }}>{error["editor"]}</span>
               <div className={classes.bottomActions}>
                 <div className={classes.drop}>

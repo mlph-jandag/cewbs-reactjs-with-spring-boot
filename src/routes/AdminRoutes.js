@@ -20,6 +20,7 @@ const AdminRoutes = () => {
       <AuthenticatedRoute path="/create-partner/:uid" component={CreatePartner} />
       <AuthenticatedRoute path="/create-partner"  component={CreatePartner} />
       <AuthenticatedRoute path="/services/:uid" component={ViewPartners} />
+      <AuthenticatedRoute path="/create-post/:uid" component={CreatePost} />
     </>
   );
 };

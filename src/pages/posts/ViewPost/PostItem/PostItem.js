@@ -3,6 +3,7 @@ import moment from 'moment';
 import classes from "./PostItem.module.css";
 import {convertFromRaw} from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
+import { Link } from "react-router-dom";
 
 const PostItem = props => {
     const convert = (storedState) => {
@@ -16,7 +17,11 @@ const PostItem = props => {
           <div className={classes.admin}>Admin</div>
           <div className={classes.date}>
               {moment(props.date).format("MMM DD, YYYY")}
-              <div className={classes.action}><i class="fa fa-ellipsis-v"></i></div>
+              <Link to={`create-post/${props.uid}`}>
+                <div className={classes.action}>
+                  <i class="fa fa-ellipsis-v"></i>
+                </div>
+              </Link>
           </div>
         </span>
         <div className="card-body">
