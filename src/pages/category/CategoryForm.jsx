@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { firestore } from '../../firebase.config';
 import { useAlert } from 'react-alert';
+import { addFormData } from '../../api/firestoreService';
+import { isFormValid } from '../../utils/validation';
 
 const CategoryForm = () => {
   const alertUi = useAlert();
@@ -8,21 +9,28 @@ const CategoryForm = () => {
   const [slug, setSlug] = useState('');
   const [btnDisabled, setBtnDisabled] = useState(false);
   
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
-    setBtnDisabled(true);
-    firestore.collection('categories').add({
-      category_name: catName.target.value,
-      slug: slug.target.value
-    }).then(result => {
-      console.log('result', result);
-      alertUi.success('Added category successfully!');
-    }).catch(err => {
-      console.log(err);
-      alertUi.error('There was an error occured!');
-    }).finally(
-      setBtnDisabled(false)
-    );
+    let data = {
+      category_name: catName,
+      slug: slug
+    };
+    if (isFormValid(data)) {
+      try {
+        setBtnDisabled(true);
+        await addFormData({
+          formData: data,
+          table: 'categories' 
+        });
+        alertUi.success('Added successfully');
+      } catch(e) {
+        console.log(e);
+      } finally {
+        setBtnDisabled(false);
+      }
+    } else {
+      alertUi.error('Please check inputs!');
+    }
   }
   return (
     <form onSubmit={onSubmitHandler}>
@@ -34,14 +42,14 @@ const CategoryForm = () => {
             type="text"
             className="form-control"
             placeholder="Example. events"
-            onChange={setCatName}
+            onChange={(e) => setCatName(e.target.value)}
           />
           <label className="mt-4">Slug</label>
           <input
             type="text"
             className="form-control"
             placeholder="/{slug}"
-            onChange={setSlug}
+            onChange={(e) => setSlug(e.target.value)}
           />
           <button
             disabled={btnDisabled}
