@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { firestore } from '../../firebase.config';
 import { useAlert } from 'react-alert';
 import { confirmAlert } from 'react-confirm-alert';
-import ActionButtons from '../../components/Buttons/ActionButtons';
+import ActionButtons from '../../components/Buttons/ActionsButton/ActionButtons';
+import UpdateCancel from '../../components/Buttons/ActionsButton/UpdateCancel';
 
 const CategoryActions = ({ data, setIsEdit, isEdit }) => {
   const alertUi = useAlert();
@@ -31,36 +32,36 @@ const CategoryActions = ({ data, setIsEdit, isEdit }) => {
     });
   } 
 
-  const reSetIsEdit= () => {
+  const onResetEdit = () => {
     setIsEdit({
       id: data.uid,
       editMode: true
     });
   }
 
-  const onCancel = () => {
+  const onCancelHandler = () => {
     setIsEdit({
       id: 0, editMode: false
     })
   }
+
+  const onUpdateHandler = () => {
+
+  }
+
   return (
     <div className="d-flex justify-content-around actions">
       {
         isEdit.editMode && isEdit.id == data.uid
         ?
-        <>
-          <button
-            className="btn btn-primary btn-sm mr-1"
-          >Update</button>
-          <button
-            className="btn btn-secondary btn-sm"
-            onClick={ onCancel }
-          >Cancel</button>
-        </>
+        <UpdateCancel
+          onCancel={ onCancelHandler }
+          onUpdate={ onUpdateHandler }
+        />
         :
         <ActionButtons
           onDeleteHandler={ onDeleteHandler }
-          setIsEdit={ reSetIsEdit }
+          setIsEdit={ onResetEdit }
           data={ data }
         />
       }
