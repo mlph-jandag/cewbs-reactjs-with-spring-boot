@@ -57,6 +57,7 @@ const CreatePartner = () => {
       }
     }
     setLoading(false);
+    return true;
   };
 
   const handleValidation = () => {
@@ -67,6 +68,7 @@ const CreatePartner = () => {
           name: "Name must not be empty",
         };
       });
+      return true;
     }
     if (logo === "") {
       console.log("eerrr");
