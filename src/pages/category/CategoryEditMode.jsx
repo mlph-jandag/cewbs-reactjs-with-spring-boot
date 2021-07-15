@@ -1,24 +1,19 @@
 import React, { useState } from 'react';
+import UpdateCancel from '../../components/Buttons/ActionsButton/UpdateCancel';
 
-// refactor this later
 const CategoryEditMode = (props) => {
+  console.log(props);
   const [catName, setCatName] = useState(props.data.category_name);
   const [slug, setSlug] = useState(props.data.slug);
-
-  const onChangeCatName = (e) => {
-    props.setFormData(prev => ({
-      ...prev,
-      name: catName
-    }));
-    setCatName(e.target.value);
+  
+  const onCancelHandler = () => {
+    props.setAction({
+      id: 0, editMode: false
+    })
   }
 
-  const onChangeSlug = (e) => {
-    props.setFormData(prev => ({
-      ...prev,
-      slug: slug
-    }));
-    setSlug(e.target.value);
+  const onUpdateHandler = () => {
+    console.log('id'+ props.id);
   }
   return (
     <>
@@ -27,7 +22,7 @@ const CategoryEditMode = (props) => {
           type="text"
           className="form-control"
           value={catName}
-          onChange={onChangeCatName}
+          onChange={(e) => setCatName(e.target.value)}
         />
       </td>
       <td>
@@ -35,7 +30,13 @@ const CategoryEditMode = (props) => {
           type="text"
           className="form-control"
           value={slug}
-          onChange={onChangeSlug}
+          onChange={(e) => setSlug(e.target.value)}
+        />
+      </td>
+      <td>
+        <UpdateCancel 
+          onCancelHandler={ onCancelHandler }
+          onUpdateHandler={ onUpdateHandler }
         />
       </td>
     </>

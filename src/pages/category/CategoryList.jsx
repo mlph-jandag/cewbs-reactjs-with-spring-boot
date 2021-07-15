@@ -43,23 +43,24 @@ const CategoryList = () => {
                   ?
                     <CategoryEditMode
                       data={ data }
-                      setFormData={ setFormData }
+                      setAction={ setAction }
+                      id={ uid }
                     />
                   :
                   <>
                     <td>{ data.category_name }</td>
                     <td>{ data.slug }</td>
+                    <td>
+                      <CategoryActions
+                        propValues={{ data, uid }}
+                        setAction={ setAction }
+                        action={ action }
+                        formData={ formData }
+                        setFormData={ setFormData }
+                      />
+                    </td>
                   </>
                 }
-                <td>
-                  <CategoryActions
-                    propValues={{ data, uid }}
-                    setAction={ setAction }
-                    action={ action }
-                    formData={ formData }
-                    setFormData={ setFormData }
-                  />
-                </td>
               </tr>
             );
           })

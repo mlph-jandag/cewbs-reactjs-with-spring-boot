@@ -3,14 +3,9 @@ import { firestore } from '../../firebase.config';
 import { useAlert } from 'react-alert';
 import { confirmAlert } from 'react-confirm-alert';
 import ActionButtons from '../../components/Buttons/ActionsButton/ActionButtons';
-import UpdateCancel from '../../components/Buttons/ActionsButton/UpdateCancel';
 
 const CategoryActions = ({ propValues, setAction, action, formData, setFormData }) => {
   const alertUi = useAlert();
-
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
 
   const onDeleteHandler = () => {
     confirmAlert({
@@ -37,42 +32,19 @@ const CategoryActions = ({ propValues, setAction, action, formData, setFormData 
   } 
 
   const onClickSetEdit = () => {
-    setFormData({
-      name: propValues.data.category_name,
-      slug: propValues.data.slug
-    })
     setAction({
       id: propValues.uid,
       editMode: true
     });
   }
 
-  const onCancelHandler = () => {
-    setAction({
-      id: 0, editMode: false
-    })
-  }
-
-  const onUpdateHandler = () => {
-    console.log(formData);
-  }
-
   return (
     <div className="d-flex justify-content-around actions">
-      {
-        action.editMode && action.id == propValues.uid
-        ?
-        <UpdateCancel
-          onCancel={ onCancelHandler }
-          onUpdate={ onUpdateHandler }
-        />
-        :
-        <ActionButtons
-          onDeleteHandler={ onDeleteHandler }
-          setIsEdit={ onClickSetEdit }
-          data={ propValues }
-        />
-      }
+      <ActionButtons
+        onDeleteHandler={ onDeleteHandler }
+        setIsEdit={ onClickSetEdit }
+        data={ propValues }
+      />
     </div>
   )
 }
