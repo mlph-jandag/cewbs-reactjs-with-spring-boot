@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { firestore } from '../../firebase.config';
 import { useAlert } from 'react-alert';
 import { confirmAlert } from 'react-confirm-alert';
 import ActionButtons from '../../components/Buttons/ActionsButton/ActionButtons';
+import { deleteData } from '../../api/firestoreService';
 
 const CategoryActions = ({ propValues, setAction, action }) => {
   const alertUi = useAlert();
@@ -16,7 +16,7 @@ const CategoryActions = ({ propValues, setAction, action }) => {
           label: 'Yes',
           onClick: async () => {
             try {
-              await firestore.collection("categories").doc(propValues.uid).delete();
+              await deleteData({ table: 'categories', id: propValues.uid});
               alertUi.success('Deleted Successfully!');
             } catch (e) {
               console.log(e);
