@@ -6,9 +6,8 @@ Coders: *Zed, Rovin, Sam*
 
 `npm install`
 
-*Add Configuration*
 `touch .env.local` 
 
-- copy firestore configuration
+> copy firestore configuration
 
 `npm run start`
