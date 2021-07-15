@@ -1,7 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import DefaultLayout from "../../../components/Layouts/DefaultLayout";
+import { firestore } from "../../../firebase.config";
+import CompanyItem from "./CompanyItem/CompanyItem";
 
 const ViewPartners = () => {
+  const [companies, setCompanies] = useState([]);
+
+  useEffect(() => {
+    const unsubscribe = firestore
+      .collection("companies")
+      .onSnapshot((documentSnapshot) => {
+        let companyData = documentSnapshot.docs.map((data) => {
+          return { uid: data.id, data: data.data() };
+        });
+        console.log(companyData);
+        setCompanies(companyData);
+      });
+    return unsubscribe;
+  }, []);
+
   return (
     <DefaultLayout>
       <div className="card mt-2">
@@ -20,30 +37,15 @@ const ViewPartners = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="align-middle">
-                    <td>1</td>
-                    <td>
-                      <a href="#" class="avatar">
-                        <img
-                          alt="company"
-                          src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/theme/team-4.jpg"
-                        />
-                      </a>
-                    </td>
-                    <td>Maxicare</td>
-                    <td>maxicare.com.ph</td>
-                    <td>
-                      <a href="#" className="text-info mr-2">
-                        <i className="fa fa-eye"></i>
-                      </a>
-                      <a href="#" className="text-warning mr-2">
-                        <i className="fa fa-pencil"></i>
-                      </a>
-                      <a href="#" className="text-danger">
-                        <i className="fa fa-trash-o"></i>
-                      </a>
-                    </td>
-                  </tr>
+                  {companies.map(({ data, uid }, index) => {
+                    return (
+                      <CompanyItem
+                        data={{ ...data, uid }}
+                        index={index + 1}
+                        key={uid}
+                      />
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
