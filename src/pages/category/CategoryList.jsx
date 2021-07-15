@@ -6,10 +6,6 @@ import CategoryEditMode from './CategoryEditMode';
 const CategoryList = () => {
   const [categories, setCategories] = useState([]);
   const [action, setAction] = useState({id: 0, editMode: false});
-  const [formData, setFormData] = useState({
-    name: '',
-    slug: '',
-  });
 
   useEffect(() => {
       const unsubscribe = firestore.collection("categories")
@@ -47,19 +43,11 @@ const CategoryList = () => {
                       id={ uid }
                     />
                   :
-                  <>
-                    <td>{ data.category_name }</td>
-                    <td>{ data.slug }</td>
-                    <td>
-                      <CategoryActions
-                        propValues={{ data, uid }}
-                        setAction={ setAction }
-                        action={ action }
-                        formData={ formData }
-                        setFormData={ setFormData }
-                      />
-                    </td>
-                  </>
+                    <CategoryActions
+                      propValues={{ data, uid }}
+                      setAction={ setAction }
+                      action={ action }
+                    />
                 }
               </tr>
             );

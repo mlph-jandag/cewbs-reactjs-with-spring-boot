@@ -4,7 +4,7 @@ import { useAlert } from 'react-alert';
 import { confirmAlert } from 'react-confirm-alert';
 import ActionButtons from '../../components/Buttons/ActionsButton/ActionButtons';
 
-const CategoryActions = ({ propValues, setAction, action, formData, setFormData }) => {
+const CategoryActions = ({ propValues, setAction, action }) => {
   const alertUi = useAlert();
 
   const onDeleteHandler = () => {
@@ -39,13 +39,19 @@ const CategoryActions = ({ propValues, setAction, action, formData, setFormData 
   }
 
   return (
-    <div className="d-flex justify-content-around actions">
-      <ActionButtons
-        onDeleteHandler={ onDeleteHandler }
-        setIsEdit={ onClickSetEdit }
-        data={ propValues }
-      />
-    </div>
+    <>
+      <td>{ propValues.data.category_name }</td>
+      <td>{ propValues.data.slug }</td>
+      <td>
+        <div className="d-flex justify-content-around actions">
+          <ActionButtons
+            onDeleteHandler={ onDeleteHandler }
+            setIsEdit={ onClickSetEdit }
+            data={ propValues }
+          />
+        </div>
+      </td>
+    </>
   )
 }
 
