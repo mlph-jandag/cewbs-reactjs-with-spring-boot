@@ -1,7 +1,7 @@
 import React from 'react';
-import CategoryButtons from '../../components/Buttons/CategoryButtons';
-import DefaultLayout from '../../components/Layouts/DefaultLayout';
-import Posts from './Posts';
+import CategoryButtons from '../../../components/Buttons/CategoryButtons';
+import DefaultLayout from '../../../components/Layouts/DefaultLayout';
+import Posts from './PostItem/Posts';
 
 const ViewPosts = () => {
     return (

@@ -2,11 +2,11 @@ import React from "react";
 import Dashboard from "../pages/dashboard/Dashboard";
 import Category from "../pages/category/Category";
 import UserList from "../pages/users/UserList";
-import CreatePost from "../pages/posts/CreatePost";
+import CreatePost from "../pages/posts/CreatePost/CreatePost";
 import AuthenticatedRoute from "./AuthenticatedRoute";
 import CreatePartner from "../pages/partners/CreatePartner/CreatePartner";
 import ViewPartners from "../pages/partners/ViewPartners/ViewPartners.jsx";
-import ViewPosts from "../pages/posts/ViewPost";
+import ViewPosts from "../pages/posts/ViewPost/ViewPost";
 
 const AdminRoutes = () => {
   return (
