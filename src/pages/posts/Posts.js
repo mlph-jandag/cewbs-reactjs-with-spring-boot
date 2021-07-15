@@ -4,15 +4,9 @@ import firebase from "firebase";
 import moment from "moment";
 import classes from "./PostItem.module.css";
 import {
-  convertFromRaw,
-  Editor,
-  EditorState,
-  convertToRaw,
-  ContentState,
+  convertFromRaw
 } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
-import { convertToHTML } from "draft-convert";
-import draftToHtml from "draftjs-to-html";
 
 const Posts = ({ category, onCategoryChanged }) => {
   const [post, setPost] = useState([]);
@@ -32,27 +26,28 @@ const Posts = ({ category, onCategoryChanged }) => {
   };
 
   return (
-    <div className={classes.postContainer}>
-      {post.map((item) => (
-        <div className={classes.container}>
-          <div className={classes.postHeader}>
-            <div className={classes.adminUser}>
-              <i className="fa fa-user-circle fa-2x"></i>
-              Admin
-            </div>
-            <div className={classes.date}>
+    <>
+    {post.map((item) => (
+        <div className="card mt-5">
+        <span className="card-header font-weight-light">
+          <i className="fa fa-user-circle fa-2x"></i>
+          <div className={classes.admin}>Admin</div>
+          <div className={classes.date}>
               {moment(item.date).format("MMM DD, YYYY")}
-            </div>
+              <div className={classes.action}><i class="fa fa-ellipsis-v"></i></div>
           </div>
+        </span>
+        <div className="card-body">
           <div className={classes.title}>{item.title}</div>
           <div className={classes.category}>
             <i class="fa fa-tags"></i>
-            {item.category}
+              {item.category}
           </div>
-          <div>{convert(item.body)}</div>
+          <div className={classes.content}><div dangerouslySetInnerHTML={{ __html: convert(item.body) }} /></div>
         </div>
-      ))}
-    </div>
+        </div>
+    ))}
+    </>
   );
 };
 
