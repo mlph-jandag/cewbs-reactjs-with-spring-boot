@@ -13,7 +13,6 @@ const ViewPartners = () => {
         let companyData = documentSnapshot.docs.map((data) => {
           return { uid: data.id, data: data.data() };
         });
-        console.log(companyData);
         setCompanies(companyData);
       });
     return unsubscribe;
