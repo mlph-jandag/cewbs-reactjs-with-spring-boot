@@ -1,20 +1,35 @@
 import React, { useState } from 'react';
 import UpdateCancel from '../../components/Buttons/ActionsButton/UpdateCancel';
+import { firestore } from '../../firebase.config';
+import { useAlert } from 'react-alert';
 
 const CategoryEditMode = (props) => {
-  console.log(props);
+  const alertUi = useAlert();
+
   const [catName, setCatName] = useState(props.data.category_name);
   const [slug, setSlug] = useState(props.data.slug);
+  const [btnDisabled, setBtnDisabled] = useState(false);
   
   const onCancelHandler = () => {
-    console.log('cancel');
     props.setAction({
       id: 0, editMode: false
     })
   }
 
   const onUpdateHandler = () => {
-    console.log('id'+ props.id);
+    setBtnDisabled(true);
+    firestore.collection('categories').doc(props.id).update({
+      category_name: catName,
+      slug: slug
+    }).then(result => {
+      console.log(result);
+      alertUi.success('Updated successfully!');
+      onCancelHandler();
+    }).catch(error => {
+      alertUi.error('There is a problem while updating!');
+    }).finally(
+      setBtnDisabled(false)
+    )
   }
   return (
     <>
@@ -38,6 +53,7 @@ const CategoryEditMode = (props) => {
         <UpdateCancel 
           onCancelHandler={ onCancelHandler }
           onUpdateHandler={ onUpdateHandler }
+          btnDisabled={ btnDisabled }
         />
       </td>
     </>
