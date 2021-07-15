@@ -5,6 +5,7 @@ import UserList from "../pages/users/UserList";
 import CreatePost from "../pages/posts/CreatePost";
 import AuthenticatedRoute from "./AuthenticatedRoute";
 import CreatePartner from "../pages/partners/CreatePartner/CreatePartner";
+import ViewPartners from "../pages/partners/ViewPartners/ViewPartners.jsx";
 
 const AdminRoutes = () => {
   return (
@@ -14,6 +15,7 @@ const AdminRoutes = () => {
       <AuthenticatedRoute path="/users" component={UserList} />
       <AuthenticatedRoute path="/create-post" component={CreatePost} />
       <AuthenticatedRoute path="/create-partner" component={CreatePartner} />
+      <AuthenticatedRoute path="/partners" component={ViewPartners} />
     </>
   );
 };

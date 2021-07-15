@@ -104,8 +104,8 @@ const CreatePartner = () => {
             <input
               className="form-control"
               type="text"
-              id="logo"
-              name="logo"
+              id="site"
+              name="site"
               value={site}
               onChange={(e) => setSite(e.target.value)}
             />

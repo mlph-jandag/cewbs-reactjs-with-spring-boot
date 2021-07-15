@@ -71,9 +71,9 @@ const Sidebar = () => {
                     <Link to="create-partner" className="list-group-item list-group-item-action  ">
                         <span className="menu-collapsed">Add New Partner</span>
                     </Link>
-                    <a href="#" className="list-group-item list-group-item-action  ">
+                    <Link to="partners" className="list-group-item list-group-item-action  ">
                         <span className="menu-collapsed">View Partners</span>
-                    </a>
+                    </Link>
                 </div>
             </ul>
         </div>
