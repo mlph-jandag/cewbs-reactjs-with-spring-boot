@@ -78,3 +78,7 @@
 .align-middle td {
   vertical-align: middle !important;
 }
+
+.actions .fa{
+  cursor: pointer;
+}
