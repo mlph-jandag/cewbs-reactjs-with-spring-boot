@@ -10,9 +10,24 @@ import 'bootstrap/dist/js/bootstrap.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 
+import { transitions, positions, Provider as AlertProvider, types } from 'react-alert'
+import AlertTemplate from 'react-alert-template-basic'
+
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+
+// optional configuration
+const options = {
+  position: positions.BOTTOM_CENTER,
+  timeout: 4000,
+  offset: '30px',
+  transition: transitions.FADE,
+}
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <AlertProvider template={AlertTemplate} {...options}>
+      <App />
+    </AlertProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
