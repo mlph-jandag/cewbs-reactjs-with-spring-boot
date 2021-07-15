@@ -26,7 +26,7 @@ const Sidebar = () => {
                     <Link to="/create-post" className="list-group-item list-group-item-action  ">
                         <span className="menu-collapsed">Add New</span>
                     </Link>
-                    <a href="#" className="list-group-item list-group-item-action  ">
+                    <a href="/posts" className="list-group-item list-group-item-action  ">
                         <span className="menu-collapsed">View Posts</span>
                     </a>
                 </div>

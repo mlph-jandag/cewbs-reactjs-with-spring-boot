@@ -4,6 +4,7 @@ import Category from '../pages/category/Category';
 import UserList from '../pages/users/UserList';
 import CreatePost from '../pages/posts/CreatePost';
 import AuthenticatedRoute from './AuthenticatedRoute';
+import ViewPosts from '../pages/posts/ViewPost';
 
 const AdminRoutes = () => {
     return (
@@ -12,6 +13,7 @@ const AdminRoutes = () => {
             <AuthenticatedRoute path="/categories" component={Category} />
             <AuthenticatedRoute path="/users" component={UserList} />
             <AuthenticatedRoute path="/create-post" component={CreatePost} />
+            <AuthenticatedRoute path="/posts" component={ViewPosts}/>
         </>
     )
 }
