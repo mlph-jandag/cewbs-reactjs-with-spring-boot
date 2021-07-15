@@ -7,6 +7,7 @@ const CategoryEditMode = (props) => {
   const [slug, setSlug] = useState(props.data.slug);
   
   const onCancelHandler = () => {
+    console.log('cancel');
     props.setAction({
       id: 0, editMode: false
     })

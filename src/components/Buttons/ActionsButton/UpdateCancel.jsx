@@ -1,6 +1,6 @@
 import React from 'react'
 
-const UpdateCancel = ({ onCancel, onUpdateHandler }) => {
+const UpdateCancel = ({ onCancelHandler, onUpdateHandler }) => {
     return (
       <div className="d-flex justify-content-around">
           <button
@@ -9,7 +9,7 @@ const UpdateCancel = ({ onCancel, onUpdateHandler }) => {
           >Update</button>
           <button
             className="btn btn-secondary btn-sm"
-            onClick={ onCancel }
+            onClick={ onCancelHandler }
           >Cancel</button>
         </div>
     )

@@ -26,7 +26,7 @@ const CategoryList = () => {
     <table className="table">
       <thead>
         <tr>
-          <th>ID</th>
+          <th>#</th>
           <th>Category name</th>
           <th>Slug</th>
           <th className="text-center">Actions</th>
@@ -34,10 +34,10 @@ const CategoryList = () => {
       </thead>
       <tbody>
         {
-          categories.map(({ data, uid}) => {
+          categories.map(({ data, uid}, index) => {
             return (
               <tr key={ uid }>
-                <td>{ uid }</td>
+                <td>{ index + 1 }</td>
                 {
                   action.editMode && action.id == uid
                   ?
