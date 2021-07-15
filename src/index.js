@@ -13,6 +13,8 @@ import 'font-awesome/css/font-awesome.min.css';
 import { transitions, positions, Provider as AlertProvider, types } from 'react-alert'
 import AlertTemplate from 'react-alert-template-basic'
 
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+
 // optional configuration
 const options = {
   position: positions.BOTTOM_CENTER,

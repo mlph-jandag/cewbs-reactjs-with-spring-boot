@@ -2,8 +2,6 @@ import React from 'react';
 import { firestore } from '../../firebase.config';
 import { useAlert } from 'react-alert';
 import { confirmAlert } from 'react-confirm-alert'; // Import
-import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
-
 
 const CategoryActions = ({ data }) => {
   const alertUi = useAlert();
