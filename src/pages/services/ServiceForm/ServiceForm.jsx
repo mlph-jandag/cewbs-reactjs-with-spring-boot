@@ -48,7 +48,7 @@ const ServiceForm = ({ id, services }) => {
           <input
             type="text"
             className="form-control"
-            placeholder="Example. events"
+            placeholder="Service name"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
@@ -56,7 +56,7 @@ const ServiceForm = ({ id, services }) => {
           <input
             type="text"
             className="form-control"
-            placeholder="https://imgur.com/service-logo.png"
+            placeholder="Service Logo link"
             value={logo}
             onChange={(e) => setLogo(e.target.value)}
           />
@@ -64,7 +64,7 @@ const ServiceForm = ({ id, services }) => {
           <input
             type="text"
             className="form-control"
-            placeholder="/{slug}"
+            placeholder="Description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />

@@ -33,7 +33,7 @@ const ViewServices = () => {
 
   return (
     <DefaultLayout>
-      <button className="btn btn-warning mb-2" onClick={goBack}>
+      <button className="btn btn-custom mb-2" onClick={goBack}>
         <i className="fa fa-arrow-left"></i> Go Back
       </button>
       <h3 className="mb-4">

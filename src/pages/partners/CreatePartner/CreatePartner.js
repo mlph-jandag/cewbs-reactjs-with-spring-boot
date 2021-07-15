@@ -47,6 +47,7 @@ const CreatePartner = () => {
           name,
           image: logo,
           url: site,
+          services: [],
         });
       } catch (e) {
         console.log(e);
