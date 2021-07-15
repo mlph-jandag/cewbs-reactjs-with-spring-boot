@@ -36,15 +36,22 @@ const ViewPartners = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {companies.map(({ data, uid }, index) => {
-                    return (
-                      <CompanyItem
-                        data={{ ...data, uid }}
-                        index={index + 1}
-                        key={uid}
-                      />
-                    );
-                  })}
+                  {companies.length > 0 ? (
+                    companies.map(({ data, uid }, index) => {
+                      return (
+                        <CompanyItem
+                          data={{ ...data, uid }}
+                          index={index + 1}
+                          key={uid}
+                        />
+                      );
+                    })
+                  ) : (
+                    <tr class="danger text-center">
+                      <td colspan="5">No records found.</td>
+                    </tr>
+                  )}
+                  {}
                 </tbody>
               </table>
             </div>
