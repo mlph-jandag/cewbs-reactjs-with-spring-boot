@@ -1,7 +1,7 @@
 import React from 'react';
 import DefaultLayout from '../../components/Layouts/DefaultLayout';
 import CategoryList from './CategoryList';
-import CategoryForm from './CategoryForm/CategoryForm';
+import CategoryForm from './CategoryForm';
 
 const Category = () => {
     return (
@@ -10,7 +10,7 @@ const Category = () => {
                 <span className="fa fa-list-alt fa-fw"></span> Category
             </h3>
             <div className="row">
-                <div className="col-5">
+                <div className="col-md-4">
                     <CategoryForm />
                 </div>
                 <div className="col">
