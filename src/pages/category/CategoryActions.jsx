@@ -1,11 +1,14 @@
 import React from 'react';
 import { firestore } from '../../firebase.config';
+import { useAlert } from 'react-alert'
 
 const CategoryActions = ({ data }) => {
+  const alert = useAlert();
 
   const onDeleteHandler =  async () => {
     try {
-      await firestore.collection("categories").doc(data.uid).delete();
+      // await firestore.collection("categories").doc(data.uid).delete();
+      // alert.success('Deleted Successfully!');
     } catch (e) {
       console.log(e);
     }
