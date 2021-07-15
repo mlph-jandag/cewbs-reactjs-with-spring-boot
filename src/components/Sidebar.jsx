@@ -5,6 +5,7 @@ const Sidebar = () => {
     const [showPost, setShowPost] = useState(false);
     const [showCategory, setShowCategory] = useState(false);
     const [showUser, setshowUser] = useState(false);
+    const [showPartners, setshowPartners] = useState(false);
 
     return (
         <div id="sidebar-container" className="sidebar-expanded d-none d-md-block">
@@ -39,11 +40,11 @@ const Sidebar = () => {
                 {/* <div className={!showCategory ? 'collapse' : ''}>
                     <a href="#" className="list-group-item list-group-item-action  ">
                         <span className="menu-collapsed">Add New</span>
-                    </a>
-                    <a href="#" className="list-group-item list-group-item-action  ">
+                        </a>
+                        <a href="#" className="list-group-item list-group-item-action  ">
                         <span className="menu-collapsed">View Categories</span>
-                    </a>
-                </div> */}
+                        </a>
+                    </div> */}
                 <a onClick={() => setshowUser(!showUser)}  data-toggle="collapse" aria-expanded="false" className="main-menu list-group-item list-group-item-action flex-column align-items-start">
                     <div className="d-flex w-100 justify-content-start align-items-center">
                         <span className="fa fa-user fa-fw mr-3"></span>
@@ -58,6 +59,21 @@ const Sidebar = () => {
                     <a href="#" className="list-group-item list-group-item-action  ">
                         <span className="menu-collapsed">View Users</span>
                     </a>
+                </div>
+                <a onClick={() => setshowPartners(!showPartners)} data-toggle="collapse" aria-expanded="false" className="main-menu list-group-item list-group-item-action">
+                    <div className="d-flex w-100 justify-content-start align-items-center">
+                        <span className="fa fa-sticky-note-o  fa-fw mr-3"></span>
+                        <span className="menu-collapsed">Partners</span>
+                        <span className="submenu-icon ml-auto"></span>
+                    </div>
+                </a>
+                <div className={!showPartners ? 'collapse': ''}>
+                    <Link to="/create-partner" className="list-group-item list-group-item-action  ">
+                        <span className="menu-collapsed">Add New Partner</span>
+                    </Link>
+                    <Link to="/partners" className="list-group-item list-group-item-action  ">
+                        <span className="menu-collapsed">View Partners</span>
+                    </Link>
                 </div>
             </ul>
         </div>
