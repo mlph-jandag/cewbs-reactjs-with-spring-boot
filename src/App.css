@@ -10,7 +10,7 @@ a{
     border-radius: 0 !important;
 }
 .btn-yellow{
-    background: #FFFF00;
+    background: #FFFF00 !important;
     color: #000;
     padding: 8px 15px;
 }
