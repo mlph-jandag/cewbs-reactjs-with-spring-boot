@@ -1,0 +1,6 @@
+.submitButton {
+  display: inline;
+  float: right;
+  width: 100px;
+  background-color: #ffff00;
+}
