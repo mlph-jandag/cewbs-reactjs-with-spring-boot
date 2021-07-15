@@ -5,8 +5,12 @@ import { confirmAlert } from 'react-confirm-alert';
 import ActionButtons from '../../components/Buttons/ActionsButton/ActionButtons';
 import UpdateCancel from '../../components/Buttons/ActionsButton/UpdateCancel';
 
-const CategoryActions = ({ data, setIsEdit, isEdit }) => {
+const CategoryActions = ({ propValues, setAction, action, formData, setFormData }) => {
   const alertUi = useAlert();
+
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
 
   const onDeleteHandler = () => {
     confirmAlert({
@@ -17,7 +21,7 @@ const CategoryActions = ({ data, setIsEdit, isEdit }) => {
           label: 'Yes',
           onClick: async () => {
             try {
-              await firestore.collection("categories").doc(data.uid).delete();
+              await firestore.collection("categories").doc(propValues.uid).delete();
               alertUi.success('Deleted Successfully!');
             } catch (e) {
               console.log(e);
@@ -32,27 +36,31 @@ const CategoryActions = ({ data, setIsEdit, isEdit }) => {
     });
   } 
 
-  const onResetEdit = () => {
-    setIsEdit({
-      id: data.uid,
+  const onClickSetEdit = () => {
+    setFormData({
+      name: propValues.data.category_name,
+      slug: propValues.data.slug
+    })
+    setAction({
+      id: propValues.uid,
       editMode: true
     });
   }
 
   const onCancelHandler = () => {
-    setIsEdit({
+    setAction({
       id: 0, editMode: false
     })
   }
 
   const onUpdateHandler = () => {
-
+    console.log(formData);
   }
 
   return (
     <div className="d-flex justify-content-around actions">
       {
-        isEdit.editMode && isEdit.id == data.uid
+        action.editMode && action.id == propValues.uid
         ?
         <UpdateCancel
           onCancel={ onCancelHandler }
@@ -61,8 +69,8 @@ const CategoryActions = ({ data, setIsEdit, isEdit }) => {
         :
         <ActionButtons
           onDeleteHandler={ onDeleteHandler }
-          setIsEdit={ onResetEdit }
-          data={ data }
+          setIsEdit={ onClickSetEdit }
+          data={ propValues }
         />
       }
     </div>

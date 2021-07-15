@@ -1,17 +1,33 @@
 import React, { useState } from 'react';
 
+// refactor this later
 const CategoryEditMode = (props) => {
-  const [name, setName] = useState(props.name);
-  const [slug, setSlug] = useState(props.slug);
+  const [catName, setCatName] = useState(props.data.category_name);
+  const [slug, setSlug] = useState(props.data.slug);
 
+  const onChangeCatName = (e) => {
+    props.setFormData(prev => ({
+      ...prev,
+      name: catName
+    }));
+    setCatName(e.target.value);
+  }
+
+  const onChangeSlug = (e) => {
+    props.setFormData(prev => ({
+      ...prev,
+      slug: slug
+    }));
+    setSlug(e.target.value);
+  }
   return (
     <>
       <td>
         <input
           type="text"
           className="form-control"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={catName}
+          onChange={onChangeCatName}
         />
       </td>
       <td>
@@ -19,7 +35,7 @@ const CategoryEditMode = (props) => {
           type="text"
           className="form-control"
           value={slug}
-          onChange={(e) => setSlug(e.target.value)}
+          onChange={onChangeSlug}
         />
       </td>
     </>

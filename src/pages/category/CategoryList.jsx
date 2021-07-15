@@ -5,7 +5,11 @@ import CategoryEditMode from './CategoryEditMode';
 
 const CategoryList = () => {
   const [categories, setCategories] = useState([]);
-  const [isEdit, setIsEdit] = useState({id: 0, editMode: false});
+  const [action, setAction] = useState({id: 0, editMode: false});
+  const [formData, setFormData] = useState({
+    name: '',
+    slug: '',
+  });
 
   useEffect(() => {
       const unsubscribe = firestore.collection("categories")
@@ -30,30 +34,30 @@ const CategoryList = () => {
       </thead>
       <tbody>
         {
-          categories.map((cat) => {
-            let mslug = cat.data.slug;
-            let mname = cat.data.category_name;
+          categories.map(({ data, uid}) => {
             return (
-              <tr key={ cat.uid }>
-                <td>{ cat.uid }</td>
+              <tr key={ uid }>
+                <td>{ uid }</td>
                 {
-                  isEdit.editMode && isEdit.id == cat.uid
+                  action.editMode && action.id == uid
                   ?
                     <CategoryEditMode
-                      name={mname}
-                      slug={mslug}
+                      data={ data }
+                      setFormData={ setFormData }
                     />
                   :
                   <>
-                    <td>{ mname }</td>
-                    <td>{ mslug }</td>
+                    <td>{ data.category_name }</td>
+                    <td>{ data.slug }</td>
                   </>
                 }
                 <td>
                   <CategoryActions
-                    data={ cat }
-                    setIsEdit={ setIsEdit }
-                    isEdit={ isEdit }
+                    propValues={{ data, uid }}
+                    setAction={ setAction }
+                    action={ action }
+                    formData={ formData }
+                    setFormData={ setFormData }
                   />
                 </td>
               </tr>

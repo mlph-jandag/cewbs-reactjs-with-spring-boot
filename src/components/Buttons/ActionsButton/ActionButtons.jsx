@@ -4,7 +4,6 @@ const ActionButtons = ({
   onDeleteHandler = null,
   setIsEdit = {},
   data = {},
-  isEdit= {}
 }) => {
   return (
     <>
