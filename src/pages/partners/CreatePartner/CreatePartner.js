@@ -1,14 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import DefaultLayout from "../../../components/Layouts/DefaultLayout";
 import { firestore } from "../../../firebase.config";
 import classes from "./CreatePartner.module.css";
 
 const CreatePartner = () => {
+  const { uid } = useParams();
   const [name, setName] = useState("");
   const [logo, setLogo] = useState("");
   const [site, setSite] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (uid) {
+        await firestore
+          .collection("companies")
+          .doc(uid)
+          .get()
+          .then((data) => {
+            const { name, image, url } = data.data();
+            setName(name);
+            setLogo(image);
+            setSite(url);
+          })
+          .catch(() => {});
+      }
+    };
+    fetchData();
+  }, [uid]);
 
   const onSaveHandler = async () => {
     setLoading(true);
@@ -16,7 +37,12 @@ const CreatePartner = () => {
     if (!handleValidation()) {
       try {
         const response = firestore.collection("companies");
-        const id = await response.doc().id;
+        let id = null;
+        if (uid) {
+          id = uid;
+        } else {
+          id = await response.doc().id;
+        }
         await response.doc(id).set({
           name,
           image: logo,

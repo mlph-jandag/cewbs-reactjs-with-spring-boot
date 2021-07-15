@@ -68,10 +68,10 @@ const Sidebar = () => {
                     </div>
                 </a>
                 <div className={!showPartners ? 'collapse': ''}>
-                    <Link to="create-partner" className="list-group-item list-group-item-action  ">
+                    <Link to="/create-partner" className="list-group-item list-group-item-action  ">
                         <span className="menu-collapsed">Add New Partner</span>
                     </Link>
-                    <Link to="partners" className="list-group-item list-group-item-action  ">
+                    <Link to="/partners" className="list-group-item list-group-item-action  ">
                         <span className="menu-collapsed">View Partners</span>
                     </Link>
                 </div>

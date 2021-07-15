@@ -24,7 +24,7 @@ const ViewPartners = () => {
         <h5 className="card-header font-weight-heavy">View Partners</h5>
         <div className="card-body">
           <div className="row">
-            <div class="col-md-10 mx-auto">
+            <div className="col-md-10 mx-auto">
               <table className="table table-striped">
                 <thead>
                   <tr>
