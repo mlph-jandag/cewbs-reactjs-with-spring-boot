@@ -10,7 +10,7 @@ import { firestore } from "../../firebase.config";
 const CreatePost = () => {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
-  const [error, setError] = useState(false);
+  const [error, setError] = useState({});
   const [loading, setLoading] = useState(false);
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
@@ -18,15 +18,7 @@ const CreatePost = () => {
 
   const onSaveHandler = async () => {
     setLoading(true);
-    const validateFields = () => {
-      setError(false);
-      if (title !== "" && category !== "") {
-        return true;
-      }
-      setError(true);
-      return false;
-    };
-    if (validateFields()) {
+    if (!handleValidation()) {
       try {
         const response = firestore.collection("posts");
         const id = await response.doc().id;
@@ -38,20 +30,56 @@ const CreatePost = () => {
         });
       } catch (e) {
         console.log(e);
+      } finally {
+        setTitle("");
+        setCategory("");
       }
-      setTitle("");
-      setCategory("");
     }
     setLoading(false);
   };
 
+  const handleValidation = () => {
+    if (title === "") {
+      setError((prev) => {
+        return {
+          ...prev,
+          name: "Title must not be empty",
+        };
+      });
+    }
+    if (Object.keys(editorState.entityMap).length > 0) {
+      console.log(editorState);
+      for (let key in editorState.entityMap) {
+        if (editorState.entityMap[key].data.src.includes("base64")) {
+          setError((prev) => {
+            return { ...prev, editor: "Only include links to images" };
+          });
+        }
+      }
+    }
+    if (category === "") {
+      setError((prev) => {
+        return {
+          ...prev,
+          category: "You must choose a category",
+        };
+      });
+      return true;
+    }
+    return false;
+  };
+
   const onCategoryChanged = (data) => {
-    setError(false);
+    setError({});
     setCategory(data);
+  };
+  const onTitleChanged = (e) => {
+    setError({});
+    setTitle(e.target.value);
   };
 
   const getEditorState = (data) => {
-    setError(false);
+    setError({});
     setEditorState(data);
   };
 
@@ -72,15 +100,12 @@ const CreatePost = () => {
                   name="title"
                   value={title}
                   placeholder="Enter post title"
-                  onChange={(e) => setTitle(e.target.value)}
+                  onChange={onTitleChanged}
                 />
+                <span style={{ color: "red" }}>{error["name"]}</span>
               </div>
               <TextEditor onChangedHandler={getEditorState} />
-              {error ? (
-                <div class="alert alert-danger mt-3" role="alert">
-                  Error on saving data, make sure all fields are not empty!
-                </div>
-              ) : null}
+              <span style={{ color: "red" }}>{error["editor"]}</span>
               <div className={classes.bottomActions}>
                 <div className={classes.drop}>
                   <CategoryDropDown
@@ -88,6 +113,7 @@ const CreatePost = () => {
                     onCategoryChanged={onCategoryChanged}
                   />
                 </div>
+                <span style={{ color: "red" }}>{error["category"]}</span>
                 <button onClick={onSaveHandler} className={classes.postButton}>
                   {loading ? "Loading..." : "Post"}
                 </button>
