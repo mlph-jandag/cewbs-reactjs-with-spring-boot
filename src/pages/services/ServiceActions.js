@@ -3,7 +3,7 @@ import { firestore } from "../../firebase.config";
 import { useAlert } from "react-alert";
 import { confirmAlert } from "react-confirm-alert";
 
-const ServiceActions = ({ data, deleteHandler }) => {
+const ServiceActions = ({ data, deleteHandler, editHandler }) => {
   const alertUi = useAlert();
 
   const onDeleteHandler = () => {
@@ -31,7 +31,7 @@ const ServiceActions = ({ data, deleteHandler }) => {
   };
   return (
     <div className="d-flex justify-content-around actions">
-      <span>
+      <span onClick={editHandler}>
         <i className="fa fa-pencil text-info"></i>
       </span>
       <span onClick={onDeleteHandler}>

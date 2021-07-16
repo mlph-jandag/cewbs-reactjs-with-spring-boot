@@ -2,19 +2,25 @@ import React from "react";
 import Logo from "../../components/UI/Logo/Logo";
 import classes from "./Login.module.css";
 import LoginForm from "../../components/LoginForm/LoginForm";
+import Footer from "../../components/Footer";
 
 function Login() {
-  console.log('login');
   return (
-    <div className={[classes.Container, ...["d-flex"]].join(" ")}>
-      <div className={classes.LoginContainer}>
-        <div className="panel panel-default">
-          <Logo />
-          <span className={classes.title}>EMPLOYEE WELL-BEING SYSTEM</span>
+    <>
+      <div className={classes.Header}>
+        <Logo />
+      </div>
+      <div className="container container-login">
+        <div className="col-md-4 offset-4">
+          <h4><i className="fa fa-user"></i> Login</h4>
+          <span className={classes.title}>
+            Centralized Employee Well-being System
+          </span>
           <LoginForm />
         </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 }
 

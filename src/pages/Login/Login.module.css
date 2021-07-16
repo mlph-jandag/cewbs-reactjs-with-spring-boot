@@ -5,6 +5,12 @@
   align-items: center;
   background: #f5f5f5;
 }
+.Header{
+  background-color: #53575a;
+  text-align: center;
+  padding: 20px;
+  margin-bottom: 30px;
+}
 .LoginContainer {
   width: 60%;
   margin: auto;
@@ -12,6 +18,9 @@
   padding: 30px;
   min-height: 70vh;
   color: white;
+}
+.FormLogin{
+  min-height: 500px;
 }
 .LoginContainer .title {
   font-size: larger;
