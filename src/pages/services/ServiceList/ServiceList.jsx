@@ -1,17 +1,23 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { firestore } from "../../../firebase.config";
+import { setEdit } from "../../../slices/serviceSlice";
 import ServiceActions from "../ServiceActions";
 
 const ServiceList = ({ id, services }) => {
-  console.log(services);
+
+  const dispatch = useDispatch()
+
   const deleteHandler = async (uid) => {
-    console.log("delete", uid);
     await firestore
       .collection("companies")
       .doc(id)
       .update({
         services: services.filter((service) => service.id !== uid),
       });
+  };
+  const editHandler = (uid) => {
+    dispatch(setEdit(uid))
   };
   return (
     <table className="table">
@@ -38,6 +44,7 @@ const ServiceList = ({ id, services }) => {
                 <ServiceActions
                   data={service}
                   deleteHandler={() => deleteHandler(service.id)}
+                  editHandler={() => editHandler(service.id)}
                 />
               </td>
             </tr>

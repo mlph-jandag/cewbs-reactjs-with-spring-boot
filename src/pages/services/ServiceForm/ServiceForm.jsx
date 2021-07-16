@@ -1,43 +1,67 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import firebaseApp, { firestore } from "../../../firebase.config";
 import { useAlert } from "react-alert";
 import { uid } from "uid";
+import { useDispatch, useSelector } from "react-redux";
+import { setEdit } from "../../../slices/serviceSlice";
 
 const ServiceForm = ({ id, services }) => {
+  const dispatch = useDispatch()
   const alertUi = useAlert();
   const [name, setName] = useState("");
   const [logo, setLogo] = useState("");
   const [description, setDescription] = useState("");
   const [btnDisabled, setBtnDisabled] = useState(false);
 
-  console.log("form", id);
+  const editId = useSelector(state => state.service.edit)
+
+  useEffect(() => {
+    const fetchData = () => {
+      if(editId !== '') {
+        services.forEach(service => {
+          if(service.id === editId) {
+            setName(service.name)
+            setDescription(service.description)
+            setLogo(service.logo)
+          }
+        })
+      }
+    }
+    fetchData()
+  }, [editId, services])
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
     setBtnDisabled(true);
-    console.log("sev", services);
+    let newServices = services;
+    if(editId !== '') {
+      newServices = newServices.map(service => {
+        if(service.id === editId)
+          return {name, logo, description, id: service.id}
+        return service;
+      })
+    } else
+      newServices = [...services, {name, logo, description, id: uid()}]
+      
     firestore
       .collection("companies")
       .doc(id)
       .update({
-        services: [
-          ...services,
-          {
-            name,
-            logo,
-            description,
-            id: uid(),
-          },
-        ],
+        services: newServices
       })
       .then((result) => {
         console.log("result", result);
-        alertUi.success("Added service successfully!");
+        alertUi.success("Service saved successfully!");
+        setName('')
+        setLogo('')
+        setDescription('')
       })
       .catch((err) => {
         console.log(err);
         alertUi.error("There was an error occured!");
       })
       .finally(setBtnDisabled(false));
+      dispatch(setEdit(''))
   };
   return (
     <form onSubmit={onSubmitHandler}>
@@ -69,7 +93,7 @@ const ServiceForm = ({ id, services }) => {
             onChange={(e) => setDescription(e.target.value)}
           />
           <button disabled={btnDisabled} className="btn btn-yellow px-4 mt-4">
-            Add New
+            Save
           </button>
         </div>
       </div>
