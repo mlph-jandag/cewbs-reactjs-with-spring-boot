@@ -4,6 +4,7 @@ import { useParams } from 'react-router';
 import { firestore } from '../../../firebase.config';
 import PostCategoryList from './PostCategoryList';
 import { NoRecordFound } from '../../../components/Table/NoRecordFound';
+import { Link } from 'react-router-dom';
 
 const PostCategory = () => {
   const { cat } = useParams();
@@ -42,6 +43,10 @@ const PostCategory = () => {
 
   return (
     <DefaultLayout>
+      <Link
+        to="/create-post"
+        className="btn btn-yellow float-right"
+      ><i className="fa fa-plus"></i> Create Post</Link>
       <h2>
           Posts &raquo;&nbsp;
           <span className="tocapitalize">
