@@ -19,6 +19,9 @@
   min-height: 70vh;
   color: white;
 }
+.FormLogin{
+  min-height: 500px;
+}
 .LoginContainer .title {
   font-size: larger;
 }
