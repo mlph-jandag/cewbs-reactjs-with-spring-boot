@@ -21,7 +21,6 @@ const AdminRoutes = () => {
       <AuthenticatedRoute path="/create-partner/:uid" component={CreatePartner}/>
       <AuthenticatedRoute exact path="/create-partner" component={CreatePartner}/>
       <AuthenticatedRoute path="/services/:uid" component={ViewServices} />
-      <AuthenticatedRoute path="/posts" component={ViewPosts}/>
       <AuthenticatedRoute path="/services/:uid" component={ViewPartners} />
       <AuthenticatedRoute path="/create-post/:uid" component={CreatePost} />
     </>
