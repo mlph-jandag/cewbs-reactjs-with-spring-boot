@@ -4,8 +4,8 @@ import classes from "./LoginForm.module.css";
 import { firebaseAuth } from '../../firebase.config';
 
 function LoginForm() {
-  const [email, setEmail] = useState("admin@admin.com");
-  const [password, setPassword] = useState("admin123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [btnLogin, setBtnLogin] = useState('Sign in');
   const [btnDisabled, setBtnDisabled] = useState(false);
   const [error, setError] = useState('');
@@ -52,6 +52,7 @@ function LoginForm() {
             name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            placeholder="Your Email address"
           />
         </div>
         <div className="form-group">
@@ -63,9 +64,10 @@ function LoginForm() {
             name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder="Your password"
           />
         </div>
-        <button type="submit" className="btn" disabled={btnDisabled}>
+        <button type="submit" className="btn mt-2" disabled={btnDisabled}>
           { btnLogin }
         </button>
       </form>
