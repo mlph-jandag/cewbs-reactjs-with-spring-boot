@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import Navbar from "../../components/Navbar/Navbar";
-import Sidebar from "../../components/Sidebar";
-import TextEditor from "../../components/Editor/Editor";
+import Navbar from "../../../components/Navbar/Navbar";
+import Sidebar from "../../../components/Sidebar";
+import TextEditor from "../../../components/Editor/Editor";
 import classes from "./CreatePost.module.css";
-import CategoryDropDown from "../../components/Buttons/CategoryDropDown";
+import CategoryDropDown from "../../../components/Buttons/CategoryDropDown";
 import { EditorState } from "draft-js";
-import { firestore } from "../../firebase.config";
+import { firestore } from "../../../firebase.config";
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
