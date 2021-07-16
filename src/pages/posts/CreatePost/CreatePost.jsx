@@ -1,33 +1,68 @@
-import React, { useState } from "react";
-import Navbar from "../../components/Navbar/Navbar";
-import Sidebar from "../../components/Sidebar";
-import TextEditor from "../../components/Editor/Editor";
+import React, { useState, useEffect } from "react";
+import Navbar from "../../../components/Navbar/Navbar";
+import Sidebar from "../../../components/Sidebar";
+import TextEditor from "../../../components/Editor/Editor";
 import classes from "./CreatePost.module.css";
-import CategoryDropDown from "../../components/Buttons/CategoryDropDown";
-import { EditorState } from "draft-js";
-import { firestore } from "../../firebase.config";
+import CategoryDropDown from "../../../components/Buttons/CategoryDropDown";
+import { ContentState, EditorState } from "draft-js";
+import { firestore } from "../../../firebase.config";
+import { Redirect, useParams } from "react-router";
+import {convertFromRaw, convertToRaw} from "draft-js";
+import { useHistory } from 'react-router-dom';
+
 
 const CreatePost = () => {
+  const { uid } = useParams();
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [error, setError] = useState({});
   const [loading, setLoading] = useState(false);
+  const [screenTitle, setScreenTitle] = useState("New Post");
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
+  const history = useHistory();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (uid) {
+        setScreenTitle("Edit Post");
+        await firestore
+          .collection("posts")
+          .doc(uid)
+          .get()
+          .then((data) => {
+            const { title, category, body } = data.data()
+            setTitle(title);
+            setCategory(category);
+            const content = convertFromRaw(body);
+            setEditorState(EditorState.createWithContent(content));
+          })
+          .catch(() => {});
+      }
+    };
+
+    fetchData();
+  }, [uid]);
 
   const onSaveHandler = async () => {
     setLoading(true);
     if (!handleValidation()) {
       try {
         const response = firestore.collection("posts");
-        const id = await response.doc().id;
+        let id = null;
+        if (uid) {
+          id = uid;
+        } else {
+          id = await response.doc().id;
+        }
         await response.doc(id).set({
           body: editorState,
           title: title,
           category: category,
           created_at: new Date().toDateString(),
         });
+        redirectToPosts();
       } catch (e) {
         console.log(e);
       } finally {
@@ -38,6 +73,11 @@ const CreatePost = () => {
     setLoading(false);
   };
 
+  const redirectToPosts = () => {
+    let path = `posts`; 
+    history.push(path);
+  }
+
   const handleValidation = () => {
     if (title === "") {
       setError((prev) => {
@@ -46,6 +86,7 @@ const CreatePost = () => {
           name: "Title must not be empty",
         };
       });
+      return true;
     }
     if (Object.keys(editorState.entityMap).length > 0) {
       console.log(editorState);
@@ -54,6 +95,7 @@ const CreatePost = () => {
           setError((prev) => {
             return { ...prev, editor: "Only include links to images" };
           });
+          return true;
         }
       }
     }
@@ -90,7 +132,7 @@ const CreatePost = () => {
         <Sidebar />
         <div className="col p-4">
           <div className="card mt-2">
-            <h5 className="card-header font-weight-heavy">New Post</h5>
+            <h5 className="card-header font-weight-heavy">{screenTitle}</h5>
             <div className="card-body">
               <div className="form-group">
                 <input
@@ -104,7 +146,7 @@ const CreatePost = () => {
                 />
                 <span style={{ color: "red" }}>{error["name"]}</span>
               </div>
-              <TextEditor onChangedHandler={getEditorState} />
+              <TextEditor editorState={editorState} onChangedHandler={getEditorState} />
               <span style={{ color: "red" }}>{error["editor"]}</span>
               <div className={classes.bottomActions}>
                 <div className={classes.drop}>

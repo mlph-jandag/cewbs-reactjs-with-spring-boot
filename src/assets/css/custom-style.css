@@ -32,6 +32,12 @@
   width: 60px;
 }
 
+.card-dark{
+  background: #343a40 !important;
+  color: #fff !important;
+  font-weight: normal !important;
+}
+
 #sidebar-container .list-group .main-menu {
   height: 50px;
   color: white;
@@ -89,4 +95,11 @@
 
 .btn-custom {
   background-color: #ffff00 !important;
+}
+
+.table-custom{
+  width: 100%;
+}
+.table-custom td{
+  padding: 10px 5px;
 }
