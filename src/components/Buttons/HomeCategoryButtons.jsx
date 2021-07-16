@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { firestore } from '../../firebase.config';
-import { setCategory } from '../../slices/postSlice';
-import classes from './Category.module.css'
+import { searchPost, setCategory } from '../../slices/postSlice';
 
-const CategoryButtons = () => {
+const HomeCategoryButtons = () => {
     const [cats, setCats] = useState(['all']);
     const dispatch = useDispatch();
     const categoryState = useSelector(state => state.post.category);
@@ -27,20 +27,18 @@ const CategoryButtons = () => {
     }, []);
 
     const onClickCategoryHandler = (cat) => {
+        dispatch(searchPost(''))
         dispatch(setCategory(cat));
-    };
-    
+      };
+
     return (
         <div className="category-buttons">
             {
                 cats.map((cat, index) => {
-                    const categoryClass = ['btn-yellow toupper'];
-                    if(cat === categoryState) 
-                        categoryClass.push(classes.selected)
                     return (
-                        <a href="#" onClick={() => onClickCategoryHandler(cat)} className={categoryClass.join(' ')} key={index}>
+                        <Link to="/posts" onClick={() => onClickCategoryHandler(cat)} className="btn-yellow toupper" key={index}>
                             { cat }
-                        </a>
+                        </Link>
                     );
                 })
             }
@@ -49,4 +47,4 @@ const CategoryButtons = () => {
 }
 
 
-export default CategoryButtons;
+export default HomeCategoryButtons;
