@@ -9,7 +9,10 @@ const Posts = ({ category, onCategoryChanged }) => {
       .firestore()
       .collection("posts")
       .onSnapshot((documentSnapshot) => {
-        let postData = documentSnapshot.docs.map((data) => data.data());
+        let postData = documentSnapshot.docs.map((data) => {
+          return { uid: data.id, data: data.data() };
+        });
+        
         setPost(postData);
       });
     return subscriber;
@@ -17,12 +20,15 @@ const Posts = ({ category, onCategoryChanged }) => {
 
   return (
     <>
-    {post.map((item) => (
+    {post.map(({ data, uid }) => (
         <PostItem
-        title={item.title}
-        date={new Date(item.created_at)}
-        category={item.category}
-        body={item.body}>
+        data={{ ...data, uid }}
+        uid={uid}
+        key={uid}
+        title={data.title}
+        date={new Date(data.created_at)}
+        category={data.category}
+        body={data.body}>
       </PostItem>
     ))}
     </>
