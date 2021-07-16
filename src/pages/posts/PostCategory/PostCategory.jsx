@@ -43,11 +43,15 @@ const PostCategory = () => {
 
   return (
     <DefaultLayout>
-      <Link
-        to="/create-post"
-        className="btn btn-yellow float-right"
-      ><i className="fa fa-plus"></i> Create Post</Link>
-      <h2>
+      <div className="float-right">
+        <Link to="/posts" 
+          className="btn btn-secondary mr-3">All Posts</Link>
+        <Link
+          to="/create-post"
+          className="btn btn-yellow"
+        ><i className="fa fa-plus"></i> Create New Post</Link>
+      </div>
+      <h2 className="pb-3">
           Posts &raquo;&nbsp;
           <span className="tocapitalize">
             { cat.replace(/-/g, " ") }
