@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import DefaultLayout from "../../../components/Layouts/DefaultLayout";
 import { firestore } from "../../../firebase.config";
 import classes from "./CreatePartner.module.css";
@@ -11,6 +11,7 @@ const CreatePartner = () => {
   const [site, setSite] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({});
+  const history = useHistory();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,6 +32,11 @@ const CreatePartner = () => {
     fetchData();
   }, [uid]);
 
+  const redirectToPartners = () => {
+    let path = `partners`; 
+    history.push(path);
+  }
+
   const onSaveHandler = async () => {
     setLoading(true);
 
@@ -49,6 +55,7 @@ const CreatePartner = () => {
           url: site,
           services: [],
         });
+        redirectToPartners()
       } catch (e) {
         console.log(e);
       } finally {
