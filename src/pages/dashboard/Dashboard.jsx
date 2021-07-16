@@ -1,8 +1,8 @@
 import React from 'react';
-import CategoryButtons from '../../components/Buttons/CategoryButtons';
 import DefaultLayout from '../../components/Layouts/DefaultLayout';
 import RecentPosts from '../../components/Posts/RecentPosts';
 import LoggedUser from '../../components/Users/LoggedUser';
+import CategoryButtons from '../../components/Buttons/CategoryButtons';
 
 const Dashboard = () => {
   return (

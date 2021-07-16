@@ -57,7 +57,7 @@ const PostItem = props => {
         <div className="card-body">
           <div className={classes.title}>{props.title}</div>
           <div className={classes.category}>
-            <i class="fa fa-tags"></i>
+            <i className="fa fa-tags"></i>
               {props.category}
           </div>
           <div className={classes.content}><div dangerouslySetInnerHTML={{ __html: convert(props.body) }} /></div>

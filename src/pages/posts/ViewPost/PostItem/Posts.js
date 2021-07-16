@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import PostItem from "./PostItem";
 import firebase from "firebase";
+import { useDispatch, useSelector } from "react-redux";
+import { filterPost, setPost } from "../../../../slices/postSlice";
 
-const Posts = ({ category, onCategoryChanged }) => {
-  const [post, setPost] = useState([]);
+const Posts = () => {
+  const dispatch = useDispatch();
+  const category = useSelector(state => state.post.category);
+  const filterPosts = useSelector(state => state.post.filterPosts);
+
   useEffect(() => {
     const subscriber = firebase
       .firestore()
@@ -13,14 +18,15 @@ const Posts = ({ category, onCategoryChanged }) => {
           return { uid: data.id, data: data.data() };
         });
         
-        setPost(postData);
+        dispatch(setPost(postData));
+        dispatch(filterPost(category));
       });
     return subscriber;
-  }, []);
-
+  }, [category, dispatch]);
+  
   return (
     <>
-    {post.map(({ data, uid }) => (
+    {filterPosts.map(({ data, uid }) => (
         <PostItem
         data={{ ...data, uid }}
         uid={uid}

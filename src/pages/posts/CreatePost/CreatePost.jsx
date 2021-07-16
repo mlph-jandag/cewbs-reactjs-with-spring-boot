@@ -156,8 +156,10 @@ const CreatePost = () => {
                   />
                 </div>
                 <span style={{ color: "red" }}>{error["category"]}</span>
-                <button onClick={onSaveHandler} className={classes.postButton}>
-                  {loading ? "Loading..." : "Post"}
+                <button onClick={onSaveHandler}
+                  className="btn btn-yellow float-right px-4 font-weight-bold"
+                >
+                  {loading ? "Loading..." : "Add Post"}
                 </button>
               </div>
             </div>

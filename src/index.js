@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {Provider} from 'react-redux';
+import store from './slices/store'
 
 import 'jquery';
 import 'popper.js';
@@ -25,9 +27,11 @@ const options = {
 
 ReactDOM.render(
   <React.StrictMode>
-    <AlertProvider template={AlertTemplate} {...options}>
-      <App />
-    </AlertProvider>
+    <Provider store={store}>
+      <AlertProvider template={AlertTemplate} {...options}>
+        <App />
+      </AlertProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
