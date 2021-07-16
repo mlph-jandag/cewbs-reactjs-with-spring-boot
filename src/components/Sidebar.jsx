@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 const Sidebar = () => {
-    const [showPost, setShowPost] = useState(false);
-    const [showCategory, setShowCategory] = useState(false);
-    const [showUser, setshowUser] = useState(false);
-    const [showPartners, setshowPartners] = useState(false);
+    const { pathname } = useLocation();
+
+    const partnersRoutes = ['/partners', '/create-partner']; 
+    const postRoutes = ['/create-post', '/posts'];
+
+    const [showPost, setShowPost] = useState(postRoutes.includes(pathname));
+    const [showPartners, setshowPartners] = useState(partnersRoutes.includes(pathname));
 
     return (
         <div id="sidebar-container" className="sidebar-expanded d-none d-md-block">
@@ -27,9 +31,9 @@ const Sidebar = () => {
                     <Link to="/create-post" className="list-group-item list-group-item-action  ">
                         <span className="menu-collapsed">Add New</span>
                     </Link>
-                    <a href="/posts" className="list-group-item list-group-item-action  ">
+                    <Link to="/posts" className="list-group-item list-group-item-action ">
                         <span className="menu-collapsed">View Posts</span>
-                    </a>
+                    </Link>
                 </div>
                 <Link to="/categories" aria-expanded="false" className="main-menu list-group-item list-group-item-action">
                     <div className="d-flex w-100 justify-content-start align-items-center">
@@ -37,14 +41,6 @@ const Sidebar = () => {
                         <span className="menu-collapsed">Category</span>
                     </div>
                 </Link>
-                {/* <div className={!showCategory ? 'collapse' : ''}>
-                    <a href="#" className="list-group-item list-group-item-action  ">
-                        <span className="menu-collapsed">Add New</span>
-                        </a>
-                        <a href="#" className="list-group-item list-group-item-action  ">
-                        <span className="menu-collapsed">View Categories</span>
-                        </a>
-                    </div> */}
                 <Link to="/users" aria-expanded="false" className="main-menu list-group-item list-group-item-action">
                     <div className="d-flex w-100 justify-content-start align-items-center">
                         <span className="fa fa-user fa-fw mr-3"></span>
@@ -59,7 +55,7 @@ const Sidebar = () => {
                     </div>
                 </a>
                 <div className={!showPartners ? 'collapse': ''}>
-                    <Link to="/create-partner" className="list-group-item list-group-item-action  ">
+                    <Link to="/create-partner" className="list-group-item list-group-item-action">
                         <span className="menu-collapsed">Add New Partner</span>
                     </Link>
                     <Link to="/partners" className="list-group-item list-group-item-action  ">
