@@ -139,7 +139,7 @@ const CreatePartner = () => {
               onChange={(e) => setSite(e.target.value)}
             />
           </div>
-          <button onClick={onSaveHandler} className={classes.submitButton}>
+          <button onClick={onSaveHandler} className="btn btn-yellow px-5">
             {loading ? "Loading..." : "Save"}
           </button>
         </div>
