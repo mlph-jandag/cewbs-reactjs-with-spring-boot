@@ -18,20 +18,14 @@ const postSlice = createSlice({
       state.category = action.payload;
     },
     filterPost: (state, action) => {
-      if (action.payload === 'all') {
         state.filterPosts = state.posts.filter(
-          post => post.data.title.includes(state.search),
+          post => (post.data.category === action.payload || state.category === 'all') && post.data.title.includes(state.search),
         );
-      } else {
-        state.filterPosts = state.posts.filter(
-          post => post.data.category === action.payload && post.data.title.includes(state.search),
-        );
-      }
     },
     searchPost: (state, action) => {
       state.search = action.payload
       state.filterPosts = state.posts.filter(
-        post => post.data.category === state.category && post.data.title.includes(state.search),
+        post => (post.data.category === state.category || state.category === 'all') && post.data.title.includes(action.payload),
       );
     }
   },
