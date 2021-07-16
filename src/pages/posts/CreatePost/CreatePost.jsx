@@ -35,8 +35,7 @@ const CreatePost = () => {
             const { title, category, body } = data.data()
             setTitle(title);
             setCategory(category);
-            const content = convertFromRaw(JSON.parse(body));
-            console.log(content)
+            const content = convertFromRaw(body);
             setEditorState(EditorState.createWithContent(content));
           })
           .catch(() => {});
@@ -54,10 +53,8 @@ const CreatePost = () => {
         let id = null;
         if (uid) {
           id = uid;
-          console.log("ALREADY EXIST")
         } else {
           id = await response.doc().id;
-          console.log("NEW POST")
         }
         await response.doc(id).set({
           body: editorState,
