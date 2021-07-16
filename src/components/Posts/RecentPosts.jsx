@@ -13,7 +13,6 @@ const RecentPosts = () => {
         let posts = documentSnapshot.docs.map((data) => {
             return { uid: data.id, data: data.data() };
         });
-        console.log(posts);
         setPosts(posts);
       });
   }

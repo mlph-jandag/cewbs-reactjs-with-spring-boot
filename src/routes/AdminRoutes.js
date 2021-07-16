@@ -8,6 +8,7 @@ import CreatePartner from "../pages/partners/CreatePartner/CreatePartner";
 import ViewPartners from "../pages/partners/ViewPartners/ViewPartners.jsx";
 import ViewPosts from "../pages/posts/ViewPost/ViewPost";
 import ViewServices from "../pages/services/ViewServices/ViewServices";
+import PostCategory from "../pages/posts/PostCategory/PostCategory";
 
 const AdminRoutes = () => {
   return (
@@ -16,6 +17,7 @@ const AdminRoutes = () => {
       <AuthenticatedRoute path="/categories" component={Category} />
       <AuthenticatedRoute path="/users" component={UserList} />
       <AuthenticatedRoute exact path="/create-post" component={CreatePost} />
+      <AuthenticatedRoute exact path="/posts/category/:cat" component={PostCategory}/>
       <AuthenticatedRoute path="/posts" component={ViewPosts} />
       <AuthenticatedRoute path="/partners" component={ViewPartners} />
       <AuthenticatedRoute path="/create-partner/:uid" component={CreatePartner}/>
