@@ -4,10 +4,12 @@ import Sidebar from "../../../components/Sidebar";
 import TextEditor from "../../../components/Editor/Editor";
 import classes from "./CreatePost.module.css";
 import CategoryDropDown from "../../../components/Buttons/CategoryDropDown";
-import { EditorState } from "draft-js";
+import { ContentState, EditorState } from "draft-js";
 import { firestore } from "../../../firebase.config";
-import { useParams } from "react-router";
-import {convertFromRaw} from "draft-js";
+import { Redirect, useParams } from "react-router";
+import {convertFromRaw, convertToRaw} from "draft-js";
+import { useHistory } from 'react-router-dom';
+
 
 const CreatePost = () => {
   const { uid } = useParams();
@@ -15,27 +17,32 @@ const CreatePost = () => {
   const [category, setCategory] = useState("");
   const [error, setError] = useState({});
   const [loading, setLoading] = useState(false);
+  const [screenTitle, setScreenTitle] = useState("New Post");
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
+  const history = useHistory();
 
   useEffect(() => {
     const fetchData = async () => {
       if (uid) {
+        setScreenTitle("Edit Post");
         await firestore
           .collection("posts")
           .doc(uid)
           .get()
           .then((data) => {
-            const { title, category, editorState } = data.data()
+            const { title, category, body } = data.data()
             setTitle(title);
             setCategory(category);
-            setEditorState(convertFromRaw(editorState));
+            const content = convertFromRaw(JSON.parse(body));
+            console.log(content)
+            setEditorState(EditorState.createWithContent(content));
           })
           .catch(() => {});
       }
     };
-    
+
     fetchData();
   }, [uid]);
 
@@ -45,26 +52,20 @@ const CreatePost = () => {
       try {
         const response = firestore.collection("posts");
         let id = null;
-        if ({uid}) {
+        if (uid) {
           id = uid;
           console.log("ALREADY EXIST")
-          await response.doc(id).update({
-            body: editorState,
-            title: title,
-            category: category,
-            created_at: new Date().toDateString(),
-          });
         } else {
           id = await response.doc().id;
           console.log("NEW POST")
-          await response.doc(id).set({
-            body: editorState,
-            title: title,
-            category: category,
-            created_at: new Date().toDateString(),
-          });
         }
-        
+        await response.doc(id).set({
+          body: editorState,
+          title: title,
+          category: category,
+          created_at: new Date().toDateString(),
+        });
+        redirectToPosts();
       } catch (e) {
         console.log(e);
       } finally {
@@ -74,6 +75,11 @@ const CreatePost = () => {
     }
     setLoading(false);
   };
+
+  const redirectToPosts = () => {
+    let path = `posts`; 
+    history.push(path);
+  }
 
   const handleValidation = () => {
     if (title === "") {
@@ -129,7 +135,7 @@ const CreatePost = () => {
         <Sidebar />
         <div className="col p-4">
           <div className="card mt-2">
-            <h5 className="card-header font-weight-heavy">New Post</h5>
+            <h5 className="card-header font-weight-heavy">{screenTitle}</h5>
             <div className="card-body">
               <div className="form-group">
                 <input

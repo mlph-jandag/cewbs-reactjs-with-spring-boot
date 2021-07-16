@@ -14,11 +14,11 @@ const AdminRoutes = () => {
       <AuthenticatedRoute exact path="/" component={Dashboard} />
       <AuthenticatedRoute path="/categories" component={Category} />
       <AuthenticatedRoute path="/users" component={UserList} />
-      <AuthenticatedRoute path="/create-post" component={CreatePost} />
+      <AuthenticatedRoute exact path="/create-post" component={CreatePost} />
       <AuthenticatedRoute path="/posts" component={ViewPosts}/>
       <AuthenticatedRoute path="/partners" component={ViewPartners} />
       <AuthenticatedRoute path="/create-partner/:uid" component={CreatePartner} />
-      <AuthenticatedRoute path="/create-partner"  component={CreatePartner} />
+      <AuthenticatedRoute exact path="/create-partner"  component={CreatePartner} />
       <AuthenticatedRoute path="/services/:uid" component={ViewPartners} />
       <AuthenticatedRoute path="/create-post/:uid" component={CreatePost} />
     </>
