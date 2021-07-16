@@ -1,9 +1,10 @@
-import React from 'react';
-import { firestore } from '../../firebase.config';
+import React, { useState, useEffect } from 'react';
 import { useAlert } from 'react-alert';
-import { confirmAlert } from 'react-confirm-alert'; // Import
+import { confirmAlert } from 'react-confirm-alert';
+import ActionButtons from '../../components/Buttons/ActionsButton/ActionButtons';
+import { deleteData } from '../../api/firestoreService';
 
-const CategoryActions = ({ data }) => {
+const CategoryActions = ({ propValues, setAction, action }) => {
   const alertUi = useAlert();
 
   const onDeleteHandler = () => {
@@ -15,7 +16,7 @@ const CategoryActions = ({ data }) => {
           label: 'Yes',
           onClick: async () => {
             try {
-              await firestore.collection("categories").doc(data.uid).delete();
+              await deleteData({ table: 'categories', id: propValues.uid});
               alertUi.success('Deleted Successfully!');
             } catch (e) {
               console.log(e);
@@ -29,17 +30,28 @@ const CategoryActions = ({ data }) => {
       ]
     });
   } 
+
+  const onClickSetEdit = () => {
+    setAction({
+      id: propValues.uid,
+      editMode: true
+    });
+  }
+
   return (
-    <div className="d-flex justify-content-around actions">
-      <span>
-        <i className="fa fa-pencil text-info"></i>
-      </span>
-      <span
-        onClick={onDeleteHandler}
-      >
-        <i className="fa fa-trash-o text-danger"></i>
-      </span>
-    </div>
+    <>
+      <td>{ propValues.data.category_name }</td>
+      <td>{ propValues.data.slug }</td>
+      <td>
+        <div className="d-flex justify-content-around actions">
+          <ActionButtons
+            onDeleteHandler={ onDeleteHandler }
+            setIsEdit={ onClickSetEdit }
+            data={ propValues }
+          />
+        </div>
+      </td>
+    </>
   )
 }
 

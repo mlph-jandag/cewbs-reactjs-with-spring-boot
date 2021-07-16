@@ -25,10 +25,13 @@ const CompanyItem = ({ data, index }) => {
         <td>{data.name}</td>
         <td>{data.url}</td>
         <td>
-          <Link to={`services/${data.uid}`} className="text-info mr-2">
+          <Link to={`/services/${data.uid}`} className="text-info mr-2">
             <i className="fa fa-eye"></i>
           </Link>
-          <Link to={`create-partner/${data.uid}`} className="text-warning mr-2">
+          <Link
+            to={`/create-partner/${data.uid}`}
+            className="text-warning mr-2"
+          >
             <i className="fa fa-pencil"></i>
           </Link>
           <span onClick={deleteHandler} className={classes.actionButton}>
