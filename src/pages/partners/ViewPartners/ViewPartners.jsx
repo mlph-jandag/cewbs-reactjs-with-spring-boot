@@ -47,8 +47,8 @@ const ViewPartners = () => {
                       );
                     })
                   ) : (
-                    <tr class="danger text-center">
-                      <td colspan="5">No records found.</td>
+                    <tr className="danger text-center">
+                      <td colSpan="5">No records found.</td>
                     </tr>
                   )}
                   {}
