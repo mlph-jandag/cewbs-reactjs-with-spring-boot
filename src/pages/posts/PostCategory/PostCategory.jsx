@@ -43,10 +43,10 @@ const PostCategory = () => {
   return (
     <DefaultLayout>
       <h2>
-          Posts 
-          { 
-            catName && <span className="tocapitalize">&nbsp;&raquo; { catName} </span> 
-          }
+          Posts &raquo;&nbsp;
+          <span className="tocapitalize">
+            { cat.replace(/-/g, " ") }
+          </span>
       </h2>
       {
         ! loading ? displayTable() : <>loading...</>
