@@ -9,6 +9,7 @@ const PostCategory = () => {
   const { cat } = useParams();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [catName, setCatName] = useState('');
 
   const fetchPosts = () => {
     firestore
@@ -19,8 +20,10 @@ const PostCategory = () => {
         let posts = documentSnapshot.docs.map((data) => {
             return { uid: data.id, data: data.data() };
         });
-        console.log(posts);
         setPosts(posts);
+        if (posts.length > 0) {
+          setCatName(posts[0].data.category)
+        }
         setLoading(false);
       });
   }
@@ -39,7 +42,12 @@ const PostCategory = () => {
 
   return (
     <DefaultLayout>
-      <h2>Posts</h2>
+      <h2>
+          Posts 
+          { 
+            catName && <span className="tocapitalize">&nbsp;&raquo; { catName} </span> 
+          }
+      </h2>
       {
         ! loading ? displayTable() : <>loading...</>
       }

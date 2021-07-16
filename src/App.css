@@ -23,3 +23,6 @@ a{
 .toupper{
     text-transform: uppercase;
 }
+.tocapitalize{
+    text-transform: capitalize;
+}

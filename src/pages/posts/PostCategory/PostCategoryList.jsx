@@ -1,7 +1,6 @@
 import React from 'react'
 
 const PostCategoryList = ({ posts }) => {
-  const { body } = posts.data;
   return (
     <>
       {
@@ -11,7 +10,7 @@ const PostCategoryList = ({ posts }) => {
               <div className="card-header">Date created: { post.data.created_at }</div>
               <div className="card-body">
                 <h4>{ post.data.title }</h4>
-                <p>{ body.blocks[0].text }</p>
+                <p>{ post.data.body.blocks[0].text }</p>
               </div>
             </div>
           )
