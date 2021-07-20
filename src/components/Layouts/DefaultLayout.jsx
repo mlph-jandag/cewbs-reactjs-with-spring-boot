@@ -1,6 +1,6 @@
 import React from 'react';
-import Sidebar from '../Sidebar';
 import Navbar from '../Navbar/Navbar';
+import Sidebar from '../Sidebar/Sidebar';
 
 const DefaultLayout = ({ children }) => {
     return (

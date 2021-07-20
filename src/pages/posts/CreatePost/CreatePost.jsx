@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../../../components/Navbar/Navbar";
-import Sidebar from "../../../components/Sidebar";
+import Sidebar from "../../../components/Sidebar/Sidebar";
 import TextEditor from "../../../components/Editor/Editor";
 import classes from "./CreatePost.module.css";
 import CategoryDropDown from "../../../components/Buttons/CategoryDropDown";
