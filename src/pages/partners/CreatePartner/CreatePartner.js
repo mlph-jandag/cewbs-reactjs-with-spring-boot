@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { useAlert } from "react-alert";
 import { useHistory, useParams } from "react-router";
+import { addFormData, updateFormData } from "../../../api/firestoreService";
 import DefaultLayout from "../../../components/Layouts/DefaultLayout";
 import { firestore } from "../../../firebase.config";
+import { isFormValid } from "../../../utils/validation";
 import classes from "./CreatePartner.module.css";
 
 const CreatePartner = () => {
+  const alertUi = useAlert();
   const { uid } = useParams();
   const [name, setName] = useState("");
   const [logo, setLogo] = useState("");
@@ -33,29 +37,34 @@ const CreatePartner = () => {
   }, [uid]);
 
   const redirectToPartners = () => {
-    let path = `partners`; 
+    let path = `partners`;
     history.push(path);
-  }
+  };
 
   const onSaveHandler = async () => {
     setLoading(true);
-
-    if (!handleValidation()) {
+    let data = {
+      name,
+      image: logo,
+      url: site,
+      services: [],
+    };
+    if (isFormValid(data)) {
       try {
-        const response = firestore.collection("companies");
-        let id = null;
         if (uid) {
-          id = uid;
+          await updateFormData({
+            id: uid,
+            formData: data,
+            table: "companies",
+          });
         } else {
-          id = await response.doc().id;
+          await addFormData({
+            formData: data,
+            table: "companies",
+          });
         }
-        await response.doc(id).set({
-          name,
-          image: logo,
-          url: site,
-          services: [],
-        });
-        redirectToPartners()
+        alertUi.success("Added successfully");
+        redirectToPartners();
       } catch (e) {
         console.log(e);
       } finally {
@@ -63,32 +72,10 @@ const CreatePartner = () => {
         setLogo("");
         setSite("");
       }
+    } else {
+      alertUi.error("Please check inputs!");
     }
     setLoading(false);
-    return true;
-  };
-
-  const handleValidation = () => {
-    if (name === "") {
-      setError((prev) => {
-        return {
-          ...prev,
-          name: "Name must not be empty",
-        };
-      });
-      return true;
-    }
-    if (logo === "") {
-      console.log("eerrr");
-      setError((prev) => {
-        return {
-          ...prev,
-          logo: "Logo must not be empty",
-        };
-      });
-      return true;
-    }
-    return false;
   };
 
   const nameHandler = (e) => {

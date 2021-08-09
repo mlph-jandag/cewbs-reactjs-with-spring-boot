@@ -47,21 +47,12 @@ const Sidebar = () => {
                         <span className="menu-collapsed">Users</span>
                     </div>
                 </Link>
-                <a onClick={() => setshowPartners(!showPartners)} data-toggle="collapse" aria-expanded="false" className="main-menu list-group-item list-group-item-action">
+                <Link to="/partners" aria-expanded="false" className="main-menu list-group-item list-group-item-action">
                     <div className="d-flex w-100 justify-content-start align-items-center">
-                        <span className="fa fa-sticky-note-o  fa-fw mr-3"></span>
+                        <span className="fa fa-sticky-note-o fa-fw mr-3"></span>
                         <span className="menu-collapsed">Partners</span>
-                        <span className="submenu-icon ml-auto"></span>
                     </div>
-                </a>
-                <div className={!showPartners ? 'collapse': ''}>
-                    <Link to="/create-partner" className="list-group-item list-group-item-action">
-                        <span className="menu-collapsed">Add New Partner</span>
-                    </Link>
-                    <Link to="/partners" className="list-group-item list-group-item-action  ">
-                        <span className="menu-collapsed">View Partners</span>
-                    </Link>
-                </div>
+                </Link>
             </ul>
         </div>
     )
