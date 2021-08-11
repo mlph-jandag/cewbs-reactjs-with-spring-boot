@@ -2,21 +2,33 @@ import React, { useEffect, useState } from "react";
 import { firestore } from "../../firebase.config";
 import PartnerActions from "./PartnerActions";
 import PartnerEditMode from "./PartnerEditMode";
+import axios from "../../axios";
 
 const PartnerList = () => {
   const [companies, setCompanies] = useState([]);
   const [action, setAction] = useState({ id: 0, editMode: false });
 
   useEffect(() => {
-    const unsubscribe = firestore
-      .collection("companies")
-      .onSnapshot((documentSnapshot) => {
-        let cmpy = documentSnapshot.docs.map((data) => {
-          return { uid: data.id, data: data.data() };
-        });
-        setCompanies(cmpy);
-      });
-    return unsubscribe;
+    // const unsubscribe = firestore
+    //   .collection("companies")
+    //   .onSnapshot((documentSnapshot) => {
+    //     let cmpy = documentSnapshot.docs.map((data) => {
+    //       return { uid: data.id, data: data.data() };
+    //     });
+    //     setCompanies(cmpy);
+    //   });
+    // return unsubscribe;
+    const fetchData = async () => {
+      axios.get("/companies", {
+        headers: {
+          'Access-Control-Allow-Origin' : '*',
+          'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+        }
+      }).then((response) => {
+          console.log(response.data)
+      })
+    }
+    fetchData();
   }, []);
 
   return (
