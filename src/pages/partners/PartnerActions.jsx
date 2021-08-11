@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useAlert } from 'react-alert';
 import { confirmAlert } from 'react-confirm-alert';
 import ActionButtons from '../../components/Buttons/ActionsButton/ActionButtons';
-import { deleteData } from '../../api/firestoreService';
 import { Link } from 'react-router-dom';
 import axios from '../../axios';
 import { useDispatch } from 'react-redux';

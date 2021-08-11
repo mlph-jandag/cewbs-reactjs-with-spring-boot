@@ -1,18 +1,18 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 const serviceSlice = createSlice({
-  name: 'post',
+  name: 'service',
 
   initialState: {
-    edit: ''
+    update: false
   },
   reducers: {
-    setEdit: (state, action) => {
-      state.edit = action.payload;
+    setServiceUpdate: (state, action) => {
+      state.update = action.payload;
     }
   },
 });
 
-export const {setEdit} = serviceSlice.actions;
+export const {setServiceUpdate} = serviceSlice.actions;
 
 export default serviceSlice.reducer;

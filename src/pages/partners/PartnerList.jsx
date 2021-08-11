@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { firestore } from "../../firebase.config";
 import PartnerActions from "./PartnerActions";
 import PartnerEditMode from "./PartnerEditMode";
 import axios from "../../axios";
@@ -24,7 +23,7 @@ const PartnerList = () => {
     fetchData();
     dispatch(setUpdate(false))
   }, [update, dispatch]);
-
+  
   return (
     <table className="table">
       <thead>
@@ -37,9 +36,9 @@ const PartnerList = () => {
         </tr>
       </thead>
       <tbody>
-        {companies.map(({ data, id }, index) => {
+        {companies.length > 0 ? companies.map(({ data, id }, index) => {
           return (
-            <tr key={id}>
+            <tr className="align-middle" key={id}>
               <td>{index + 1}</td>
               {action.editMode && action.id === id ? (
                 <PartnerEditMode data={data} setAction={setAction} id={id} />
@@ -52,7 +51,11 @@ const PartnerList = () => {
               )}
             </tr>
           );
-        })}
+        }) : (
+          <tr className="danger text-center">
+            <td colSpan="5">No records found.</td>
+          </tr>
+        )}
       </tbody>
     </table>
   );

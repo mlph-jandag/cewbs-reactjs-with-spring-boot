@@ -1,44 +1,64 @@
-import React from "react";
-import { firestore } from "../../firebase.config";
-import { useAlert } from "react-alert";
-import { confirmAlert } from "react-confirm-alert";
+import React from 'react';
+import { useAlert } from 'react-alert';
+import { confirmAlert } from 'react-confirm-alert';
+import ActionButtons from '../../components/Buttons/ActionsButton/ActionButtons';
+import axios from '../../axios';
+import { useDispatch } from 'react-redux';
+import { setServiceUpdate } from '../../slices/serviceSlice';
 
-const ServiceActions = ({ data, deleteHandler, editHandler }) => {
+const ServiceActions = ({ propValues, setAction, action }) => {
   const alertUi = useAlert();
+  const dispatch = useDispatch()
 
   const onDeleteHandler = () => {
     confirmAlert({
-      title: "Confirm to delete",
-      message: "Are you sure to do this?",
+      title: 'Confirm to delete',
+      message: 'Are you sure to do this?',
       buttons: [
         {
-          label: "Yes",
+          label: 'Yes',
           onClick: async () => {
-            try {
-              await deleteHandler();
-              alertUi.success("Deleted Successfully!");
-            } catch (e) {
+            axios.delete(`/companies/${propValues.id}/services/${propValues.service.id}`).then(() => {
+              alertUi.success('Deleted Successfully!');
+              dispatch(setServiceUpdate(true))
+            }).catch((e) => {
               console.log(e);
-              alertUi.error("Something is wrong!");
-            }
-          },
+              alertUi.error('Something is wrong!');
+            })
+          }
         },
         {
-          label: "No",
-        },
-      ],
+          label: 'No',
+        }
+      ]
     });
-  };
-  return (
-    <div className="d-flex justify-content-around actions">
-      <span onClick={editHandler}>
-        <i className="fa fa-pencil text-info"></i>
-      </span>
-      <span onClick={onDeleteHandler}>
-        <i className="fa fa-trash-o text-danger"></i>
-      </span>
-    </div>
-  );
-};
+  } 
 
-export default ServiceActions;
+  const onClickSetEdit = () => {
+    setAction({
+      id: propValues.service.id,
+      editMode: true
+    });
+  }
+
+  return (
+    <>
+      <td><a href="#" className="avatar">
+            <img alt={propValues.service.name} src={propValues.service.logo} />
+          </a></td>
+      <td>{ propValues.service.name }</td>
+      <td>{ propValues.service.accessLink }</td>
+      <td>
+        <div className="d-flex justify-content-around actions">
+          <ActionButtons
+            onDeleteHandler={ onDeleteHandler }
+            setIsEdit={ onClickSetEdit }
+            data={ propValues }
+          />
+        </div>
+      </td>
+    </>
+  )
+}
+
+export default ServiceActions

@@ -1,55 +1,61 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import { firestore } from "../../../firebase.config";
-import { setEdit } from "../../../slices/serviceSlice";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ServiceActions from "../ServiceActions";
+import axios from '../../../axios'
+import ServiceEditMode from "../ServiceEditMode";
+import { setServiceUpdate } from "../../../slices/serviceSlice";
 
-const ServiceList = ({ id, services }) => {
+const ServiceList = ({ id }) => {
+  
+  const [services, setServices] = useState([]);
+  const [action, setAction] = useState({ id: 0, editMode: false });
+  const dispatch = useDispatch();
+  const update = useSelector(state => state.service.update);
 
-  const dispatch = useDispatch()
+  useEffect(() => {
+    const fetchData = async () => {
+      axios.get(`/companies/${id}/services`).then((response) => {
+        let list = response.data.content.map(data => {
+          return { ...data }
+        });
+        setServices(list)
+      })
+    };
+    fetchData();
+    dispatch(setServiceUpdate(false))
+  }, [id, update, dispatch]);
 
-  const deleteHandler = async (uid) => {
-    await firestore
-      .collection("companies")
-      .doc(id)
-      .update({
-        services: services.filter((service) => service.id !== uid),
-      });
-  };
-  const editHandler = (uid) => {
-    dispatch(setEdit(uid))
-  };
   return (
     <table className="table">
       <thead>
         <tr>
-          <th>ID</th>
+          <th>#</th>
           <th>Logo</th>
-          <th>Service name</th>
+          <th>Service</th>
+          <th>Access Link</th>
           <th className="text-center">Actions</th>
         </tr>
       </thead>
       <tbody>
-        {services.map((service) => {
+        {services.length > 0 ? services.map((service, index) => {
           return (
             <tr className="align-middle" key={service.id}>
-              <td>{service.id}</td>
-              <td>
-                <a href="#" className="avatar">
-                  <img alt={service.name} src={service.logo} />
-                </a>
-              </td>
-              <td>{service.name}</td>
-              <td>
+              <td>{index + 1}</td>
+              {action.editMode && action.id === service.id ? (
+                <ServiceEditMode data={service} setAction={setAction} id={id} />
+              ) : (
                 <ServiceActions
-                  data={service}
-                  deleteHandler={() => deleteHandler(service.id)}
-                  editHandler={() => editHandler(service.id)}
+                  propValues={{ service, id }}
+                  setAction={setAction}
+                  action={action}
                 />
-              </td>
+              )}
             </tr>
           );
-        })}
+        }) : (
+          <tr className="danger text-center">
+            <td colSpan="5">No records found.</td>
+          </tr>)}
       </tbody>
     </table>
   );
