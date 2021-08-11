@@ -2,14 +2,20 @@ import React, { useState } from "react";
 import UpdateCancel from "../../components/Buttons/ActionsButton/UpdateCancel";
 import { firestore } from "../../firebase.config";
 import { useAlert } from "react-alert";
+import axios from "../../axios";
+import { useDispatch, useSelector } from "react-redux";
+import { setUpdate } from "../../slices/companySlice";
 
 const PartnerEditMode = (props) => {
   const alertUi = useAlert();
 
-  const [logo, setLogo] = useState(props.data.image);
+  const [logo, setLogo] = useState(props.data.logo);
   const [name, setName] = useState(props.data.name);
-  const [url, setUrl] = useState(props.data.url);
+  const [url, setUrl] = useState(props.data.website);
   const [btnDisabled, setBtnDisabled] = useState(false);
+
+  const dispatch = useDispatch();
+  const update = useSelector(state => state.company.update);
 
   const onCancelHandler = () => {
     props.setAction({
@@ -20,23 +26,20 @@ const PartnerEditMode = (props) => {
 
   const onUpdateHandler = () => {
     setBtnDisabled(true);
-    firestore
-      .collection("companies")
-      .doc(props.id)
-      .update({
-        image: logo,
-        name,
-        url,
-      })
-      .then((result) => {
-        console.log(result);
-        alertUi.success("Updated successfully!");
-        onCancelHandler();
-      })
-      .catch((error) => {
-        alertUi.error("There is a problem while updating!");
-      })
-      .finally(setBtnDisabled(false));
+    axios.put('/companies', {
+      id: props.id,
+      name,
+      logo,
+      website: url
+    }).then(() => {
+      alertUi.success("Updated successfully!");
+      dispatch(setUpdate(true))
+      onCancelHandler();
+    }).catch((error) => {
+      console.log(error)
+      alertUi.error("There is a problem while updating!");
+    })
+    .finally(setBtnDisabled(false));
   };
   return (
     <>
