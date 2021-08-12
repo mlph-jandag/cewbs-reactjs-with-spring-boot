@@ -93,7 +93,7 @@
   cursor: pointer;
 }
 
-.btn-custom {
+.btn-custom, .btn-custom .page-link {
   background-color: #ffff00 !important;
 }
 
@@ -110,4 +110,7 @@
 
 .danger {
   background-color: #ffdfdd;
+}
+.page-link {
+  color: #1e2125 !important;
 }
