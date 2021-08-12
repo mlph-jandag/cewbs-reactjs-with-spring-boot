@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from "react";
-import firebaseApp, { firestore } from "../../../firebase.config";
+import React, { useState } from "react";
 import { useAlert } from "react-alert";
-import { uid } from "uid";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setServiceUpdate } from "../../../slices/serviceSlice";
 import { isFormValid } from "../../../utils/validation";
 import axios from "../../../axios";
 
-const ServiceForm = ({ id, services }) => {
+const ServiceForm = ({ id }) => {
   const dispatch = useDispatch()
   const alertUi = useAlert();
   
@@ -38,35 +36,6 @@ const ServiceForm = ({ id, services }) => {
       alertUi.error("Please check inputs!");
     }
     setBtnDisabled(false);
-    // let newServices = services;
-    // if(editId !== '') {
-    //   newServices = newServices.map(service => {
-    //     if(service.id === editId)
-    //       return {name, logo, description, id: service.id}
-    //     return service;
-    //   })
-    // } else
-    //   newServices = [...services, {name, logo, description, id: uid()}]
-      
-    // firestore
-    //   .collection("companies")
-    //   .doc(id)
-    //   .update({
-    //     services: newServices
-    //   })
-    //   .then((result) => {
-    //     console.log("result", result);
-    //     alertUi.success("Service saved successfully!");
-    //     setName('')
-    //     setLogo('')
-    //     setAccessLink('')
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     alertUi.error("There was an error occured!");
-    //   })
-    //   .finally(setBtnDisabled(false));
-    //   dispatch(setEdit(''))
   };
   return (
     <form onSubmit={onSubmitHandler}>

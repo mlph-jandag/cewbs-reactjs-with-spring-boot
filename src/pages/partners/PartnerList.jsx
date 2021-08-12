@@ -8,16 +8,19 @@ import { setUpdate } from "../../slices/companySlice";
 const PartnerList = () => {
   const [companies, setCompanies] = useState([]);
   const [action, setAction] = useState({ id: 0, editMode: false });
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const update = useSelector(state => state.company.update);
 
   useEffect(() => {
+    setLoading(true)
     const fetchData = async () => {
       axios.get("/companies").then((response) => {
-          let cmpy = response.data.content.map(data => {
-            return { data: {...data}, id: data.id }
-          });
-          setCompanies(cmpy)
+        let cmpy = response.data.content.map(data => {
+          return { data: {...data}, id: data.id }
+        });
+        setCompanies(cmpy)
+        setLoading(false)
       })
     }
     fetchData();
@@ -51,7 +54,11 @@ const PartnerList = () => {
               )}
             </tr>
           );
-        }) : (
+        }) : loading ? (
+          <tr className="text-center">
+            <td colSpan="5"><i className="fa fa-spinner fa-spin"></i> Loading</td>
+          </tr>
+        ) : (
           <tr className="danger text-center">
             <td colSpan="5">No records found.</td>
           </tr>

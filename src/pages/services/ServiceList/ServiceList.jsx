@@ -9,16 +9,19 @@ const ServiceList = ({ id }) => {
   
   const [services, setServices] = useState([]);
   const [action, setAction] = useState({ id: 0, editMode: false });
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const update = useSelector(state => state.service.update);
 
   useEffect(() => {
+    setLoading(true)
     const fetchData = async () => {
       axios.get(`/companies/${id}/services`).then((response) => {
         let list = response.data.content.map(data => {
           return { ...data }
         });
         setServices(list)
+        setLoading(false)
       })
     };
     fetchData();
@@ -52,10 +55,15 @@ const ServiceList = ({ id }) => {
               )}
             </tr>
           );
-        }) : (
+        }) : loading ? (
+          <tr className="text-center">
+            <td colSpan="5"><i className="fa fa-spinner fa-spin"></i> Loading</td>
+          </tr>
+        ) : (
           <tr className="danger text-center">
             <td colSpan="5">No records found.</td>
-          </tr>)}
+          </tr>
+        )}
       </tbody>
     </table>
   );
