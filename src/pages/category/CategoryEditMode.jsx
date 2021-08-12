@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import UpdateCancel from '../../components/Buttons/ActionsButton/UpdateCancel';
 import { firestore } from '../../firebase.config';
 import { useAlert } from 'react-alert';
+import axios from "../../axios";
+import { useDispatch } from "react-redux";
+import { setUpdate } from "../../slices/categorySlice";
 
 const CategoryEditMode = (props) => {
   const alertUi = useAlert();
-
-  const [catName, setCatName] = useState(props.data.category_name);
-  const [slug, setSlug] = useState(props.data.slug);
+  const [name, setCatName] = useState(props.data.name);
   const [btnDisabled, setBtnDisabled] = useState(false);
+  const dispatch = useDispatch();
   
   const onCancelHandler = () => {
     props.setAction({
@@ -17,36 +19,29 @@ const CategoryEditMode = (props) => {
   }
 
   const onUpdateHandler = () => {
-    setBtnDisabled(true);
-    firestore.collection('categories').doc(props.id).update({
-      category_name: catName,
-      slug: slug
-    }).then(result => {
-      console.log(result);
-      alertUi.success('Updated successfully!');
-      onCancelHandler();
-    }).catch(error => {
-      alertUi.error('There is a problem while updating!');
-    }).finally(
-      setBtnDisabled(false)
-    )
-  }
+      setBtnDisabled(true);
+      axios.put('/categories', {
+        id: props.id,
+        name
+      }).then(() => {
+        alertUi.success("Updated successfully!");
+        dispatch(setUpdate(true))
+        onCancelHandler();
+      }).catch((error) => {
+        console.log(error)
+        alertUi.error("There is a problem while updating!");
+      })
+      .finally(setBtnDisabled(false));
+    };
+
   return (
     <>
       <td>
         <input
           type="text"
           className="form-control"
-          value={catName}
+          value={name}
           onChange={(e) => setCatName(e.target.value)}
-        />
-      </td>
-      <td>
-        <input
-          type="text"
-          className="form-control"
-          value={slug}
-          onChange={(e) => setSlug(e.target.value)}
         />
       </td>
       <td>
