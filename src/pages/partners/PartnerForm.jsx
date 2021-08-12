@@ -22,7 +22,6 @@ const PartnerForm = () => {
     };
     if (isFormValid(data)) {
         setLoading(true);
-        console.log('nccs')
         axios.post('/companies', {
           ...data 
         }).then(() => {

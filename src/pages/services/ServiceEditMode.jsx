@@ -3,14 +3,14 @@ import UpdateCancel from "../../components/Buttons/ActionsButton/UpdateCancel";
 import { useAlert } from "react-alert";
 import axios from "../../axios";
 import { useDispatch } from "react-redux";
-import { setUpdate } from "../../slices/companySlice";
+import { setServiceUpdate } from "../../slices/serviceSlice";
 
-const PartnerEditMode = (props) => {
+const ServiceEditMode = (props) => {
   const alertUi = useAlert();
 
   const [logo, setLogo] = useState(props.data.logo);
   const [name, setName] = useState(props.data.name);
-  const [url, setUrl] = useState(props.data.website);
+  const [accessLink, setAccessLink] = useState(props.data.accessLink);
   const [btnDisabled, setBtnDisabled] = useState(false);
 
   const dispatch = useDispatch();
@@ -24,14 +24,14 @@ const PartnerEditMode = (props) => {
 
   const onUpdateHandler = () => {
     setBtnDisabled(true);
-    axios.put('/companies', {
-      id: props.id,
+    axios.put(`/companies/${props.id}/services/`, {
+      id: props.data.id,
       name,
       logo,
-      website: url
+      accessLink
     }).then(() => {
       alertUi.success("Updated successfully!");
-      dispatch(setUpdate(true))
+      dispatch(setServiceUpdate(true))
       onCancelHandler();
     }).catch((error) => {
       console.log(error)
@@ -39,6 +39,7 @@ const PartnerEditMode = (props) => {
     })
     .finally(setBtnDisabled(false));
   };
+
   return (
     <>
       <td>
@@ -61,8 +62,8 @@ const PartnerEditMode = (props) => {
         <input
           type="text"
           className="form-control"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
+          value={accessLink}
+          onChange={(e) => setAccessLink(e.target.value)}
         />
       </td>
       <td>
@@ -76,4 +77,4 @@ const PartnerEditMode = (props) => {
   );
 };
 
-export default PartnerEditMode;
+export default ServiceEditMode;
