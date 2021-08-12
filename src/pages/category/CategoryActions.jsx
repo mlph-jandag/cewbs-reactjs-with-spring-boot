@@ -3,9 +3,13 @@ import { useAlert } from 'react-alert';
 import { confirmAlert } from 'react-confirm-alert';
 import ActionButtons from '../../components/Buttons/ActionsButton/ActionButtons';
 import { deleteData } from '../../api/firestoreService';
+import axios from '../../axios';
+import { useDispatch } from 'react-redux';
+import { setUpdate } from '../../slices/categorySlice';
 
 const CategoryActions = ({ propValues, setAction, action }) => {
   const alertUi = useAlert();
+  const dispatch = useDispatch();
 
   const onDeleteHandler = () => {
     confirmAlert({
@@ -15,13 +19,13 @@ const CategoryActions = ({ propValues, setAction, action }) => {
         {
           label: 'Yes',
           onClick: async () => {
-            try {
-              await deleteData({ table: 'categories', id: propValues.uid});
-              alertUi.success('Deleted Successfully!');
-            } catch (e) {
-              console.log(e);
-              alertUi.error('Something is wrong!');
-            }
+            axios.delete(`/categories/${propValues.id}`).then(() => {
+                alertUi.success('Deleted Successfully!');
+                dispatch(setUpdate(true))
+            }).catch((e) => {
+                console.log(e);
+                alertUi.error('Something is wrong!');
+            })
           }
         },
         {
@@ -33,15 +37,14 @@ const CategoryActions = ({ propValues, setAction, action }) => {
 
   const onClickSetEdit = () => {
     setAction({
-      id: propValues.uid,
-      editMode: true
+       id: propValues.id,
+       editMode: true
     });
   }
 
   return (
     <>
-      <td>{ propValues.data.category_name }</td>
-      <td>{ propValues.data.slug }</td>
+      <td>{ propValues.data.name }</td>
       <td>
         <div className="d-flex justify-content-around actions">
           <ActionButtons
