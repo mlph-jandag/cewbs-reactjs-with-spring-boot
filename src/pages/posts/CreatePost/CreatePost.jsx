@@ -9,12 +9,14 @@ import { firestore } from "../../../firebase.config";
 import { Redirect, useParams } from "react-router";
 import {convertFromRaw, convertToRaw} from "draft-js";
 import { useHistory } from 'react-router-dom';
+import axios from "../../../axios";
 
 
 const CreatePost = () => {
   const { uid } = useParams();
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
+  const [body, setBody] = useState("");
   const [error, setError] = useState({});
   const [loading, setLoading] = useState(false);
   const [screenTitle, setScreenTitle] = useState("New Post");
