@@ -19,7 +19,6 @@ const CategoryForm = () => {
       name
     };
     if (isFormValid(data)) {
-        console.log(data);
         setBtnDisabled(true);
         axios.post('/categories', {
            ...data

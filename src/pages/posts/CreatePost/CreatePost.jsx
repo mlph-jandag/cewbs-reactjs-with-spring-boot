@@ -10,10 +10,12 @@ import { Redirect, useParams } from "react-router";
 import {convertFromRaw, convertToRaw} from "draft-js";
 import { useHistory } from 'react-router-dom';
 import axios from "../../../axios";
-
+import { useDispatch } from "react-redux";
+import { useAlert } from 'react-alert';
 
 const CreatePost = () => {
   const { uid } = useParams();
+  const alertUi = useAlert();
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [body, setBody] = useState("");
@@ -23,6 +25,7 @@ const CreatePost = () => {
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
+  const dispatch = useDispatch();
   const history = useHistory();
 
   useEffect(() => {
@@ -49,28 +52,21 @@ const CreatePost = () => {
 
   const onSaveHandler = async () => {
     setLoading(true);
+    let data = {
+        title, category,
+        body: JSON.stringify(editorState)
+    };
+    console.log(data);
     if (!handleValidation()) {
-      try {
-        const response = firestore.collection("posts");
-        let id = null;
-        if (uid) {
-          id = uid;
-        } else {
-          id = await response.doc().id;
-        }
-        await response.doc(id).set({
-          body: editorState,
-          title: title,
-          category: category,
-          created_at: new Date().toDateString(),
-        });
-        redirectToPosts();
-      } catch (e) {
-        console.log(e);
-      } finally {
-        setTitle("");
-        setCategory("");
-      }
+         axios.post('/posts', {
+              ...data
+         }).then(() => {
+             alertUi.success("Posted successfully");
+         }).catch((e) => {
+             alertUi.error("There is something wrong with the inputs!");
+         })
+    }else{
+        alertUi.error("There is something wrong with the inputs!");
     }
     setLoading(false);
   };
@@ -115,6 +111,7 @@ const CreatePost = () => {
 
   const onCategoryChanged = (data) => {
     setError({});
+    console.log(data);
     setCategory(data);
   };
   const onTitleChanged = (e) => {
