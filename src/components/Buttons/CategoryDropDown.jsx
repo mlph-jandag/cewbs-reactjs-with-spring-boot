@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { firestore } from "../../firebase.config";
+import axios from "../../axios";
+import { useDispatch, useSelector } from "react-redux";
+import { setUpdate } from "../../slices/categorySlice";
 
 const CategoryDropDown = ({ category, onCategoryChanged }) => {
   const [cats, setCats] = useState([]);
-
-  const fetchCategories = async () => {
-    try {
-      const response = firestore.collection("categories");
-      const data = await response.get();
-      data.docs.forEach((item) => {
-        const catValue = item.data().category_name;
-        setCats((oldCats) => [...oldCats, catValue]);
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchCategories();
-  }, []);
+        const fetchData = async () => {
+              axios.get("/categories").then((response) => {
+                  let cat = response.data.content.map(data => {
+                    return { data: {...data}, id: data.id }
+                  });
+                  setCats(cat)
+                  console.log(cat)
+              })
+            }
+        fetchData();
+        dispatch(setUpdate(false))
+    }, [dispatch]);
 
   return (
     <div className="dropdown">
@@ -37,11 +37,11 @@ const CategoryDropDown = ({ category, onCategoryChanged }) => {
         {cats.map((cat) => {
           return (
             <button
-              onClick={() => onCategoryChanged(cat)}
+              onClick={() => onCategoryChanged(cat.data.name)}
               className="dropdown-item"
-              key={cat}
+              key={cat.id}
             >
-              {cat}
+              {cat.data.name}
             </button>
           );
         })}
