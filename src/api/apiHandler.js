@@ -20,28 +20,42 @@ export const authHeader = () => {
 }
 
 /**
- * Every autoload request
+ * GET REQUEST
  */
 export const getAxios = (endpoint) => {
-  const url = `${API_URL}${endpoint}`;
-  return axios.get(url, { headers: authHeader() });
+  return axios.get(`${API_URL}${endpoint}`, { headers: authHeader() });
+}
+
+/**
+ * POST REQUEST
+ */
+export const postAxios = (endpoint, data) => {
+  console.log(data);
+  return new Promise((resolve, reject) => {
+    axios.post(`${API_URL}${endpoint}`, data, { headers: authHeader() })
+    .then(res => {
+      console.log(res);
+      resolve(res.data);
+    })
+    .catch(err => {
+      reject(err);
+    });
+  });
+}
+
+/**
+ * PUT REQUEST
+ */
+export const putAxios = (endpoint, data, id) => {
+  return axios.put(`${API_URL}${endpoint}/${id}`, data, { headers: authHeader() });
 }
 
 
 /**
- * Method GET
+ * DELETE REQUEST
  */
-// export const getAxios = async (endpoint) => {
-//   const url = `${API_URL}${endpoint}`;
-//   return new Promise((resolve, reject) => {
-//     axios.get(url, { headers: authHeader() })
-//     .then((response) => {
-//       resolve(response.data);
-//     })
-//     .catch(error => {
-//       reject(error)
-//     });
-//   });
-// }
+export const deleteAxios = (endpoint, id) => {
+  return axios.put(`${API_URL}${endpoint}/${id}`, { headers: authHeader() });
+}
 
 export default authHeader;

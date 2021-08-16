@@ -7,7 +7,6 @@ const UserList = () => {
   useEffect(() => {
     getAxios('/users')
     .then(res => {
-      console.log(res);
       const { content } = res.data;
       setusers(content);
     })
