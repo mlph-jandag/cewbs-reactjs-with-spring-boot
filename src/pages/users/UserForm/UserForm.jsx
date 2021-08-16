@@ -35,14 +35,6 @@ const UserForm = ({ id, services }) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          {/* <label className="mt-4">Description</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          /> */}
           <button disabled={btnDisabled} className="btn btn-yellow px-4 mt-4">
             Save
           </button>

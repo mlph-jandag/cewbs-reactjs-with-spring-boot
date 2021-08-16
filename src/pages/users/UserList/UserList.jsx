@@ -1,37 +1,40 @@
-import React from "react";
+import React,{ useEffect, useState} from "react";
+import { getAxios } from "../../../api/apiHandler";
 
-const UserList = ({ id, users }) => {
-  const deleteHandler = async (uid) => {
-    console.log("delete", uid);
-  };
+const UserList = () => {
+  const [users, setusers] = useState([]);
+
+  useEffect(() => {
+    getAxios('/users')
+    .then(res => {
+      console.log(res);
+      const { content } = res.data;
+      setusers(content);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }, []);
+
   return (
     <table className="table">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>email</th>
+          <th>#</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
           <th className="text-center">Actions</th>
         </tr>
       </thead>
       <tbody>
-        {users.map((user) => {
+        {users.map((user, index) => {
           return (
-            // <tr className="align-middle" key={service.id}>
-            //   <td>{service.id}</td>
-            //   <td>
-            //     <a href="#" className="avatar">
-            //       <img alt={service.name} src={service.logo} />
-            //     </a>
-            //   </td>
-            //   <td>{service.name}</td>
-            //   <td>
-            //     <ServiceActions
-            //       data={service}
-            //       deleteHandler={() => deleteHandler(service.id)}
-            //     />
-            //   </td>
-            // </tr>
-            <h1>hi</h1>
+            <tr key={ user.id }>
+              <td>{ index + 1 }</td>
+              <td>{ user.name }</td>
+              <td>{ user.email }</td>
+            </tr>
           );
         })}
       </tbody>
