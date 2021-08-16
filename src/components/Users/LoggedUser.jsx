@@ -1,14 +1,18 @@
+import axios from 'axios';
 import React, {useEffect} from 'react'
-import { axiosAutoload } from '../../api/apiHandler';
+import { axiosAutoload, authHeader, getAxios } from '../../api/apiHandler';
 import { useAuth } from '../../contexts/AuthContext';
+import { API_URL } from '../../config/AppConfig';
 
 const LoggedUser = () => {
   const {user} = useAuth();
   
   useEffect(() => {
-    axiosAutoload('/users').then(res => {
+    getAxios('/users')
+    .then(res => {
       console.log(res);
-    }).catch(err => {
+    })
+    .catch(err => {
       console.log(err);
     });
   }, [])

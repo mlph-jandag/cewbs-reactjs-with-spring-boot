@@ -1,4 +1,4 @@
-import axios from '../axios';
+import axios from 'axios';
 import { API_URL,STORAGE_NAME } from '../config/AppConfig';
 
 /**
@@ -13,9 +13,7 @@ export const authHeader = () => {
   const { token } = authInfo;
   if (token) {
     return {
-      Authorization: 'Bearer ' + token,
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
+      Authorization: 'Bearer ' + token
     };
   }
   return {};
@@ -34,8 +32,11 @@ export const axiosAutoload = (endpoint) => {
  * Method GET
  */
 export const getAxios = async (endpoint) => {
+  const url = `${API_URL}${endpoint}`;
+  console.log(url);
+  console.log(authHeader());
   return new Promise((resolve, reject) => {
-    axios.get(`${API_URL}${endpoint}`, { headers: authHeader() })
+    axios.get(url, { headers: authHeader() })
     .then((response) => {
       console.log(response);
       resolve(response.data);
