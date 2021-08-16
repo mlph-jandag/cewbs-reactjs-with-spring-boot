@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { axiosAutoload } from '../../api/apiHandler';
 
 const RecentPosts = () => {
   const [postData, setPosts] = useState([]);

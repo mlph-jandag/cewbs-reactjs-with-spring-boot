@@ -1,10 +1,10 @@
-import axios from 'axios';
+import axios from '../axios';
 import { API_URL,STORAGE_NAME } from '../config/AppConfig';
 
 /**
  * Get all info
  */
-export const authInfo = JSON.parse(localStorage.getItem(STORAGE_NAME));
+export const authInfo = JSON.parse(localStorage.getItem(STORAGE_NAME)) || {};
 
 /**
  * Return authorization header
@@ -14,6 +14,8 @@ export const authHeader = () => {
   if (token) {
     return {
       Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
     };
   }
   return {};
@@ -23,7 +25,8 @@ export const authHeader = () => {
  * Every autoload request
  */
 export const axiosAutoload = (endpoint) => {
-  return axios.get(`${API_URL}${endpoint}`, { headers: authHeader() });
+  const url = `${API_URL}${endpoint}`;
+  return axios.get(url, { headers: authHeader() });
 }
 
 

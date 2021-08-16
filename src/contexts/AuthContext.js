@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState} from 'react';
 import LightLoader from '../components/Loaders/LightLoader';
 import { axiosAutoload } from '../api/apiHandler';
 import { authInfo } from '../api/apiHandler';
+import { useHistory } from 'react-router';
 
 const AuthContext = React.createContext();
 
@@ -10,17 +11,15 @@ export const useAuth = () => {
 }
 
 const AuthProvider = ({ children }) => {
-
+    const history = useHistory();
     const [currentUser, setCurrentUser] = useState({});
     const [loading, setLoading] = useState(true);
 
-    const fetchProfile = () => {
-    }
-
     useEffect(() => {
         if (authInfo && authInfo.user) {
-            console.log(authInfo.user);
             setCurrentUser(authInfo.user);
+        } else {
+            history.push('/login');
             setLoading(false);
         }
     }, [])
@@ -40,7 +39,7 @@ const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={values}>
-            { display() }
+            { children }
         </AuthContext.Provider>
     )
 }

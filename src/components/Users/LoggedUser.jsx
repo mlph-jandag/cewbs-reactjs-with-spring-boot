@@ -1,9 +1,18 @@
-import React from 'react'
-import { useAuth } from '../../contexts/AuthContext'
+import React, {useEffect} from 'react'
+import { axiosAutoload } from '../../api/apiHandler';
+import { useAuth } from '../../contexts/AuthContext';
 
 const LoggedUser = () => {
   const {user} = useAuth();
-  console.log(user);
+  
+  useEffect(() => {
+    axiosAutoload('/users').then(res => {
+      console.log(res);
+    }).catch(err => {
+      console.log(err);
+    });
+  }, [])
+
   return (
     <table className="table-custom">
       <tbody>

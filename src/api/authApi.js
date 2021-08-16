@@ -15,11 +15,12 @@ export const login = async (email, password) =>  {
       resolve(response.data);
     })
     .catch(err => {
-      if(err.response.status == 403) {
-        reject('You do not have permission.');
-      } else {
-        reject('Email address and password are mismatched!');
-      }
+      console.log(err);
+      // if(err.response.status == 403) {
+      //   reject('You do not have permission.');
+      // } else {
+      //   reject('Email address and password are mismatched!');
+      // }
     });
   });
 };
