@@ -1,27 +1,34 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import classes from "./LoginForm.module.css";
 import { login } from "../../api/authApi";
+import { useAlert } from 'react-alert';
+import { setLogin } from "../../slices/authSlice";
 
 function LoginForm() {
-  const [email, setEmail] = useState("superadmin@admin.com");
-  const [password, setPassword] = useState("test12345");
+  const alertUi = useAlert();
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [btnLogin, setBtnLogin] = useState('Sign in');
   const [btnDisabled, setBtnDisabled] = useState(false);
   const [error, setError] = useState('');
 
   const history = useHistory();
 
-  useEffect(() => {
-    // authListener();
-  }, []);
-
   const loginHandler = async (e) => {
     e.preventDefault();
-    setBtnLogin('Loading...');
-    setBtnDisabled(true);
-    await login(email, password);
-    console.log("sam");
+    try {
+      setBtnLogin('Signing in...');
+      setBtnDisabled(true);
+      let resp = await login(email, password);
+      dispatch(setLogin(resp));
+    } catch(e) {
+      alertUi.error(e);
+      setBtnLogin('Sign in');
+      setBtnDisabled(false);
+    }
   }
 
   return (

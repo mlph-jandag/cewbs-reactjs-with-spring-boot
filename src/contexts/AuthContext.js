@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState, useSelector} from 'react';
 import { firebaseAuth } from '../firebase.config';
 import LightLoader from '../components/Loaders/LightLoader';
 
@@ -9,20 +9,12 @@ export const useAuth = () => {
 }
 
 const AuthProvider = ({ children }) => {
-
     const [currentUser, setCurrentUser] = useState({});
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        console.log('loading..');
-        const unsubscribe = firebaseAuth.onAuthStateChanged(loggedInUser => {
-            console.log('done');
-            setCurrentUser(loggedInUser);
-            setLoading(false);
-        });
-
-        return unsubscribe;
-    }, [])
+        console.log('user logged');
+    }, []);
 
     const values = {
         currentUser,

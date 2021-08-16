@@ -1,23 +1,25 @@
 import axios from 'axios'
-
-const API_URL = process.env.REACT_APP_API_URL;
+import { API_URL, STORAGE_NAME } from '../config/AppConfig';
 
 export const login = async (email, password) =>  {
-  console.log("logging in" + API_URL);
-  return axios
-    .post(`${API_URL}/login`, {
+  return new Promise((resolve, reject) => {
+    axios.post(`${API_URL}/admin/login`, {
       email,
       password,
     })
     .then((response) => {
-      console.log(response);
-      // if (response.data.accessToken) {
-      //   localStorage.setItem("user", JSON.stringify(response.data));
-      // }
-
-      return response.data;
+      const { token } = response.data;
+      if (token) {
+        localStorage.setItem(STORAGE_NAME, JSON.stringify(response.data));
+      }
+      resolve(response.data);
     })
     .catch(err => {
-      console.log(err);
+      if(err.response.status == 403) {
+        reject('You do not have permission.');
+      } else {
+        reject('Email address and password are mismatched!');
+      }
     });
+  });
 };
