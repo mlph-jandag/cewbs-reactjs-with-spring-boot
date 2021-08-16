@@ -28,15 +28,32 @@ const UserList = () => {
         </tr>
       </thead>
       <tbody>
-        {users.map((user, index) => {
+        {
+          users.length > 0 ? users.map((user, index) => {
           return (
             <tr key={ user.id }>
               <td>{ index + 1 }</td>
               <td>{ user.name }</td>
               <td>{ user.email }</td>
+              <td>
+                { user.roles.map(role => role.name) }
+              </td>
+              <td className="text-center">
+                <span className="mr-3">
+                    <i className="fa fa-pencil text-info"></i>
+                </span>
+                <span>
+                    <i className="fa fa-trash-o text-danger"></i>
+                </span>
+              </td>
             </tr>
-          );
-        })}
+          )
+        }): (
+          <tr className="danger text-center">
+             <td colSpan="5">No users found.</td>
+          </tr>
+          )
+        }
       </tbody>
     </table>
   );
