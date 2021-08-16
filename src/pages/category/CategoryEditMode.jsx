@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import UpdateCancel from '../../components/Buttons/ActionsButton/UpdateCancel';
-import { firestore } from '../../firebase.config';
 import { useAlert } from 'react-alert';
 import axios from "../../axios";
 import { useDispatch } from "react-redux";

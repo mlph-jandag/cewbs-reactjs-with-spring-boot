@@ -1,16 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { firestore } from "../../../../firebase.config";
 import classes from "./CompanyItem.module.css";
 import Modal from "../../../../components/UI/ConfirmModal/Modal";
 
 const CompanyItem = ({ data, index }) => {
   const deleteHandler = async () => {
-    try {
-      await firestore.collection("companies").doc(data.uid).delete();
-    } catch (e) {
-      console.log(e);
-    }
   };
 
   return (

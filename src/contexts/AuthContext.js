@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useState, useSelector} from 'react';
-import { firebaseAuth } from '../firebase.config';
+import React, { useContext, useEffect, useState} from 'react';
 import LightLoader from '../components/Loaders/LightLoader';
+import { axiosAutoload } from '../api/apiHandler';
+import { authInfo } from '../api/apiHandler';
 
 const AuthContext = React.createContext();
 
@@ -9,12 +10,20 @@ export const useAuth = () => {
 }
 
 const AuthProvider = ({ children }) => {
+
     const [currentUser, setCurrentUser] = useState({});
     const [loading, setLoading] = useState(true);
 
+    const fetchProfile = () => {
+    }
+
     useEffect(() => {
-        console.log('user logged');
-    }, []);
+        if (authInfo && authInfo.user) {
+            console.log(authInfo.user);
+            setCurrentUser(authInfo.user);
+            setLoading(false);
+        }
+    }, [])
 
     const values = {
         currentUser,

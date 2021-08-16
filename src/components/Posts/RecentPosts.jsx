@@ -1,20 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { firestore } from '../../firebase.config';
 
 const RecentPosts = () => {
   const [postData, setPosts] = useState([]);
 
   const fetchRecent = () => {
-    firestore
-      .collection('posts')
-      .limit(2)
-      .get()
-      .then(documentSnapshot => {
-        let posts = documentSnapshot.docs.map((data) => {
-            return { uid: data.id, data: data.data() };
-        });
-        setPosts(posts);
-      });
   }
   
   useEffect(() => {

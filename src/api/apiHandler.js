@@ -2,10 +2,15 @@ import axios from 'axios';
 import { API_URL,STORAGE_NAME } from '../config/AppConfig';
 
 /**
+ * Get all info
+ */
+export const authInfo = JSON.parse(localStorage.getItem(STORAGE_NAME));
+
+/**
  * Return authorization header
  */
 export const authHeader = () => {
-  const { token } = JSON.parse(localStorage.getItem(STORAGE_NAME));
+  const { token } = authInfo;
   if (token) {
     return {
       Authorization: 'Bearer ' + token,
@@ -13,6 +18,14 @@ export const authHeader = () => {
   }
   return {};
 }
+
+/**
+ * Every autoload request
+ */
+export const axiosAutoload = (endpoint) => {
+  return axios.get(`${API_URL}${endpoint}`, { headers: authHeader() });
+}
+
 
 /**
  * Method GET

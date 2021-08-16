@@ -4,7 +4,6 @@ import classes from "./PostItem.module.css";
 import {convertFromRaw} from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 import { Link } from "react-router-dom";
-import { firestore } from '../../../../firebase.config';
 
 const PostItem = props => {
     const convert = (storedState) => {
@@ -12,11 +11,6 @@ const PostItem = props => {
     };
 
     const deleteHandler = async () => {
-      try {
-        await firestore.collection("posts").doc(props.uid).delete();
-      } catch (e) {
-        console.log(e);
-      }
     };
 
     return (

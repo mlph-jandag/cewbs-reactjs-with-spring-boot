@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import DefaultLayout from "../../../components/Layouts/DefaultLayout";
-import { firebaseAuth, firestore } from "../../../firebase.config";
 import UserForm from "../UserForm/UserForm";
 import UserList from "../UserList/UserList";
 
@@ -11,15 +10,6 @@ const ViewServices = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-        // await firebaseAuth
-        //   .getUsers()
-        //   .then((data) => {
-        //     console.log(data.users)
-        //     // setUseres(services);
-        //   })
-        //   .catch((error) => {
-        //     console.log('Error fetching user data:', error);
-        //   });
     };
     fetchData();
   }, []);

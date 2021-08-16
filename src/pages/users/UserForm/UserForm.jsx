@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import firebaseApp, { firestore } from "../../../firebase.config";
 import { useAlert } from "react-alert";
 import { uid } from "uid";
 
@@ -13,29 +12,6 @@ const UserForm = ({ id, services }) => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     setBtnDisabled(true);
-    // firestore
-    //   .collection("companies")
-    //   .doc(id)
-    //   .update({
-    //     services: [
-    //       ...services,
-    //       {
-    //         name,
-    //         logo,
-    //         description,
-    //         id: uid(),
-    //       },
-    //     ],
-    //   })
-    //   .then((result) => {
-    //     console.log("result", result);
-    //     alertUi.success("Added service successfully!");
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     alertUi.error("There was an error occured!");
-    //   })
-    //   .finally();
     setBtnDisabled(false)
   };
   return (

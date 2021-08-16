@@ -1,21 +1,11 @@
 import React, { useState, useEffect } from "react";
 import DefaultLayout from "../../../components/Layouts/DefaultLayout";
-import { firestore } from "../../../firebase.config";
 import CompanyItem from "./CompanyItem/CompanyItem";
 
 const ViewPartners = () => {
   const [companies, setCompanies] = useState([]);
 
   useEffect(() => {
-    const unsubscribe = firestore
-      .collection("companies")
-      .onSnapshot((documentSnapshot) => {
-        let companyData = documentSnapshot.docs.map((data) => {
-          return { uid: data.id, data: data.data() };
-        });
-        setCompanies(companyData);
-      });
-    return unsubscribe;
   }, []);
 
   return (

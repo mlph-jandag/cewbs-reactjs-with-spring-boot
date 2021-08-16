@@ -1,10 +1,8 @@
 import React from 'react';
-import { firebaseAuth } from '../../firebase.config';
 
 const Logout = () => {
     
     const onLogout = () => {
-        firebaseAuth.signOut();
     }
     return (
         <a className="nav-link" href="#" onClick={onLogout}>

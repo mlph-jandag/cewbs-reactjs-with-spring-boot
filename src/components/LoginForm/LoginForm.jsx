@@ -9,13 +9,19 @@ import { setLogin } from "../../slices/authSlice";
 function LoginForm() {
   const alertUi = useAlert();
   const dispatch = useDispatch();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('admin@admin.com');
+  const [password, setPassword] = useState('test12345');
   const [btnLogin, setBtnLogin] = useState('Sign in');
   const [btnDisabled, setBtnDisabled] = useState(false);
   const [error, setError] = useState('');
 
   const history = useHistory();
+
+  const auth = useSelector(state => state.auth.user);
+
+  useEffect(() => {
+    console.log(auth);
+  }, [auth]);
 
   const loginHandler = async (e) => {
     e.preventDefault();
@@ -24,6 +30,7 @@ function LoginForm() {
       setBtnDisabled(true);
       let resp = await login(email, password);
       dispatch(setLogin(resp));
+      history.push('/');
     } catch(e) {
       alertUi.error(e);
       setBtnLogin('Sign in');

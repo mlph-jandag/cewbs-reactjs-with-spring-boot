@@ -1,5 +1,4 @@
 import React, { useEffect, useState} from 'react'
-import { firestore } from '../../firebase.config';
 import CategoryActions from './CategoryActions';
 import CategoryEditMode from './CategoryEditMode';
 import axios from "../../axios";

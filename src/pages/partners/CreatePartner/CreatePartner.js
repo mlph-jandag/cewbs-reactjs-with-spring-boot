@@ -3,7 +3,6 @@ import { useAlert } from "react-alert";
 import { useHistory, useParams } from "react-router";
 import { addFormData, updateFormData } from "../../../api/firestoreService";
 import DefaultLayout from "../../../components/Layouts/DefaultLayout";
-import { firestore } from "../../../firebase.config";
 import { isFormValid } from "../../../utils/validation";
 import classes from "./CreatePartner.module.css";
 
@@ -19,19 +18,6 @@ const CreatePartner = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (uid) {
-        await firestore
-          .collection("companies")
-          .doc(uid)
-          .get()
-          .then((data) => {
-            const { name, image, url } = data.data();
-            setName(name);
-            setLogo(image);
-            setSite(url);
-          })
-          .catch(() => {});
-      }
     };
     fetchData();
   }, [uid]);

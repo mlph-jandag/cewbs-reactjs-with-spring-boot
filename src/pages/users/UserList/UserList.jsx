@@ -1,15 +1,8 @@
 import React from "react";
-import { firestore } from "../../../firebase.config";
 
 const UserList = ({ id, users }) => {
   const deleteHandler = async (uid) => {
     console.log("delete", uid);
-    // await firestore
-    //   .collection("companies")
-    //   .doc(id)
-    //   .update({
-    //     services: services.filter((service) => service.id !== uid),
-    //   });
   };
   return (
     <table className="table">

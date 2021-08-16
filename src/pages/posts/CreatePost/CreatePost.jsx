@@ -5,7 +5,6 @@ import TextEditor from "../../../components/Editor/Editor";
 import classes from "./CreatePost.module.css";
 import CategoryDropDown from "../../../components/Buttons/CategoryDropDown";
 import { ContentState, EditorState } from "draft-js";
-import { firestore } from "../../../firebase.config";
 import { Redirect, useParams } from "react-router";
 import {convertFromRaw, convertToRaw} from "draft-js";
 import { useHistory } from 'react-router-dom';
@@ -30,21 +29,6 @@ const CreatePost = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (uid) {
-        setScreenTitle("Edit Post");
-        await firestore
-          .collection("posts")
-          .doc(uid)
-          .get()
-          .then((data) => {
-            const { title, category, body } = data.data()
-            setTitle(title);
-            setCategory(category);
-            const content = convertFromRaw(body);
-            setEditorState(EditorState.createWithContent(content));
-          })
-          .catch(() => {});
-      }
     };
 
     fetchData();
