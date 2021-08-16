@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useAlert } from 'react-alert';
-import { addFormData } from '../../api/firestoreService';
 import { useDispatch } from "react-redux";
 import { setUpdate } from "../../slices/categorySlice";
 import { isFormValid } from '../../utils/validation';

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAlert } from "react-alert";
 import { useHistory, useParams } from "react-router";
-import { addFormData, updateFormData } from "../../../api/firestoreService";
 import DefaultLayout from "../../../components/Layouts/DefaultLayout";
 import { isFormValid } from "../../../utils/validation";
 import classes from "./CreatePartner.module.css";
@@ -37,7 +36,7 @@ const CreatePartner = () => {
     };
     if (isFormValid(data)) {
       try {
-        if (uid) {
+       /*  if (uid) {
           await updateFormData({
             id: uid,
             formData: data,
@@ -48,7 +47,7 @@ const CreatePartner = () => {
             formData: data,
             table: "companies",
           });
-        }
+        } */
         alertUi.success("Added successfully");
         redirectToPartners();
       } catch (e) {
