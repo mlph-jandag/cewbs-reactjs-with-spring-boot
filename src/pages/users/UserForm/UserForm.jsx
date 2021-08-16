@@ -8,24 +8,22 @@ import { extractErrorMessages } from "../../../utils/responseUtils";
 
 const UserForm = () => {
   const alertUi = useAlert();
-  const [name, setName] = useState("sam");
-  const [email, setEmail] = useState("sam@test.com");
-  const [password, setPassword] = useState("test");
-  const [role, setRole] = useState("ADMIN");
+  const [userForm, setUserForm] = useState({name: '', email: '', password: '', role: ''});
   const [btnDisabled, setBtnDisabled] = useState(false);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
       setBtnDisabled(true);
-      let resp = await postAxios('/users', {
-        name: name,
-        email: email,
-        role: role,
-        password: password
-      });
-      console.log(resp);
-      alertUi.success('Successfully added new user.');
+      console.log(userForm);
+      // let resp = await postAxios('/users', {
+      //   name: userForm.name,
+      //   email: userForm.email,
+      //   role: userForm.role,
+      //   password: userForm.password
+      // });
+      // console.log(resp);
+      // alertUi.success('Successfully added new user.');
     } catch(err) {
       console.log(err.response);
       alertUi.error(extractErrorMessages(err.response));
@@ -44,13 +42,13 @@ const UserForm = () => {
             type="text"
             className="form-control mb-3"
             placeholder="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={userForm.name}
+            onChange={(e) => setUserForm({...userForm, name: e.target.value})}
           />
           <DropdownButton
             id="dropdown-basic-button"
-            title={role ? role : 'Select Role'}
-            onSelect={(e) => setRole(e)}
+            title={userForm.role ? userForm.role : 'Select Role'}
+            onChange={(e) => setUserForm({...userForm, role: e.target.value})}
           >
             {
               USER_ROLES.map((text, index) => {
@@ -68,16 +66,16 @@ const UserForm = () => {
             type="text"
             className="form-control"
             placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={userForm.email}
+            onChange={(e) => setUserForm({...userForm, email: e.target.value})}
           />
           <label className="mt-3">Password</label>
           <input
             type="password"
             className="form-control"
             placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={userForm.password}
+            onChange={(e) => setUserForm({...userForm, password: e.target.value})}
           />
           <button disabled={btnDisabled} className="btn btn-yellow px-4 mt-4">
             Create New
