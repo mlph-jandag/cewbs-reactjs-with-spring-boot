@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
+import axios from "../../axios";
+import { base64ToArrayBuffer, saveByteArray } from "../../utils/reportUtils";
 
 const GenerateReport = () => {
     const [department, setDepartment] = useState('');
@@ -8,16 +10,38 @@ const GenerateReport = () => {
     const [status, setStatus] = useState('');
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
-    const [btnDisabled, setBtnDisabled] = useState(true);
+    const [btnDisabled, setBtnDisabled] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    const onGenerateHandler = () => {
+      let data = {
+        startDate,
+        endDate,
+        department,
+        classification,
+        type,
+        status
+      }
+      setLoading(true)
+      axios.post('/reports/generate', data).then(response => {
+        const dataByte = response.data;
+        var sampleArr = base64ToArrayBuffer(dataByte);
+        saveByteArray("Report", sampleArr);
+      }).catch(err => {
+        console.log(err)
+      }).finally(() => {
+        setLoading(false)
+      })
+    }
 
     return (
             <div className="card">
                 <div className="card-header">Generate Report</div>
                 <div className="card-body mb-2">
                   <label>Start Date</label>
-                  <Form.Control type="date" name='date_of_birth' value={startDate} onChange={(e) => setStartDate(e.target.value)}/>
+                  <Form.Control type="date" name='startDate' value={startDate} onChange={(e) => setStartDate(e.target.value)}/>
                   <label>End Date</label>
-                  <Form.Control type="date" name='date_of_birth' min={startDate} value={endDate > startDate ? endDate : startDate} onChange={(e) => setEndDate(e.target.value)} />
+                  <Form.Control type="date" name='endDate' min={startDate} value={endDate > startDate ? endDate : startDate} onChange={(e) => setEndDate(e.target.value)} />
                   <label>Department</label>
                   <div className="dropdown">
                     <button
@@ -226,7 +250,8 @@ const GenerateReport = () => {
                   <button
                       disabled={btnDisabled}
                       className="btn btn-yellow px-4 mt-4"
-                  >Generate</button>
+                      onClick={onGenerateHandler}
+                  >{loading ? 'Loading ...' : 'Generate'}</button>
                 </div>
             </div>
     )
