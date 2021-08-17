@@ -4,6 +4,7 @@ import { useParams } from 'react-router';
 import PostCategoryList from './PostCategoryList';
 import { NoRecordFound } from '../../../components/Table/NoRecordFound';
 import { Link } from 'react-router-dom';
+import axios from '../../../axios';
 
 const PostCategory = () => {
   const { cat } = useParams();
@@ -12,8 +13,14 @@ const PostCategory = () => {
   const [catName, setCatName] = useState('');
 
   const fetchPosts = () => {
+    axios.get('/posts').then(response => {
+      
+    }).catch(err => {
+
+    })
   }
 
+  console.log(cat)
   useEffect(() => {
     fetchPosts();
   }, []);
@@ -43,7 +50,7 @@ const PostCategory = () => {
           </span>
       </h2>
       {
-        ! loading ? displayTable() : <>loading...</>
+        ! loading ? displayTable() : <><i className="fa fa fa-spinner fa-spin"></i> Loading...</>
       }
     </DefaultLayout>
   )
