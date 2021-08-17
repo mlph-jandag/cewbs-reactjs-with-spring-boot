@@ -30,7 +30,7 @@ const Dashboard = () => {
               <i className="fa fa-user"></i>  Logged in Account
             </h5>
             <div className="card-body">
-              {/* <LoggedUser /> */}
+              <LoggedUser />
             </div>
           </div>
         </div>

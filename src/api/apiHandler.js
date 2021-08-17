@@ -55,7 +55,7 @@ export const putAxios = (endpoint, data, id) => {
  * DELETE REQUEST
  */
 export const deleteAxios = (endpoint, id) => {
-  return axios.put(`${API_URL}${endpoint}/${id}`, { headers: authHeader() });
+  return axios.delete(`${API_URL}${endpoint}/${id}`, { headers: authHeader() });
 }
 
 export default authHeader;

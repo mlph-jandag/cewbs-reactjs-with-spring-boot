@@ -1,8 +1,11 @@
 import React,{ useEffect, useState} from "react";
 import { getAxios } from "../../../api/apiHandler";
+import LoadingText from "../../../components/Table/LoadingText";
+import TableBodyNoRecord from "../../../components/Table/TableBodyNoRecord";
+import UserAction from "./UserAction";
 
 const UserList = () => {
-  const [users, setusers] = useState([]);
+  const [users, setusers] = useState(null);
 
   useEffect(() => {
     getAxios('/users')
@@ -28,30 +31,28 @@ const UserList = () => {
       </thead>
       <tbody>
         {
-          users.length > 0 ? users.map((user, index) => {
-          return (
-            <tr key={ user.id }>
-              <td>{ index + 1 }</td>
-              <td>{ user.name }</td>
-              <td>{ user.email }</td>
-              <td>
-                { user.roles.map(role => role.name) }
-              </td>
-              <td className="text-center">
-                <span className="mr-3">
-                    <i className="fa fa-pencil text-info"></i>
-                </span>
-                <span>
-                    <i className="fa fa-trash-o text-danger"></i>
-                </span>
-              </td>
-            </tr>
-          )
-        }): (
-          <tr className="danger text-center">
-             <td colSpan="5">No users found.</td>
-          </tr>
-          )
+          users != null ? 
+            users.length > 0 ? users.map((data, index) => {
+              const { id, name , email, roles } = data;
+              return (
+                <tr key={ id }>
+                  <td>{ index + 1 }</td>
+                  <td>{ name }</td>
+                  <td>{ email }</td>
+                  <td>
+                    { roles.map(role => role.name) }
+                  </td>
+                  <td>
+                    <UserAction
+                        propValues={{ data }}
+                    />
+                  </td>
+                </tr>
+              )
+            }):
+            <TableBodyNoRecord />
+          :
+          <LoadingText />
         }
       </tbody>
     </table>

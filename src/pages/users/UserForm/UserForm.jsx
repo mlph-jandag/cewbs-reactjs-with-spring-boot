@@ -16,14 +16,14 @@ const UserForm = () => {
     try {
       setBtnDisabled(true);
       console.log(userForm);
-      // let resp = await postAxios('/users', {
-      //   name: userForm.name,
-      //   email: userForm.email,
-      //   role: userForm.role,
-      //   password: userForm.password
-      // });
-      // console.log(resp);
-      // alertUi.success('Successfully added new user.');
+      let resp = await postAxios('/users', {
+        name: userForm.name,
+        email: userForm.email,
+        role: userForm.role,
+        password: userForm.password
+      });
+      console.log(resp);
+      alertUi.success('Successfully added new user.');
     } catch(err) {
       console.log(err.response);
       alertUi.error(extractErrorMessages(err.response));

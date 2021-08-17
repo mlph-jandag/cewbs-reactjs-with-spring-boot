@@ -5,6 +5,7 @@ const RecentPosts = () => {
   const [postData, setPosts] = useState([]);
 
   const fetchRecent = () => {
+    
   }
   
   useEffect(() => {

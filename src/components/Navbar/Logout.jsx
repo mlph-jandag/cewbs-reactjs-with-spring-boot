@@ -5,7 +5,8 @@ import { STORAGE_NAME } from '../../config/AppConfig';
 const Logout = () => {
     const history = useHistory();
     
-    const onLogout = () => {
+    const onLogout = (e) => {
+        e.preventDefault();
         localStorage.removeItem(STORAGE_NAME);
         history.push('/login');
     }
