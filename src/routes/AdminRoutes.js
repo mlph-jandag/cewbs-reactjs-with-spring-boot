@@ -9,6 +9,7 @@ import ViewServices from "../pages/services/ViewServices/ViewServices";
 import PostCategory from "../pages/posts/PostCategory/PostCategory";
 import ViewUsers from "../pages/users/ViewUsers/ViewUsers";
 import Partner from "../pages/partners/Partner";
+import HRRequest from "../pages/hrRequest/HRRequest";
 
 const AdminRoutes = () => {
   return (
@@ -24,6 +25,7 @@ const AdminRoutes = () => {
       <AuthenticatedRoute path="/services/:uid" component={ViewServices} />
       <AuthenticatedRoute path="/create-post/:uid" component={CreatePost} />
       <AuthenticatedRoute path="/users" component={ViewUsers} />
+      <AuthenticatedRoute path="/hr-request" component={HRRequest} />
     </>
   );
 };

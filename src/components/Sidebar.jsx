@@ -53,6 +53,12 @@ const Sidebar = () => {
                         <span className="menu-collapsed">Partners</span>
                     </div>
                 </Link>
+                <Link to="/hr-request" aria-expanded="false" className="main-menu list-group-item list-group-item-action">
+                    <div className="d-flex w-100 justify-content-start align-items-center">
+                        <span className="fa fa-file fa-fw mr-3"></span>
+                        <span className="menu-collapsed">HR Requests</span>
+                    </div>
+                </Link>
             </ul>
         </div>
     )
