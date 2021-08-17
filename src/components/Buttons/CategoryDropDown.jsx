@@ -21,6 +21,13 @@ const CategoryDropDown = ({ category, onCategoryChanged }) => {
         dispatch(setUpdate(false))
     }, [dispatch]);
 
+  const categoryName = (category) => {
+    const result = cats.find(cat => cat.id === category)
+    if(result){
+      return result.data.name
+    }
+    return "Please select category"
+  }
   return (
     <div className="dropdown">
       <button
@@ -31,13 +38,14 @@ const CategoryDropDown = ({ category, onCategoryChanged }) => {
         aria-haspopup="true"
         aria-expanded="false"
       >
-        {category !== "" ? category : "Select category"}
+        {/* {cats.some(c => c.id === category) ? cats.find(c => c.id === category).name : "Select category"} */}
+        {categoryName(category)}
       </button>
       <div className="dropdown-menu" aria-labelledby="dropdownCategoryButton">
         {cats.map((cat) => {
           return (
             <button
-              onClick={() => onCategoryChanged(cat.data.name)}
+              onClick={() => onCategoryChanged(cat.data.id)}
               className="dropdown-item"
               key={cat.id}
             >
