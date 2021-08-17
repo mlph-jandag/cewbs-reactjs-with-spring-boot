@@ -4,9 +4,8 @@ import Sidebar from "../../../components/Sidebar";
 import TextEditor from "../../../components/Editor/Editor";
 import classes from "./CreatePost.module.css";
 import CategoryDropDown from "../../../components/Buttons/CategoryDropDown";
-import { ContentState, EditorState } from "draft-js";
-import { Redirect, useParams } from "react-router";
-import {convertFromRaw, convertToRaw} from "draft-js";
+import { EditorState } from "draft-js";
+import { useParams } from "react-router";
 import { useHistory } from 'react-router-dom';
 import axios from "../../../axios";
 import { useDispatch } from "react-redux";
@@ -17,7 +16,6 @@ const CreatePost = () => {
   const alertUi = useAlert();
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
-  const [body, setBody] = useState("");
   const [error, setError] = useState({});
   const [loading, setLoading] = useState(false);
   const [screenTitle, setScreenTitle] = useState("New Post");
@@ -37,17 +35,19 @@ const CreatePost = () => {
   const onSaveHandler = async () => {
     setLoading(true);
     let data = {
-        title, category,
+        title, category_id: category,
         body: JSON.stringify(editorState)
     };
-    console.log(data);
     if (!handleValidation()) {
          axios.post('/posts', {
               ...data
          }).then(() => {
              alertUi.success("Posted successfully");
-         }).catch((e) => {
+             redirectToPosts()
+         }).catch((err) => {
+           if(err.response) {
              alertUi.error("There is something wrong with the inputs!");
+           }
          })
     }else{
         alertUi.error("There is something wrong with the inputs!");
@@ -95,7 +95,6 @@ const CreatePost = () => {
 
   const onCategoryChanged = (data) => {
     setError({});
-    console.log(data);
     setCategory(data);
   };
   const onTitleChanged = (e) => {

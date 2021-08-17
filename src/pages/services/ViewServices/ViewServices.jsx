@@ -31,7 +31,7 @@ const ViewServices = () => {
         <i className="fa fa-arrow-left"></i> Go Back
       </button>
       <div className="mb-4">
-        <span className="h3"><span className="fa fa-list-alt fa-fw"></span> Partner</span>
+        <span className="h3"><span className="fa fa-list-alt fa-fw"></span> Service</span>
         <div className="pull-right">
           <div className="input-group">
               <input className="form-control py-2 border-right-0 border" type="search" value={search} onChange={onSearchHandler} id="search"/>

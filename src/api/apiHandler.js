@@ -11,7 +11,6 @@ export const authInfo = JSON.parse(localStorage.getItem(STORAGE_NAME)) || {};
  */
 export const authHeader = () => {
   const { token } = authInfo;
-  console.log(token)
   if (token) {
     return {
       Authorization: 'Bearer ' + token

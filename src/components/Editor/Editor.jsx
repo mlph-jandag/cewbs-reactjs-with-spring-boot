@@ -7,9 +7,6 @@ export default function TextEditor({ onChangedHandler }) {
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
-  useEffect(() => {
-    console.log(convertToRaw(editorState.getCurrentContent()));
-  }, [editorState]);
 
   const onChangeHandler = (e) => {
     setEditorState(e);
