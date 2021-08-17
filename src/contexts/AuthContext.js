@@ -14,16 +14,18 @@ export const useAuth = () => {
 const AuthProvider = ({ children }) => {
     const history = useHistory();
     const [currentUser, setCurrentUser] = useState({});
+    const [roles, setRoles] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const auth = useSelector(state => state.auth.user);
 
     useEffect(() => {
         getAxios('/me')
         .then(resp => {
             const { data } = resp;
-            console.log(data);
+            const { authorities } = data;
+            const roleData = authorities.map((role, index) => role.authority);
             setCurrentUser(data);
+            setRoles(roleData);
             setLoading(false);
         })
         .catch(err => {
@@ -35,6 +37,7 @@ const AuthProvider = ({ children }) => {
     const values = {
         currentUser,
         loading,
+        roles
     };
 
     const display = () => {

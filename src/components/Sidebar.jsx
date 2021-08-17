@@ -1,15 +1,35 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router';
+import { useAuth } from '../contexts/AuthContext';
+import { ROLES } from '../config/AppConfig';
 
 const Sidebar = () => {
     const { pathname } = useLocation();
+    const auth = useAuth();
 
     const partnersRoutes = ['/partners', '/create-partner']; 
     const postRoutes = ['/create-post', '/posts'];
 
     const [showPost, setShowPost] = useState(postRoutes.includes(pathname));
     const [showPartners, setshowPartners] = useState(partnersRoutes.includes(pathname));
+
+    const showUsers = () => {
+        if (auth.roles.includes(ROLES.ADMIN)) {
+            return (
+                <Link
+                    to="/users"
+                    aria-expanded="false"
+                    className="main-menu list-group-item list-group-item-action"
+                >
+                    <div className="d-flex w-100 justify-content-start align-items-center">
+                        <span className="fa fa-user fa-fw mr-3"></span>
+                        <span className="menu-collapsed">Users</span>
+                    </div>
+                </Link>
+            )
+        }
+    }
 
     return (
         <div id="sidebar-container" className="sidebar-expanded d-none d-md-block">
@@ -41,12 +61,9 @@ const Sidebar = () => {
                         <span className="menu-collapsed">Category</span>
                     </div>
                 </Link>
-                <Link to="/users" aria-expanded="false" className="main-menu list-group-item list-group-item-action">
-                    <div className="d-flex w-100 justify-content-start align-items-center">
-                        <span className="fa fa-user fa-fw mr-3"></span>
-                        <span className="menu-collapsed">Users</span>
-                    </div>
-                </Link>
+                {
+                    showUsers()
+                }
                 <Link to="/partners" aria-expanded="false" className="main-menu list-group-item list-group-item-action">
                     <div className="d-flex w-100 justify-content-start align-items-center">
                         <span className="fa fa-sticky-note-o fa-fw mr-3"></span>
