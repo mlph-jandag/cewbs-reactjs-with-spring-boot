@@ -13,6 +13,7 @@ const ServiceList = ({ id }) => {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const update = useSelector(state => state.service.update);
+  const search = useSelector((state) => state.service.search);
 
   const [pages, setPages] = useState(0)
   const [currentPage, setCurrentPage] = useState(0)
@@ -22,7 +23,7 @@ const ServiceList = ({ id }) => {
   const fetchData = useCallback(async () => {
     if(update)
       setCurrentPage(0)
-    axios.get(`/companies/${id}/services?page=${currentPage}`).then((response) => {
+    axios.get(`/companies/${id}/services/search?page=${currentPage}&search=${search}`).then((response) => {
       let list = response.data.content.map(data => {
         return { ...data }
       });
@@ -34,7 +35,7 @@ const ServiceList = ({ id }) => {
       setServices(list)
       setLoading(false)
     })
-  }, [currentPage, id, update]);
+  }, [currentPage, id, update, search]);
 
   useEffect(() => {
     setLoading(true)
