@@ -4,6 +4,7 @@ import postSlice from './postSlice';
 import serviceSlice from './serviceSlice';
 import authSlice from './authSlice';
 import categorySlice from './categorySlice'
+import hrRequestSlice from './hrRequestSlice'
 
 export default configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export default configureStore({
     service: serviceSlice,
     company: companySlice,
     auth: authSlice,
-    category: categorySlice
+    category: categorySlice,
+    hrRequest: hrRequestSlice
   },
 });
