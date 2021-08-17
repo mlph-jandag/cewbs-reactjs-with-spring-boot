@@ -16,7 +16,7 @@ export const login = async (email, password) =>  {
     })
     .catch(err => {
       console.log(err);
-      if(err.response.status == 403) {
+      if(err.response.status && err.response.status == 403) {
         reject('You do not have permission.');
       } else {
         reject('Email address and password are mismatched!');
