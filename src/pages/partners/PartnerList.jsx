@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUpdate } from "../../slices/companySlice";
 import Pagination from "../../components/Pagination/Pagination";
 import { useAlert } from "react-alert";
+// import { getAxios } from "../../api/apiHandler";
 
 const PartnerList = () => {
   const alertUi = useAlert();
@@ -14,6 +15,7 @@ const PartnerList = () => {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const update = useSelector((state) => state.company.update);
+  const search = useSelector((state) => state.company.search);
 
   const [pages, setPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
@@ -23,7 +25,7 @@ const PartnerList = () => {
   const fetchData = useCallback(async () => {
     if (update) setCurrentPage(0);
     axios
-      .get(`/companies?page=${currentPage}`)
+      .get(`/companies/search?page=${currentPage}&search=${search}`)
       .then((response) => {
         let cmpy = response.data.content.map((data) => {
           return { data: { ...data }, id: data.id };
@@ -41,7 +43,7 @@ const PartnerList = () => {
         if (err.response) alertUi.error(err.response.data.message);
         else alertUi.error(err.message);
       });
-  }, [currentPage, update, alertUi]);
+  }, [currentPage, update, alertUi,search]);
 
   useEffect(() => {
     setLoading(true);
