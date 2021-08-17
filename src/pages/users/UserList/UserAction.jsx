@@ -4,6 +4,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import { useDispatch } from 'react-redux';
 import { deleteAxios } from '../../../api/apiHandler';
 import ActionButtons from '../../../components/Buttons/ActionsButton/ActionButtons';
+import { setUserDone } from '../../../slices/userSlice';
 
 const UserAction = ({ propValues, setAction = {}, action = {} }) => {
   const alertUi = useAlert();
@@ -11,7 +12,6 @@ const UserAction = ({ propValues, setAction = {}, action = {} }) => {
   const { data } = propValues;
 
   const onDeleteHandler = () => {
-    console.log("test");
     confirmAlert({
       title: 'Confirm to delete',
       message: 'Are you sure to do this?',
@@ -22,6 +22,7 @@ const UserAction = ({ propValues, setAction = {}, action = {} }) => {
             deleteAxios('/users', data.id)
             .then(() => {
               alertUi.success('Deleted Successfully!');
+              dispatch(setUserDone());
             }).catch((e) => {
               console.log(e);
               alertUi.error('Something is wrong!');

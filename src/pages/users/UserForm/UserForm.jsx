@@ -5,10 +5,13 @@ import { DropdownButton, Dropdown } from 'react-bootstrap';
 import { USER_ROLES } from "../../../config/AppConfig";
 import { postAxios } from "../../../api/apiHandler";
 import { extractErrorMessages } from "../../../utils/responseUtils";
+import { setUserDone } from "../../../slices/userSlice";
+import { useDispatch } from "react-redux";
 
 const UserForm = () => {
+  const dispatch = useDispatch();
   const alertUi = useAlert();
-  const [userForm, setUserForm] = useState({name: '', email: '', password: '', role: ''});
+  const [userForm, setUserForm] = useState({name: '', email: '', password: '', role: 'ADMIN'});
   const [btnDisabled, setBtnDisabled] = useState(false);
 
   const onSubmitHandler = async (e) => {
@@ -24,6 +27,7 @@ const UserForm = () => {
       });
       console.log(resp);
       alertUi.success('Successfully added new user.');
+      dispatch(setUserDone());
     } catch(err) {
       console.log(err.response);
       alertUi.error(extractErrorMessages(err.response));
@@ -45,10 +49,11 @@ const UserForm = () => {
             value={userForm.name}
             onChange={(e) => setUserForm({...userForm, name: e.target.value})}
           />
+          <label>ROLE</label>
           <DropdownButton
             id="dropdown-basic-button"
-            title={userForm.role ? userForm.role : 'Select Role'}
-            onChange={(e) => setUserForm({...userForm, role: e.target.value})}
+            title={userForm.role}
+            onSelect={(e) => setUserForm({...userForm, role: e})}
           >
             {
               USER_ROLES.map((text, index) => {
