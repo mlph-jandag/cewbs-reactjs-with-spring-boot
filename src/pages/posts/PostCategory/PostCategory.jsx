@@ -14,13 +14,18 @@ const PostCategory = () => {
 
   const fetchPosts = () => {
     axios.get('/posts').then(response => {
-      
+      let filteredData = response.data.content
+          .filter(data => data.category.name === cat)
+          .map(data => {
+            return {uid: data.id, data: {...data}}
+          })
+      setPosts(filteredData)
+      setLoading(false)
     }).catch(err => {
 
     })
   }
 
-  console.log(cat)
   useEffect(() => {
     fetchPosts();
   }, []);

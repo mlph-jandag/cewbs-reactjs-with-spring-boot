@@ -17,8 +17,8 @@ const AdminRoutes = () => {
       <AuthenticatedRoute exact path="/" component={Dashboard} />
       <AuthenticatedRoute path="/categories" component={Category} />
       <AuthenticatedRoute exact path="/create-post" component={CreatePost} />
-      <AuthenticatedRoute exact path="/posts/category/:cat" component={PostCategory} />
-      <AuthenticatedRoute path="/posts" component={ViewPosts} />
+      <AuthenticatedRoute path="/posts/category/:cat" component={PostCategory} />
+      <AuthenticatedRoute exact path="/posts" component={ViewPosts} />
       <AuthenticatedRoute path="/partners" component={Partner} />
       <AuthenticatedRoute path="/create-partner/:uid" component={CreatePartner} />
       <AuthenticatedRoute exact path="/create-partner" component={CreatePartner} />
