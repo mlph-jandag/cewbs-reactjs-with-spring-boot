@@ -24,7 +24,7 @@ const RequestList = () => {
   useEffect(() => {
         const fetchData = async () => {
               if (update) setCurrentPage(0);
-              axios.get(`/reports?page=${currentPage}`).then((response) => {
+              axios.get(`/reports/search?page=${currentPage}&search=${search}`).then((response) => {
                   let status = response.data.content.map(data => {
                     return { data: {...data}, id: data.id }
                   });
@@ -37,7 +37,10 @@ const RequestList = () => {
               })
               .catch((err) => {
                       setLoading(false);
-                      if (err.response) alertUi.error(err.response.data.message);
+                      if (err.response){
+                        alertUi.error(err.response.data.message);
+                        console.log(err.response.data);
+                      }
                       else alertUi.error(err.message);
               })
               }
