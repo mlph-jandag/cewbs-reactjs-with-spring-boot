@@ -10,11 +10,13 @@ import { useHistory } from 'react-router-dom';
 import axios from "../../../axios";
 import { useDispatch } from "react-redux";
 import { useAlert } from 'react-alert';
+import {convertFromRaw, convertToRaw} from "draft-js";
 
 const CreatePost = () => {
   const { uid } = useParams();
   const alertUi = useAlert();
   const [title, setTitle] = useState("");
+  const [id, setId] = useState(useParams());
   const [category, setCategory] = useState("");
   const [error, setError] = useState({});
   const [loading, setLoading] = useState(false);
@@ -26,10 +28,23 @@ const CreatePost = () => {
   const history = useHistory();
 
   useEffect(() => {
-    const fetchData = async () => {
-    };
-
-    fetchData();
+      const fetchData = async () => {
+        if (uid) {
+          setScreenTitle("Edit Post");
+          axios.get(`/posts/${uid}`).then(response => {
+            let { id, category, title, body } = response.data;
+            setTitle(title);
+            setCategory(category.id);
+            console.log(body);
+            const content = convertFromRaw(JSON.parse(body));
+            setEditorState(EditorState.createWithContent(content));
+          }).catch(err => {
+            console.log(err);
+            alertUi.error("There is a problem in fetching posts data!");
+          })
+        }
+      };
+      fetchData();
   }, [uid]);
 
   const onSaveHandler = async () => {
@@ -39,6 +54,18 @@ const CreatePost = () => {
         body: JSON.stringify(editorState)
     };
     if (!handleValidation()) {
+         if(uid){
+             axios.put('/posts', {
+                  ...data
+             }).then(() => {
+                 alertUi.success("Updated successfully");
+                 redirectToPosts()
+             }).catch((err) => {
+               if(err.response) {
+                 alertUi.error("There is something wrong with the inputs!");
+               }
+             })
+         }else{
          axios.post('/posts', {
               ...data
          }).then(() => {
@@ -49,6 +76,7 @@ const CreatePost = () => {
              alertUi.error("There is something wrong with the inputs!");
            }
          })
+         }
     }else{
         alertUi.error("There is something wrong with the inputs!");
     }

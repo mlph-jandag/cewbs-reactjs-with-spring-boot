@@ -8,9 +8,13 @@ const postSlice = createSlice({
     posts: [],
     category: 'all',
     filterPosts: [],
-    search: ''
+    search: '',
+    update: false
   },
   reducers: {
+    setUpdate: (state, action) => {
+      state.update = action.payload;
+    },
     setPost: (state, action) => {
       state.posts = [...action.payload];
     },
@@ -31,6 +35,6 @@ const postSlice = createSlice({
   },
 });
 
-export const {setPost, setCategory, filterPost, searchPost} = postSlice.actions;
+export const {setPost, setCategory, setUpdate, filterPost, searchPost} = postSlice.actions;
 
 export default postSlice.reducer;

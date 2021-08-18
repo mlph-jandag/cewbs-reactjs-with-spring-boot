@@ -12,7 +12,6 @@ const Posts = () => {
   const filterPosts = useSelector(state => state.post.filterPosts);
 
   useEffect(() => {
-
     axios.get('/posts').then(response => {
       let postData = response.data.content.map(data => {
         return {uid: data.id, data: {...data}}
