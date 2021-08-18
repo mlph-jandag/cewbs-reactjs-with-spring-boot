@@ -41,6 +41,7 @@ const UserAction = ({ propValues, setAction = {}, action = {} }) => {
     //    id: propValues.id,
     //    editMode: true
     // });
+    console.log(propValues);
     console.log('set edit');
   }
 

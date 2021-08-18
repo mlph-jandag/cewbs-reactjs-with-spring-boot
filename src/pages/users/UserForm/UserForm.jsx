@@ -5,16 +5,17 @@ import { DropdownButton, Dropdown } from 'react-bootstrap';
 import { USER_ROLES } from "../../../config/AppConfig";
 import { postAxios } from "../../../api/apiHandler";
 import { extractErrorMessages } from "../../../utils/responseUtils";
-import { setUserDone } from "../../../slices/userSlice";
-import { useDispatch } from "react-redux";
+import { setUserDone, setUserEditData } from "../../../slices/userSlice";
+import { useDispatch, useSelector} from "react-redux";
 
 const UserForm = () => {
   const dispatch = useDispatch();
   const alertUi = useAlert();
-  const [userForm, setUserForm] = useState({name: '', email: '', password: '', role: 'ADMIN'});
+  const userForm = useSelector(state => state.users.userEditData);
   const [btnDisabled, setBtnDisabled] = useState(false);
 
   const onSubmitHandler = async (e) => {
+
     e.preventDefault();
     try {
       setBtnDisabled(true);
@@ -36,6 +37,21 @@ const UserForm = () => {
     }
   };
 
+  const onChangeForm = (e) => {
+    let field = e.target.name;
+    dispatch(setUserEditData({
+      ...userForm,
+      [field]: e.target.value
+    }));
+  }
+
+  const onSelectRole = (e) => {
+    dispatch(setUserEditData({
+      ...userForm, 
+      role: e
+    }));
+  }
+
   return (
     <form onSubmit={onSubmitHandler}>
       <div className="card">
@@ -47,13 +63,14 @@ const UserForm = () => {
             className="form-control mb-3"
             placeholder="Name"
             value={userForm.name}
-            onChange={(e) => setUserForm({...userForm, name: e.target.value})}
+            name="name"
+            onChange={onChangeForm}
           />
           <label>ROLE</label>
           <DropdownButton
             id="dropdown-basic-button"
             title={userForm.role}
-            onSelect={(e) => setUserForm({...userForm, role: e})}
+            onSelect={onSelectRole}
           >
             {
               USER_ROLES.map((text, index) => {
@@ -72,7 +89,8 @@ const UserForm = () => {
             className="form-control"
             placeholder="Email"
             value={userForm.email}
-            onChange={(e) => setUserForm({...userForm, email: e.target.value})}
+            onChange={onChangeForm}
+            name="email"
           />
           <label className="mt-3">Password</label>
           <input
@@ -80,7 +98,8 @@ const UserForm = () => {
             className="form-control"
             placeholder="Password"
             value={userForm.password}
-            onChange={(e) => setUserForm({...userForm, password: e.target.value})}
+            onChange={onChangeForm}
+            name="password"
           />
           <button disabled={btnDisabled} className="btn btn-yellow px-4 mt-4">
             Create New
