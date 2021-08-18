@@ -38,6 +38,7 @@ const CreatePost = () => {
             console.log(body);
             const content = convertFromRaw(JSON.parse(body));
             setEditorState(EditorState.createWithContent(content));
+            // setEditorState(JSON.parse(body))
           }).catch(err => {
             console.log(err);
             alertUi.error("There is a problem in fetching posts data!");
@@ -51,31 +52,37 @@ const CreatePost = () => {
     setLoading(true);
     let data = {
         title, category_id: category,
-        body: JSON.stringify(editorState)
+        body: JSON.stringify(convertToRaw(editorState.getCurrentContent()))
     };
     if (!handleValidation()) {
+      console.log('ds',{
+        ...data,
+        id: uid
+   })
          if(uid){
              axios.put('/posts', {
-                  ...data
+                  ...data,
+                  id: parseInt(uid)
              }).then(() => {
                  alertUi.success("Updated successfully");
                  redirectToPosts()
              }).catch((err) => {
                if(err.response) {
+                 console.log(err.response.data)
                  alertUi.error("There is something wrong with the inputs!");
                }
              })
          }else{
-         axios.post('/posts', {
-              ...data
-         }).then(() => {
-             alertUi.success("Posted successfully");
-             redirectToPosts()
-         }).catch((err) => {
-           if(err.response) {
-             alertUi.error("There is something wrong with the inputs!");
-           }
-         })
+          axios.post('/posts', {
+                ...data
+          }).then(() => {
+              alertUi.success("Posted successfully");
+              redirectToPosts()
+          }).catch((err) => {
+            if(err.response) {
+              alertUi.error(err.response.data.message);
+            }
+          })
          }
     }else{
         alertUi.error("There is something wrong with the inputs!");
@@ -84,7 +91,7 @@ const CreatePost = () => {
   };
 
   const redirectToPosts = () => {
-    let path = `posts`; 
+    let path = `/posts`; 
     history.push(path);
   }
 
@@ -98,10 +105,11 @@ const CreatePost = () => {
       });
       return true;
     }
-    if (Object.keys(editorState.entityMap).length > 0) {
-      console.log(editorState);
-      for (let key in editorState.entityMap) {
-        if (editorState.entityMap[key].data.src.includes("base64")) {
+    const rawState = convertToRaw(editorState.getCurrentContent())
+    if (Object.keys(rawState.entityMap).length > 0) {
+      console.log(rawState);
+      for (let key in rawState.entityMap) {
+        if (rawState.entityMap[key].data.src.includes("base64")) {
           setError((prev) => {
             return { ...prev, editor: "Only include links to images" };
           });
@@ -169,7 +177,7 @@ const CreatePost = () => {
                 <button onClick={onSaveHandler}
                   className="btn btn-yellow float-right px-4 font-weight-bold"
                 >
-                  {loading ? "Loading..." : "Add Post"}
+                  {loading ? "Loading..." : "Save"}
                 </button>
               </div>
             </div>

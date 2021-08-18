@@ -42,7 +42,7 @@ const PostItem = props => {
           ]
         });
     }
-
+    console.log('prop', props.uid)
     return (
         <div className="card mt-5">
         <span className="card-header font-weight-light">
