@@ -59,7 +59,7 @@ const CategoryButtons = () => {
                         <Link
                             className="btn-yellow toupper"
                             key={index}
-                            to={`/posts/category/${cat.name}`}
+                            to={cat.name == `All` ? `/posts` : `/posts/category/${cat.name}`}
                         >
                             { cat.name }
                         </Link>
