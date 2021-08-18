@@ -3,27 +3,43 @@ import { getAxios } from "../../../api/apiHandler";
 import LoadingText from "../../../components/Table/LoadingText";
 import TableBodyNoRecord from "../../../components/Table/TableBodyNoRecord";
 import UserAction from "./UserAction";
-import { setUsers } from "../../../slices/userSlice";
+import { setUsers, setSearch } from "../../../slices/userSlice";
 import { useSelector, useDispatch } from "react-redux";
+import Pagination from "../../../components/Pagination/Pagination";
 
 const UserList = () => {
   const {users, done} = useSelector(state => state.users);
   const dispatch = useDispatch();
 
+  const search = useSelector(state => state.users.search);
+  const [pages, setPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [first, setFirst] = useState(false);
+  const [last, setLast] = useState(false);
+
   useEffect(() => {
-    getAxios('/users')
-    .then(res => {
+    getAxios(`/users/search?page=${currentPage}&search=${search}`)
+    .then(response => {
       console.log('loaded');
-      const { content } = res.data;
+      const { content } = response.data;
+      setPages(response.data.totalPages);
+      setCurrentPage(response.data.number);
+      setFirst(response.data.first);
+      setLast(response.data.last);
       dispatch(setUsers(content));
     })
     .catch(err => {
       console.log(err);
     });
-  }, [done]);
+  }, [done, currentPage, search, dispatch]);
 
-
+  const nextPage = (page) => {
+      if (page <= pages || page >= 0) {
+        setCurrentPage(page);
+      }
+  };
   return (
+    <>
     <table className="table">
       <thead>
         <tr>
@@ -61,6 +77,14 @@ const UserList = () => {
         }
       </tbody>
     </table>
+    <Pagination
+            totalPages={pages}
+            first={first}
+            last={last}
+            currentPage={currentPage}
+            navigate={nextPage}
+    />
+    </>
   );
 };
 
