@@ -30,11 +30,9 @@ export const getAxios = (endpoint) => {
  * POST REQUEST
  */
 export const postAxios = (endpoint, data) => {
-  console.log(data);
   return new Promise((resolve, reject) => {
     axios.post(`${API_URL}${endpoint}`, data, { headers: authHeader() })
     .then(res => {
-      console.log(res);
       resolve(res.data);
     })
     .catch(err => {

@@ -10,12 +10,14 @@ import { useHistory } from 'react-router-dom';
 import axios from "../../../axios";
 import { useDispatch } from "react-redux";
 import { useAlert } from 'react-alert';
+import {convertFromRaw, convertToRaw} from "draft-js";
 
 const CreatePost = () => {
   const { uid } = useParams();
   const alertUi = useAlert();
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
+  const [userId, setUserId] = useState("");
   const [error, setError] = useState({});
   const [loading, setLoading] = useState(false);
   const [screenTitle, setScreenTitle] = useState("New Post");
@@ -26,29 +28,60 @@ const CreatePost = () => {
   const history = useHistory();
 
   useEffect(() => {
-    const fetchData = async () => {
-    };
-
-    fetchData();
+      const fetchData = async () => {
+        if (uid) {
+          setScreenTitle("Edit Post");
+          axios.get(`/posts/${uid}`).then(response => {
+            let { id, category, title, body, user_id } = response.data;
+            setTitle(title);
+            setCategory(category.id);
+            const content = convertFromRaw(JSON.parse(body));
+            setEditorState(EditorState.createWithContent(content));
+          }).catch(err => {
+            alertUi.error("There is a problem in fetching posts data!");
+          })
+        }
+      };
+      fetchData();
   }, [uid]);
 
   const onSaveHandler = async () => {
     setLoading(true);
     let data = {
         title, category_id: category,
-        body: JSON.stringify(editorState)
+        body: JSON.stringify(convertToRaw(editorState.getCurrentContent()))
     };
     if (!handleValidation()) {
-         axios.post('/posts', {
-              ...data
-         }).then(() => {
-             alertUi.success("Posted successfully");
-             redirectToPosts()
-         }).catch((err) => {
-           if(err.response) {
-             alertUi.error("There is something wrong with the inputs!");
-           }
-         })
+      console.log('ds',{
+        ...data,
+        id: uid
+   })
+         if(uid){
+             data.id = uid;
+             axios.put('/posts', {
+                  ...data,
+                  id: parseInt(uid)
+             }).then(() => {
+                 alertUi.success("Updated successfully");
+                 redirectToPosts()
+             }).catch((err) => {
+               if(err.response) {
+                 console.log(err.response.data)
+                 alertUi.error("There is something wrong with the inputs!");
+               }
+             })
+         }else{
+          axios.post('/posts', {
+                ...data
+          }).then(() => {
+              alertUi.success("Posted successfully");
+              redirectToPosts()
+          }).catch((err) => {
+            if(err.response) {
+              alertUi.error(err.response.data.message);
+            }
+          })
+         }
     }else{
         alertUi.error("There is something wrong with the inputs!");
     }
@@ -56,7 +89,7 @@ const CreatePost = () => {
   };
 
   const redirectToPosts = () => {
-    let path = `posts`; 
+    let path = `/posts`; 
     history.push(path);
   }
 
@@ -70,10 +103,11 @@ const CreatePost = () => {
       });
       return true;
     }
-    if (Object.keys(editorState.entityMap).length > 0) {
-      console.log(editorState);
-      for (let key in editorState.entityMap) {
-        if (editorState.entityMap[key].data.src.includes("base64")) {
+    const rawState = convertToRaw(editorState.getCurrentContent())
+    if (Object.keys(rawState.entityMap).length > 0) {
+      console.log(rawState);
+      for (let key in rawState.entityMap) {
+        if (rawState.entityMap[key].data.src.includes("base64")) {
           setError((prev) => {
             return { ...prev, editor: "Only include links to images" };
           });
@@ -141,7 +175,7 @@ const CreatePost = () => {
                 <button onClick={onSaveHandler}
                   className="btn btn-yellow float-right px-4 font-weight-bold"
                 >
-                  {loading ? "Loading..." : "Add Post"}
+                  {loading ? "Loading..." : "Save"}
                 </button>
               </div>
             </div>

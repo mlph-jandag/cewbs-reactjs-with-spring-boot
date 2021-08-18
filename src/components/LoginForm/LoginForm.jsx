@@ -31,7 +31,6 @@ function LoginForm() {
       setBtnDisabled(true);
       let resp = await login(email, password);
       dispatch(setLogin(resp));
-      console.log('logged daw');
       window.location.href = '/';
     } catch(e) {
       alertUi.error(e);

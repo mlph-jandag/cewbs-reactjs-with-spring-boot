@@ -4,15 +4,43 @@ import classes from "./PostItem.module.css";
 import {convertFromRaw} from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 import { Link } from "react-router-dom";
+import { useAlert } from 'react-alert';
+import axios from '../../../../axios';
+import { confirmAlert } from 'react-confirm-alert';
+import { setUpdate } from '../../../../slices/postSlice';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 const PostItem = props => {
+    const alertUi = useAlert();
+    const dispatch = useDispatch();
+
     const convert = (storedState) => {
         return stateToHTML(convertFromRaw(storedState));
     };
 
-    const deleteHandler = async () => {
-    };
-
+    const deleteHandler = () => {
+        confirmAlert({
+          title: 'Confirm to delete',
+          message: 'Are you sure to do this?',
+          buttons: [
+            {
+              label: 'Yes',
+              onClick: async () => {
+                axios.delete(`/posts/${props.uid}`).then(() => {
+                  alertUi.success('Deleted Successfully!');
+                  dispatch(setUpdate(true));
+                }).catch((e) => {
+                  alertUi.error('Something is wrong!');
+                })
+              }
+            },
+            {
+              label: 'No',
+            }
+          ]
+        });
+    }
     return (
         <div className="card mt-5">
         <span className="card-header font-weight-light">

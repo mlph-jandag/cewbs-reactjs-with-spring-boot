@@ -10,9 +10,9 @@ const Posts = () => {
   const dispatch = useDispatch();
   const category = useSelector(state => state.post.category);
   const filterPosts = useSelector(state => state.post.filterPosts);
+  const update = useSelector(state => state.post.update);
 
   useEffect(() => {
-
     axios.get('/posts').then(response => {
       let postData = response.data.content.map(data => {
         return {uid: data.id, data: {...data}}
@@ -23,7 +23,7 @@ const Posts = () => {
       alertUi.error("There is a problem in fetching posts data!");
     })
 
-  }, [category, dispatch, alertUi]);
+  }, [category, dispatch, alertUi, update]);
   
   return (
     <>

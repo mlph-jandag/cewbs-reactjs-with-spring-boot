@@ -27,7 +27,6 @@ const CategoryEditMode = (props) => {
         dispatch(setUpdate(true))
         onCancelHandler();
       }).catch((error) => {
-        console.log(error)
         alertUi.error("There is a problem while updating!");
       })
       .finally(setBtnDisabled(false));
