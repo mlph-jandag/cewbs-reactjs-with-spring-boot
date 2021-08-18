@@ -7,17 +7,11 @@ export default function TextEditor({ editorState: state, onChangedHandler }) {
   const [editorState, setEditorState] = useState(() =>
     state ? state : EditorState.createEmpty()
   );
-  console.log('state', state)
   const onChangeHandler = (e) => {
     // setEditorState(e);
     // onChangedHandler(convertToRaw(editorState.getCurrentContent()));
     onChangedHandler(e);
   };
-
-  useEffect(() => {
-    // console.log('boice', EditorState.createWithContent(convertFromRaw(state)))
-    // setEditorState(state)  
-  }, [state])
 
   return (
     <div>

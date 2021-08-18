@@ -31,6 +31,9 @@ const postSlice = createSlice({
       state.filterPosts = state.posts.filter(
         post => (post.data.category === state.category || state.category === 'all') && post.data.title.includes(action.payload),
       );
+    }, 
+    setSearch: (state, action) => {
+      state.search = action.payload
     }
   },
 });
