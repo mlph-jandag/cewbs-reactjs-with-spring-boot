@@ -16,8 +16,8 @@ const CreatePost = () => {
   const { uid } = useParams();
   const alertUi = useAlert();
   const [title, setTitle] = useState("");
-  const [id, setId] = useState(useParams());
   const [category, setCategory] = useState("");
+  const [userId, setUserId] = useState("");
   const [error, setError] = useState({});
   const [loading, setLoading] = useState(false);
   const [screenTitle, setScreenTitle] = useState("New Post");
@@ -32,7 +32,7 @@ const CreatePost = () => {
         if (uid) {
           setScreenTitle("Edit Post");
           axios.get(`/posts/${uid}`).then(response => {
-            let { id, category, title, body } = response.data;
+            let { id, category, title, body, user_id } = response.data;
             setTitle(title);
             setCategory(category.id);
             console.log(body);
@@ -55,6 +55,7 @@ const CreatePost = () => {
     };
     if (!handleValidation()) {
          if(uid){
+             data.id = uid;
              axios.put('/posts', {
                   ...data
              }).then(() => {
@@ -62,20 +63,21 @@ const CreatePost = () => {
                  redirectToPosts()
              }).catch((err) => {
                if(err.response) {
+                 console.log(err.response.data)
                  alertUi.error("There is something wrong with the inputs!");
                }
              })
          }else{
-         axios.post('/posts', {
-              ...data
-         }).then(() => {
-             alertUi.success("Posted successfully");
-             redirectToPosts()
-         }).catch((err) => {
-           if(err.response) {
-             alertUi.error("There is something wrong with the inputs!");
-           }
-         })
+             axios.post('/posts', {
+                  ...data
+             }).then(() => {
+                 alertUi.success("Posted successfully");
+                 redirectToPosts()
+             }).catch((err) => {
+               if(err.response) {
+                 alertUi.error("There is something wrong with the inputs!");
+               }
+             })
          }
     }else{
         alertUi.error("There is something wrong with the inputs!");
@@ -84,7 +86,7 @@ const CreatePost = () => {
   };
 
   const redirectToPosts = () => {
-    let path = `posts`; 
+    let path = `/posts`;
     history.push(path);
   }
 
