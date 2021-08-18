@@ -16,6 +16,8 @@ const UserForm = () => {
 
   const onSubmitHandler = async (e) => {
 
+    console.log(userForm);
+
     e.preventDefault();
     try {
       setBtnDisabled(true);

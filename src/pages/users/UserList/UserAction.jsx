@@ -4,7 +4,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import { useDispatch } from 'react-redux';
 import { deleteAxios } from '../../../api/apiHandler';
 import ActionButtons from '../../../components/Buttons/ActionsButton/ActionButtons';
-import { setUserDone } from '../../../slices/userSlice';
+import { setUserDone, setUserEditData } from '../../../slices/userSlice';
 
 const UserAction = ({ propValues, setAction = {}, action = {} }) => {
   const alertUi = useAlert();
@@ -37,12 +37,13 @@ const UserAction = ({ propValues, setAction = {}, action = {} }) => {
   } 
 
   const onClickSetEdit = () => {
-    // setAction({
-    //    id: propValues.id,
-    //    editMode: true
-    // });
-    console.log(propValues);
-    console.log('set edit');
+    dispatch(setUserEditData({
+      id: propValues.id,
+      email: propValues.email,
+      name: propValues.name,
+      role: 'EDITOR',
+      password: 'TEST', // do not display password
+    }));
   }
 
   return (
