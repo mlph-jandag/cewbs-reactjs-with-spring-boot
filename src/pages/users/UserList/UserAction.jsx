@@ -5,10 +5,12 @@ import { useDispatch } from 'react-redux';
 import { deleteAxios } from '../../../api/apiHandler';
 import ActionButtons from '../../../components/Buttons/ActionsButton/ActionButtons';
 import { setUserDone } from '../../../slices/userSlice';
+import { useHistory } from "react-router-dom";
 
 const UserAction = ({ propValues, setAction = {}, action = {} }) => {
   const alertUi = useAlert();
   const dispatch = useDispatch();
+  const history = useHistory();
   const { data } = propValues;
 
   const onDeleteHandler = () => {
@@ -37,11 +39,8 @@ const UserAction = ({ propValues, setAction = {}, action = {} }) => {
   } 
 
   const onClickSetEdit = () => {
-    // setAction({
-    //    id: propValues.id,
-    //    editMode: true
-    // });
-    console.log('set edit');
+    const { id } = propValues.data;
+    history.push(`/users/${id}`);
   }
 
   return (
