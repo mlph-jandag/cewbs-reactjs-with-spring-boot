@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
-import { EditorState, convertToRaw } from "draft-js";
+import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
-export default function TextEditor({ onChangedHandler }) {
+export default function TextEditor({ editorState: state, onChangedHandler }) {
   const [editorState, setEditorState] = useState(() =>
-    EditorState.createEmpty()
+    state ? state : EditorState.createEmpty()
   );
-
+  console.log('state', state)
   const onChangeHandler = (e) => {
-    setEditorState(e);
-    onChangedHandler(convertToRaw(editorState.getCurrentContent()));
+    // setEditorState(e);
+    // onChangedHandler(convertToRaw(editorState.getCurrentContent()));
+    onChangedHandler(e);
   };
+
+  useEffect(() => {
+    // console.log('boice', EditorState.createWithContent(convertFromRaw(state)))
+    // setEditorState(state)  
+  }, [state])
 
   return (
     <div>
@@ -23,7 +29,7 @@ export default function TextEditor({ onChangedHandler }) {
         }}
       >
         <Editor
-          editorState={editorState}
+          editorState={state}
           onEditorStateChange={onChangeHandler}
         />
       </div>
