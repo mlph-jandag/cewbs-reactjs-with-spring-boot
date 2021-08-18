@@ -4,7 +4,6 @@ import { useAuth } from '../../contexts/AuthContext';
 
 const LoggedUser = () => {
   const { currentUser } = useAuth();
-  console.log(currentUser.authorities);
   return (
     <table className="table-custom">
       <tbody>

@@ -15,7 +15,6 @@ export const login = async (email, password) =>  {
       resolve(response.data);
     })
     .catch(err => {
-      console.log(err);
       if(err.response.status && err.response.status == 403) {
         reject('You do not have permission.');
       } else {

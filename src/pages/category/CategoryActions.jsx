@@ -22,7 +22,6 @@ const CategoryActions = ({ propValues, setAction, action }) => {
                 alertUi.success('Deleted Successfully!');
                 dispatch(setUpdate(true))
             }).catch((e) => {
-                console.log(e);
                 alertUi.error('Something is wrong!');
             })
           }

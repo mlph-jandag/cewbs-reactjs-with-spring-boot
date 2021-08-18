@@ -35,12 +35,9 @@ const CreatePost = () => {
             let { id, category, title, body, user_id } = response.data;
             setTitle(title);
             setCategory(category.id);
-            console.log(body);
             const content = convertFromRaw(JSON.parse(body));
             setEditorState(EditorState.createWithContent(content));
-            // setEditorState(JSON.parse(body))
           }).catch(err => {
-            console.log(err);
             alertUi.error("There is a problem in fetching posts data!");
           })
         }

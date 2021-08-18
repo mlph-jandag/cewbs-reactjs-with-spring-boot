@@ -14,7 +14,6 @@ const CategoryDropDown = ({ category, onCategoryChanged }) => {
                     return { data: {...data}, id: data.id }
                   });
                   setCats(cat)
-                  console.log(cat)
               })
             }
         fetchData();
