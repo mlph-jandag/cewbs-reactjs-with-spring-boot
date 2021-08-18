@@ -20,7 +20,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 // optional configuration
 const options = {
   position: positions.BOTTOM_CENTER,
-  // timeout: 4000,
+  timeout: 3000,
   offset: '30px',
   transition: transitions.FADE,
 }
